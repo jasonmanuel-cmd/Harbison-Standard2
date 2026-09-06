@@ -7,16 +7,17 @@ export default async function handler(request) {
   if (!crmConfigured()) return notConfigured();
 
   const url = new URL(request.url);
-  const status = url.searchParams.get("status");
-  const q = (url.searchParams.get("q") || "").toString().slice(0, 100);
+  const status = (url.searchParams.get("status") || "").trim() || null;
+  const q = (url.searchParams.get("q") || "").slice(0, 100) || null;
+  const like = q ? "%" + q + "%" : null;
   const limit = Math.min(Math.max(Number(url.searchParams.get("limit")) || 50, 1), 200);
 
   try {
     const rows = await query`
       SELECT id, session_id, source, goal, interest, name, email, phone, location, timing, message, status, notes, created_at
       FROM leads
-      WHERE (${status === null ? null : status} IS NULL OR status = ${status === null ? null : status})
-        AND (${q || null} IS NULL OR name ILIKE ${"%" + q + "%"} OR email ILIKE ${"%" + q + "%"})
+      WHERE (${status}::text IS NULL OR status = ${status}::text)
+        AND (${like}::text IS NULL OR name ILIKE ${like} OR email ILIKE ${like})
       ORDER BY created_at DESC
       LIMIT ${limit}
     `;
