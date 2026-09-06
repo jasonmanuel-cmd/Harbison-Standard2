@@ -1,0 +1,71 @@
+import {HouseLine,Key,Hammer,ChartLineUp,ChatCircle,Clock,Buildings,PaintBrush} from '@phosphor-icons/react';
+
+export const servicePages = {
+ '/real-estate': {
+  name:'Sell Your Home',category:'Real estate',image:'house',alt:'California home with a landscaped front yard',
+  heading:'Life changes.',accent:'Let’s plan your next move.',
+  intro:'When selling a home comes with more than a moving date, start with a conversation about your property, your priorities, and the time you have.',
+  cta:'Talk about selling',caption:'A clear next step starts with your situation.',
+  sectionLabel:'A sale that fits your circumstances',sectionTitle:'You have a story.',sectionAccent:'Start there.',
+  sectionIntro:'You don’t need to have everything figured out before reaching out.',
+  cards:[
+   {title:'Divorce or separation',copy:'A shared home can be one of the biggest questions during a separation. Talk with Nate about the property and what you need from a sale.'},
+   {title:'Bankruptcy or foreclosure',copy:'If financial pressure or a foreclosure timeline has you considering a sale, let Nate know about your timing and the professionals already helping you.'},
+   {title:'Whatever life brings',copy:'An inherited property, a relocation, a home that needs repairs, or a change in plans. Start with where you are and what you want to do next.'},
+  ],
+  approachTitle:'Your priorities come first.',approachCopy:'Share the property’s location, its condition, and any important dates. Nate can discuss the real estate side of a potential sale and coordinate with your existing advisers where needed.',
+  steps:['Tell Nate about the home','Discuss your priorities and timing','Decide on the next step together'],
+  formTitle:'Let’s talk about',formAccent:'your home.',formCopy:'Tell Nate only what you’re comfortable sharing. A location and a general timeline are a good place to start.',
+  messagePlaceholder:'Property location, condition, and any timing you want Nate to know about…',
+  goals:[
+   {name:'Planning a home sale',Icon:HouseLine,copy:'Understand my next steps'},
+   {name:'A time-sensitive sale',Icon:Clock,copy:'I have an important timeline'},
+   {name:'Selling a home that needs repairs',Icon:Hammer,copy:'Discuss the property as it is'},
+   {name:'Another selling situation',Icon:ChatCircle,copy:'Talk through my circumstances'},
+  ],
+ },
+ '/development': {
+  name:'Development',category:'Development',image:'development',alt:'Timber framing inside a home under construction',
+  heading:'Your home.',accent:'From the ground up.',
+  intro:'Have a vision for a home, land you want to build on, or an interest in a spec home? Bring Nate into the conversation.',
+  cta:'Discuss your new home',caption:'From an idea to a place to call your own.',
+  sectionLabel:'Two ways to start',sectionTitle:'Build your vision.',sectionAccent:'Or find your new home.',
+  sectionIntro:'Choose the direction that fits your plans, then explore the details with Nate.',
+  cards:[
+   {title:'Build a home',copy:'Start with your ideas, preferred location, and budget. Whether you already own land or are still looking, talk through the kind of home you want to create.'},
+   {title:'Buy a spec home',copy:'A spec home is a new home built for sale. Ask Nate about new-construction opportunities, available homes, and what may fit your location and timing.'},
+   {title:'Explore a piece of land',copy:'Already have a parcel in mind? Share its location and your goals to start a conversation about what would need to be evaluated before building.'},
+  ],
+  approachTitle:'Start with the big picture.',approachCopy:'A new home starts with a few essentials: where you want to live, how you want the home to work, your budget, and your timing. Bring what you know; the conversation can start there.',
+  steps:['Share your vision and location','Discuss budget, land, and timing','Explore a practical next step'],
+  formTitle:'What would you',formAccent:'like to build?',formCopy:'Tell Nate whether you’re looking to build a home or buy a spec home. Include a preferred area and your plans for the property.',
+  messagePlaceholder:'Your ideal home, preferred area, budget range, and whether you already own land…',
+  goals:[
+   {name:'Building a home',Icon:Hammer,copy:'Bring my plans to life'},
+   {name:'Buying a spec home',Icon:Key,copy:'Find a new home built for sale'},
+   {name:'Exploring land for a home',Icon:HouseLine,copy:'Talk about a parcel or location'},
+  ],
+ },
+ '/investing': {
+  name:'Investing',category:'Investing',image:'investing',alt:'A city skyline beneath mountains at sunset',
+  heading:'See the potential.',accent:'Consider the possibilities.',
+  intro:'Explore real estate investing, ask about investing in Harbison Standard, or discuss a home you want to buy, restore, and flip.',
+  cta:'Talk about investing',caption:'A property. A project. A conversation.',
+  sectionLabel:'Your investment interests',sectionTitle:'Different paths.',sectionAccent:'A thoughtful start.',
+  sectionIntro:'Tell Nate what interests you and how involved you want to be.',
+  cards:[
+   {title:'Invest in real estate',copy:'Considering your first investment property or another purchase? Talk about the property types, locations, and ownership goals you want to explore.'},
+   {title:'Invest in Harbison Standard',copy:'Interested in the company? Start a conversation with Nate about your interest and whether there is an opportunity to discuss. Any specific opportunity would require its own details and review.'},
+   {title:'Buy, restore & flip',copy:'Have a home in mind that needs work? Bring the address and your renovation ideas to a conversation about the purchase, scope of work, budget, and intended resale.'},
+  ],
+  approachTitle:'Look at the whole project.',approachCopy:'A useful conversation starts with your goals, your experience, your budget, and your timeline. For a renovation, include the work you have in mind and how hands-on you want to be.',
+  steps:['Share your investment interests','Discuss the property or project','Review the details before deciding'],
+  formTitle:'Let’s explore',formAccent:'your interests.',formCopy:'Tell Nate which path interests you. You can start with a general idea or a specific property you’re considering.',
+  messagePlaceholder:'Your investment interests, a property or project, budget range, and experience…',
+  goals:[
+   {name:'Real estate investing',Icon:ChartLineUp,copy:'Explore investment properties'},
+   {name:'Investing in Harbison Standard',Icon:Buildings,copy:'Ask about the company'},
+   {name:'Buying, restoring, and flipping a home',Icon:PaintBrush,copy:'Discuss my own renovation project'},
+  ],
+ },
+};

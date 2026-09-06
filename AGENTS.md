@@ -17,3 +17,11 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Contact needs his name, email, phone, all four social links, and an inquiry funnel; the homepage also needs a funnel.
 - User-supplied social links: https://www.facebook.com/nate85.realtor ; https://www.instagram.com/nathanaelharbison ; https://www.youtube.com/@Nathanaelharbison ; https://www.linkedin.com/in/nathanael-harbison .
 - No lead delivery service is currently configured. The inquiry flow prepares an email draft with an explicit send-in-email-app step and copy fallback. Never show a successful submission without confirmed delivery from a real service. Automatic lead capture still needs a configured service.
+
+# Service page decisions — September 6, 2026
+
+- The three homepage service cards link to separate pages: `/real-estate`, `/development`, and `/investing`.
+- Replace the generic real estate opportunity message with selling a home during life changes, including divorce, bankruptcy, foreclosure, repairs, inheritance, and other circumstances. Use supportive language without promises about legal outcomes, guaranteed sales, or cash offers.
+- Development covers having a home built, exploring land, and buying a spec home. User confirmed that “sim home” meant a spec home.
+- Investing covers general property investing, inquiries about investing in Harbison Standard, and buying/restoring/flipping one's own homes. Do not invent an active company offering, terms, or returns.
+- Each service page has a tailored inquiry funnel using the existing email-draft behavior and Gmail destination.
