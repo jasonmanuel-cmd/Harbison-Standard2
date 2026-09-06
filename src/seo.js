@@ -84,6 +84,11 @@ export const routes = {
     title: 'Real Estate Investing | Harbison Standard',
     description: 'Explore real estate investing, ask about investing in Harbison Standard, or discuss buying, restoring, and flipping a home with Nathanael Harbison.',
   },
+  '/hq': {
+    title: 'HQ | Harbison Standard',
+    description: '',
+    robots: 'noindex, nofollow',
+  },
 };
 
 export function jsonLdFor(path) {

@@ -1,6 +1,7 @@
 import {useId,useRef,useState,useEffect} from 'react';
-import {ArrowRight,ArrowLeft,HouseLine,Key,Hammer,ChartLineUp,ChatCircle,Envelope,Check,Copy,CheckCircle,Warning} from '@phosphor-icons/react';
+import {ArrowRight,ArrowLeft,HouseLine,Key,Hammer,ChartLineUp,ChatCircle,Envelope,Check,Copy,CheckCircle} from '@phosphor-icons/react';
 import {agent} from './data';
+import {getSessionId} from './track';
 const defaultGoals=[{name:'Buying',Icon:Key,copy:'Find my next home'},{name:'Selling',Icon:HouseLine,copy:'Plan my next move'},{name:'Investing',Icon:ChartLineUp,copy:'Explore an opportunity'},{name:'Building or renovating',Icon:Hammer,copy:'Create something better'},{name:'Something else',Icon:ChatCircle,copy:'Let’s talk it through'}];
 const FORMSPREE='https://formspree.io/f/xqpkdwrp';
 export function LeadForm({source,goalOptions=defaultGoals,messagePlaceholder="Your goals, price range, or questions…"}){
@@ -15,15 +16,19 @@ export function LeadForm({source,goalOptions=defaultGoals,messagePlaceholder="Yo
  const body=`Hi Nathanael,\n\nI’m interested in ${interest}.\n\nName: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone||'Not provided'}\nLocation: ${data.location||'Open to ideas'}\nTiming: ${data.timing}\n\n${data.message||'I’d like to talk about my next steps.'}\n\nSent from the Harbison Standard ${source}.`;
  const mailto=`mailto:${agent.email}?subject=${encodeURIComponent('Harbison Standard — '+data.goal+' inquiry')}&body=${encodeURIComponent(body)}`;
  async function copy(){try{await navigator.clipboard.writeText(body);setNotice('Message copied. Paste it into an email to '+agent.email+'.')}catch{setNotice('Copy is unavailable in this browser. You can select the message below and copy it manually.')}}
- async function submit(){
-  if(status==='sending')return;
-  setStatus('sending');setNotice('');
-  try{
-   const res=await fetch(FORMSPREE,{method:'POST',headers:{'Accept':'application/json'},body:JSON.stringify({_subject:'Harbison Standard — '+data.goal+' inquiry (from '+source+')',_replyto:data.email,_cc:agent.email,name:data.name,email:data.email,phone:data.phone||'Not provided',location:data.location||'Open to ideas',timing:data.timing,goal:data.goal,interest,message:data.message||'I’d like to talk about my next steps.'})});
-   if(!res.ok)throw new Error('network');
-   setStatus('success');
-  }catch{setStatus('error');setNotice('We couldn’t send your inquiry. Please try again, or use the email draft below.')}
- }
+function recordLead(){
+ fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:getSessionId(),source,goal:data.goal,interest,name:data.name,email:data.email,phone:data.phone||'Not provided',location:data.location||'Open to ideas',timing:data.timing,message:data.message||'I’d like to talk about my next steps.'})}).catch(()=>{});
+}
+async function submit(){
+ if(status==='sending')return;
+ setStatus('sending');setNotice('');
+ recordLead();
+ try{
+  const res=await fetch(FORMSPREE,{method:'POST',headers:{'Accept':'application/json'},body:JSON.stringify({_subject:'Harbison Standard — '+data.goal+' inquiry (from '+source+')',_replyto:data.email,_cc:agent.email,name:data.name,email:data.email,phone:data.phone||'Not provided',location:data.location||'Open to ideas',timing:data.timing,goal:data.goal,interest,message:data.message||'I’d like to talk about my next steps.'})});
+  if(!res.ok)throw new Error('network');
+  setStatus('success');
+ }catch{setStatus('error');setNotice('We couldn’t send your inquiry. Please try again, or use the email draft below.')}
+}
  return <div className="lead-card">
   <div className="form-progress" aria-label={`Step ${step===4?3:step} of 3`}><span>{String(step===4?3:step).padStart(2,'0')} / 03</span><ol>{['Your goal','Your details','Review'].map((label,i)=><li key={label} className={step>=i+1?'reached':''} aria-current={step===i+1?'step':undefined}>{label}</li>)}</ol></div>
   {status==='success'?<>

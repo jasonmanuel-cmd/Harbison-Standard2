@@ -38,3 +38,15 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Development covers having a home built, exploring land, and buying a spec home. User confirmed that “sim home” meant a spec home.
 - Investing covers general property investing, inquiries about investing in Harbison Standard, and buying/restoring/flipping one's own homes. Do not invent an active company offering, terms, or returns.
 - Each service page has a tailored inquiry funnel using the existing lead form, which submits to Formspree.
+
+# Lead-capture CRM decisions — September 6, 2026
+
+- Option 2 CRM implemented: Neon Postgres (NOT Supabase) + Vercel serverless functions in `api/` + password-protected SPA named **HQ** at `/hq`.
+- Formspree remains the primary delivery channel (unchanged). Every lead form ALSO writes a copy to the CRM non-blockingly via `POST /api/lead` (`src/LeadForm.jsx` → `recordLead()`), so the Formspree response still drives the success state and must not be coupled to the CRM.
+- `src/track.js` sets a first-party session cookie (`hs_sid`) and beacons page views to `POST /api/track` on every route change (path, referrer, UTM params). Tracking is fire-and-forget and must never break the page.
+- Tables `leads`, `sessions`, `visits` auto-create in Neon on first use (`api/lib/db.mjs`). API handlers use the Web `Request`/`Response` API so they run unchanged on Vercel Node functions and the local shim (`npm run dev:api` → `scripts/dev-api.mjs`, Vite proxies `/api` → :8787).
+- HQ auth is a bearer token: `ADMIN_TOKEN` env var (SHA-256 + timingSafeEqual in `api/lib/auth.mjs`); the `/hq` SPA keeps it in sessionStorage (`hs_hq`). Login succeeds for an unconfigured backend so the "Not configured yet" screen can explain the missing env vars.
+- `/hq` is noindex (dynamic `meta[name="robots"]` set to `noindex, nofollow` via `src/seo.js` route entry + `public/robots.txt` `Disallow: /hq`). It is NEVER shown in the nav, site chrome (header/footer/closing) is not rendered on `/hq`, and it must not be tracked or visible to search engines.
+- `vercel.json` rewrites everything except `/api/*` to `/index.html`. `worker/index.js` (OpenAI Sites backup host) does NOT serve `/api/*`; the CRM and `/hq` work on the Vercel primary only. Keep `tests/sites-worker.test.mjs` passing.
+- Required env vars (Vercel + optional local `.env` from `.env.example`): `DATABASE_URL` (Neon), `ADMIN_TOKEN`.
+- Lead list/detail/stats/status/notes are managed from `/hq` only; no public endpoint exposes lead data.
