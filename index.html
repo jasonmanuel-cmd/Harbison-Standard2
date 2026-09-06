@@ -3,230 +3,239 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Harbison Standard — Real Estate, Development & Investing." />
+  <meta name="description" content="Harbison Standard — Real Estate, Development & Investing across Bakersfield, Tehachapi and Kern County." />
   <title>Harbison Standard | Real Estate • Development • Investing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --navy:#071b31;
-      --navy2:#0b2746;
-      --cream:#f7f3ea;
-      --paper:#fffdf8;
-      --gold:#d9ae45;
-      --gold2:#f2d47a;
-      --ink:#102039;
-      --muted:#5f6670;
+      --navy:#061a2e;
+      --navy2:#0b2744;
+      --cream:#f4f0e7;
+      --paper:#fbf9f4;
+      --gold:#d6a642;
+      --gold2:#f1ce6b;
+      --ink:#0c2340;
+      --muted:#5b6370;
       --line:#d8d1c4;
       --serif:"Cormorant Garamond",Georgia,serif;
       --sans:"Montserrat",Arial,sans-serif;
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.45;-webkit-font-smoothing:antialiased}
     img{display:block;width:100%}
     a{text-decoration:none;color:inherit}
     button,input,textarea{font:inherit}
     .container{width:min(1180px,calc(100% - 44px));margin:auto}
-    .eyebrow{margin:0 0 10px;color:var(--gold);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
-    .display{font-family:var(--serif);font-weight:600;line-height:.92;letter-spacing:-.025em;margin:0;font-size:clamp(3.1rem,5vw,5rem)}
+    .eyebrow{margin:0 0 10px;color:#b8872b;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+    .display{font-family:var(--serif);font-weight:600;line-height:.92;letter-spacing:-.025em;margin:0;font-size:clamp(3rem,5.2vw,5.6rem)}
     .display em{color:var(--gold);font-weight:600}
-    .copy{color:#535a64;max-width:36rem;font-size:.96rem}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:48px;padding:0 28px;border:1px solid var(--gold);background:linear-gradient(90deg,#d3aa4a,#f1d171);color:#111827;text-transform:uppercase;font-size:.68rem;letter-spacing:.16em;font-weight:700;cursor:pointer;transition:.2s ease}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(190,145,38,.25)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:48px;padding:0 30px;border:1px solid var(--gold);background:linear-gradient(90deg,#d8ad4e,#f0d172);color:#111;text-transform:uppercase;font-size:.68rem;letter-spacing:.14em;font-weight:700;cursor:pointer;transition:.2s ease}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(171,127,26,.24)}
+    .text-link{display:inline-flex;align-items:center;gap:15px;color:#fff;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:4px}
+
+    /* HEADER */
+    .topbar{position:sticky;top:0;z-index:40;background:rgba(5,24,43,.97);color:#fff;border-bottom:1px solid rgba(214,166,66,.28);backdrop-filter:blur(10px)}
+    .nav-inner{height:92px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:42px}
+    .brand-lockup{display:flex;align-items:center;gap:12px}
+    .mark{width:66px;height:66px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;position:relative;color:var(--gold);font-family:var(--serif);font-size:3rem;line-height:1}
+    .mark:before,.mark:after{content:"";position:absolute;background:var(--gold)}
+    .mark:before{width:78px;height:2px;left:-8px;top:50%}
+    .mark:after{height:78px;width:2px;top:-8px;left:50%}
+    .mark span{position:relative;z-index:2;background:var(--navy);padding:0 4px}
+    .brand-copy{border-left:1px solid var(--gold);padding-left:12px;font-family:var(--serif);text-transform:uppercase;font-size:2rem;line-height:.82;letter-spacing:.12em}
+    .brand-copy small{display:block;font-family:var(--sans);font-size:.43rem;letter-spacing:.09em;color:var(--gold);margin-top:7px;font-weight:600}
+    .nav-links{display:flex;justify-content:flex-end;gap:35px;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+    .nav-links a{position:relative;padding:36px 0 30px}
+    .nav-links a:after{content:"";position:absolute;left:0;right:0;bottom:22px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:.2s}
+    .nav-links a:hover:after,.nav-links a.active:after{transform:scaleX(1)}
+    .menu-btn{display:none;border:0;background:none;color:#fff;font-size:1.8rem;cursor:pointer}
 
     /* HERO */
-    .hero{position:relative;min-height:360px;background:var(--navy);color:#fff;overflow:hidden;border-bottom:1px solid var(--gold)}
-    .hero-bg{position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,27,49,.9) 0%,rgba(7,27,49,.68) 38%,rgba(7,27,49,.22) 67%,rgba(7,27,49,.22) 100%),url('https://images.homes.com/listings/102/1565433024-942719391/18024-pellisier-rd-tehachapi-ca-primaryphoto.jpg') center/cover no-repeat}
-    .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.45));pointer-events:none}
-    .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:245px 1fr 210px;min-height:360px;align-items:stretch}
-    .portrait-wrap{overflow:hidden;display:flex;align-items:flex-end}
-    .portrait{height:100%;object-fit:cover;object-position:center top;filter:saturate(.95) contrast(1.02);-webkit-mask-image:linear-gradient(to right,#000 83%,transparent 100%);mask-image:linear-gradient(to right,#000 83%,transparent 100%)}
-    .brand{align-self:center;padding:28px 18px 24px 18px;max-width:610px}
-    .brand-row{display:flex;align-items:center;gap:18px}
-    .mark{width:94px;height:94px;border:3px solid var(--gold);border-radius:50%;display:grid;place-items:center;position:relative;flex:0 0 auto;color:var(--gold)}
-    .mark:before,.mark:after{content:"";position:absolute;background:var(--gold)}
-    .mark:before{width:114px;height:2px;left:-12px;top:50%}
-    .mark:after{width:2px;height:114px;left:50%;top:-12px}
-    .mark span{position:relative;z-index:2;background:var(--navy);padding:0 6px;font-family:var(--serif);font-size:4rem;line-height:1}
-    .divider{width:1px;height:86px;background:var(--gold)}
-    .brand-name{font-family:var(--serif);font-size:3.2rem;line-height:.86;letter-spacing:.12em;text-transform:uppercase}
-    .brand-name small{display:block;margin-top:10px;font-family:var(--sans);font-size:.7rem;color:var(--gold);letter-spacing:.08em;font-weight:600}
-    .hero-quote{font-family:var(--serif);font-style:italic;font-size:2rem;line-height:1.05;margin:18px 0 14px 108px}
-    .hero-quote em{color:var(--gold)}
-    .agent{margin-left:108px;font-size:1rem;font-weight:600}
-    .agent small{display:block;font-size:.7rem;letter-spacing:.13em;font-weight:500}
-    .hero-right{padding:26px 18px;display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;text-align:right}
-    .tag{font-size:.82rem;letter-spacing:.16em;line-height:1.55;text-transform:uppercase;font-weight:600}
-    .tag:after{content:"";display:block;width:40px;height:2px;background:var(--gold);margin:10px 0 0 auto}
-    .ground{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+    .hero{position:relative;min-height:620px;color:#fff;overflow:hidden;background:#07182a}
+    .hero-bg{position:absolute;inset:0;background:
+      linear-gradient(90deg,rgba(4,18,33,.88) 0%,rgba(4,18,33,.68) 43%,rgba(4,18,33,.16) 70%,rgba(4,18,33,.1) 100%),
+      linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.38)),
+      url('https://images.homes.com/listings/102/1565433024-942719391/18024-pellisier-rd-tehachapi-ca-primaryphoto.jpg') center/cover no-repeat;
+      transform:scale(1.01)}
+    .hero-inner{position:relative;z-index:2;min-height:620px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center}
+    .hero-copy{padding:70px 0 66px;max-width:650px}
+    .hero-kicker{font-size:.76rem;letter-spacing:.34em;text-transform:uppercase;font-weight:600;margin-bottom:12px}
+    .hero h1{font-family:var(--serif);font-size:clamp(4.5rem,7vw,7rem);line-height:.78;letter-spacing:-.035em;margin:0 0 28px;font-weight:600}
+    .hero h1 em{color:var(--gold2);font-weight:600}
+    .hero-rule{width:72px;height:4px;background:var(--gold2);margin:0 0 24px}
+    .hero-copy p{max-width:470px;font-size:1rem;margin:0 0 16px;color:#f2f4f6}
+    .hero-quote{font-family:var(--serif);font-style:italic;font-size:2.2rem;line-height:1;margin-top:18px}
+    .hero-quote em{color:var(--gold2)}
+    .hero-actions{display:flex;gap:28px;align-items:center;margin-top:28px}
+    .hero-person{position:relative;height:100%;display:flex;align-items:flex-end;justify-content:flex-end}
+    .hero-person img{width:min(490px,100%);height:570px;object-fit:cover;object-position:center 12%;border-radius:260px 260px 0 0;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 30px 65px rgba(0,0,0,.25);filter:saturate(.98) contrast(1.02)}
+    .hero-side{position:absolute;right:0;bottom:70px;text-transform:uppercase;letter-spacing:.12em;font-size:.73rem;line-height:1.55;font-weight:600;text-align:left}
+    .hero-side:after{content:"";display:block;width:48px;height:3px;background:var(--gold2);margin-top:20px}
 
-    /* NAV */
-    .nav{position:sticky;top:0;z-index:30;background:rgba(6,23,42,.98);border-bottom:1px solid rgba(217,174,69,.55);backdrop-filter:blur(8px)}
-    .nav-inner{height:62px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .nav-links{display:flex;align-items:center;gap:31px;color:#fff;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
-    .nav-links a{padding:22px 0 19px;position:relative}
-    .nav-links a:after{content:"";position:absolute;left:0;right:0;bottom:12px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:.2s}
-    .nav-links a:hover:after,.nav-links a.active:after{transform:scaleX(1)}
-    .nav-links a.active{color:var(--gold)}
-    .nav-cta{border:1px solid var(--gold);color:var(--gold);padding:11px 19px;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
-    .mobile{display:none;background:none;border:0;color:#fff;font-size:1.7rem}
+    /* INTRO */
+    .intro{padding:64px 0 48px;background:linear-gradient(90deg,#f7f3eb 0%,#fffdf8 58%,#f5f1e8 100%)}
+    .intro-top{display:grid;grid-template-columns:1.02fr .98fr;gap:80px;align-items:center;margin-bottom:34px}
+    .intro-title{font-family:var(--serif);font-size:clamp(3.7rem,5.5vw,5.7rem);line-height:.82;letter-spacing:-.03em;margin:0}
+    .intro-title em{color:#c69134;font-weight:600}
+    .intro-copy{font-size:1.02rem;color:#243650;max-width:520px}
+    .intro-copy p{margin:0}
 
-    /* STANDARD */
-    .standard{padding:68px 0 0;background:linear-gradient(90deg,#f6f2e9 0%,#fff 58%,#f7f3eb 100%)}
-    .standard-top{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
-    .standard .display{font-size:clamp(3.7rem,5vw,5.35rem)}
-    .standard-photo{height:390px;object-fit:cover;box-shadow:0 18px 48px rgba(8,25,44,.17)}
-    .standard .btn{margin-top:17px}
-    .pillars{display:grid;grid-template-columns:repeat(3,1fr);margin-top:42px;padding-bottom:32px}
-    .pillar{text-align:center;padding:10px 34px 18px;position:relative}
-    .pillar:not(:last-child):after{content:"";position:absolute;right:0;top:2px;bottom:15px;width:1px;background:#d1cbc0}
-    .icon{width:64px;height:64px;border:2px solid var(--gold);border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;font-size:1.75rem}
-    .pillar h3{font-family:var(--serif);font-size:1.72rem;margin:0 0 8px}
-    .pillar p{font-size:.86rem;color:#59606a;margin:auto;max-width:255px}
-
-    /* VIEWPOINT */
-    .view{background:linear-gradient(180deg,#071a30,#0b2846);color:#fff;padding:54px 0}
-    .view-grid{display:grid;grid-template-columns:1fr 1.03fr;gap:66px;align-items:center}
-    .view .display{font-size:clamp(3.1rem,4.5vw,4.55rem)}
-    .view .copy{color:#dce2e9}
-    .quote-card{border:1px solid #8090a2;background:#0a2039;box-shadow:0 18px 45px rgba(0,0,0,.23)}
-    .quote-card img{height:235px;object-fit:cover}
-    .quote-copy{padding:16px 22px 20px;text-align:center;font-family:var(--serif);font-size:1.4rem;line-height:1.05}
-    .quote-sign{font-family:var(--sans);color:var(--gold);font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;margin-top:12px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{background:var(--navy);color:#fff;overflow:hidden}
+    .card img{height:205px;object-fit:cover}
+    .card-body{display:grid;grid-template-columns:62px 1fr;gap:18px;padding:22px 24px 24px;min-height:145px}
+    .card-icon{width:56px;height:56px;color:#fff;display:grid;place-items:center}
+    .card-icon svg{width:52px;height:52px;stroke:currentColor;fill:none;stroke-width:1.7}
+    .card h3{font-size:.9rem;letter-spacing:.09em;text-transform:uppercase;margin:3px 0 5px}
+    .card p{margin:0;color:#e2e7ec;font-size:.8rem}
+    .learn{display:inline-flex;align-items:center;gap:12px;margin-top:14px;color:var(--gold2);font-size:.67rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;border-bottom:1px solid rgba(241,206,107,.65);padding-bottom:2px}
 
     /* PROCESS */
-    .process{padding:56px 0;background:#f5f1e8}
-    .process-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:68px}
-    .process .display{font-size:clamp(3.1rem,4.2vw,4.45rem)}
-    .process-list{border-top:1px solid #c9c3b7}
-    .step{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:17px 0;border-bottom:1px solid #d5cfc3}
-    .num{color:var(--gold);font-family:var(--serif);font-size:1.3rem}
-    .step h3{font-family:var(--serif);font-size:1.8rem;line-height:1;margin:0}
-    .step p{font-size:.84rem;color:#5f656e;margin:5px 0 0}
-
-    /* DISCIPLINES */
-    .disciplines{padding:46px 0 54px;background:linear-gradient(180deg,#071a31,#0a233e);color:#fff}
-    .discipline-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:23px}
-    .discipline-head .display{font-size:3.3rem}
-    .discipline-head p{max-width:310px;color:#d8dee6;font-size:.82rem}
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .card{border:1px solid #3c536d;background:#0b213a;overflow:hidden;transition:.2s}
-    .card:hover{transform:translateY(-4px);border-color:var(--gold)}
-    .card img{height:190px;object-fit:cover}
-    .card-body{padding:15px 16px 18px}
-    .card h3{margin:0 0 7px;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase}
-    .card p{margin:0;color:#e1e6eb;font-size:.8rem;min-height:56px}
-    .explore{display:inline-block;margin-top:12px;color:var(--gold);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700}
+    .process{padding:52px 0 62px;background:#faf7f0}
+    .process-grid{display:grid;grid-template-columns:.9fr 1.6fr;gap:72px;align-items:center}
+    .process-title{font-family:var(--serif);font-size:clamp(3.7rem,5vw,5.3rem);line-height:.82;margin:0}
+    .process-title em{color:#c69134}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+    .step{padding:8px 28px 10px;border-left:1px solid #ded6c8;position:relative}
+    .step:first-child{border-left:0}
+    .num{font-family:var(--serif);font-size:2.6rem;color:#c69134;line-height:1;margin-bottom:3px}
+    .step h3{font-family:var(--serif);font-size:1.7rem;line-height:1;margin:0 0 5px}
+    .step p{font-size:.8rem;color:#485465;margin:0;max-width:190px}
 
     /* CTA */
-    .cta{position:relative;color:#fff;background:linear-gradient(90deg,rgba(5,22,40,.92),rgba(8,31,54,.72)),url('https://images.homes.com/listings/102/1565433024-942719391/18024-pellisier-rd-tehachapi-ca-primaryphoto.jpg') center/cover no-repeat;border-bottom:1px solid var(--gold)}
-    .cta-grid{min-height:150px;display:grid;grid-template-columns:1fr 1fr auto;align-items:center;gap:38px}
-    .cta-title{font-family:var(--serif);font-size:2.65rem;line-height:.92}
-    .cta-title em{color:var(--gold)}
-    .cta-mid{border-left:1px solid #8b98a7;padding-left:26px}
-    .cta-mid p{margin:3px 0;font-size:.78rem}
+    .cta{position:relative;color:#fff;min-height:250px;display:flex;align-items:center;overflow:hidden;border-top:1px solid rgba(214,166,66,.55);border-bottom:1px solid rgba(214,166,66,.55)}
+    .cta:before{content:"";position:absolute;inset:0;background:
+      linear-gradient(90deg,rgba(4,18,32,.6),rgba(4,18,32,.4)),
+      url('https://images.homes.com/listings/102/1565433024-942719391/18024-pellisier-rd-tehachapi-ca-primaryphoto.jpg') center 58%/cover no-repeat}
+    .cta-inner{position:relative;z-index:2;width:100%;display:flex;align-items:center;justify-content:space-between;gap:40px}
+    .cta-brand{display:flex;align-items:center;gap:14px}
+    .cta-brand .mark{width:74px;height:74px;font-size:3.3rem}
+    .cta-brand .mark:before{width:88px}.cta-brand .mark:after{height:88px}
+    .cta-name{font-family:var(--serif);font-size:2.5rem;line-height:.82;letter-spacing:.12em;text-transform:uppercase}
+    .cta-name small{display:block;font-family:var(--sans);font-size:.46rem;letter-spacing:.1em;color:var(--gold2);margin-top:8px}
+    .cta-quote{font-family:var(--serif);font-style:italic;font-size:2.7rem;line-height:.95;text-align:left}
+    .cta-quote em{color:var(--gold2)}
+    .cta-quote .btn{margin-top:22px;font-family:var(--sans);font-style:normal;font-size:.68rem}
 
     /* FOOTER */
-    footer{background:#06182c;color:#fff;padding:30px 0 22px}
-    .footer-grid{display:grid;grid-template-columns:1fr 1.25fr .5fr;gap:30px;align-items:center}
-    .footer-brand{display:flex;align-items:center;gap:12px}
-    .footer-mark{width:55px;height:55px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:2rem;color:var(--gold)}
-    .footer-name{font-family:var(--serif);font-size:1.5rem;line-height:.83;letter-spacing:.12em;text-transform:uppercase}
-    .footer-name small{display:block;font-family:var(--sans);font-size:.48rem;letter-spacing:.1em;color:var(--gold);margin-top:7px}
-    .footer-links{display:flex;justify-content:center;gap:22px;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase}
-    .social{display:flex;justify-content:flex-end;gap:15px;font-weight:700}
-    .footer-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:30px;padding-top:13px;border-top:1px solid #203b56;color:#aeb8c4;font-size:.49rem;letter-spacing:.11em;text-transform:uppercase}
+    footer{background:#05182b;color:#fff;padding:24px 0}
+    .footer-row{display:flex;justify-content:space-between;align-items:center;gap:25px}
+    .location{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:#e7ebef}
+    .social{display:flex;align-items:center;gap:18px;font-size:1rem;font-weight:700}
+    .social span:last-child{display:block;width:34px;height:2px;background:var(--gold)}
 
     /* MODAL */
-    .modal{position:fixed;inset:0;z-index:100;background:rgba(3,12,23,.78);display:none;place-items:center;padding:22px}
+    .modal{position:fixed;inset:0;z-index:100;background:rgba(2,10,20,.82);display:none;place-items:center;padding:20px}
     .modal.open{display:grid}
-    .modal-card{width:min(700px,100%);background:#fbf8f1;color:var(--ink);padding:32px;position:relative;box-shadow:0 25px 70px rgba(0,0,0,.45)}
-    .modal-card h2{font-family:var(--serif);font-size:2.7rem;line-height:1;margin:0 0 8px}
-    .close{position:absolute;right:17px;top:11px;border:0;background:none;font-size:2rem;cursor:pointer}
+    .modal-card{width:min(650px,100%);background:#fbf8f1;padding:32px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+    .modal-card h2{font-family:var(--serif);font-size:3rem;line-height:.95;margin:0 0 8px}
+    .close{position:absolute;top:12px;right:16px;border:0;background:none;font-size:2rem;cursor:pointer}
     .form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
     .form input,.form textarea{width:100%;padding:13px 14px;border:1px solid #cfc7b9;background:#fff}
     .form textarea{min-height:110px;resize:vertical}
     .full{grid-column:1/-1}
 
-    @media(max-width:900px){
-      .hero-inner{grid-template-columns:180px 1fr}.hero-right{display:none}.brand-name{font-size:2.5rem}.hero-quote,.agent{margin-left:0}.brand-row{gap:12px}.mark{width:76px;height:76px}.mark span{font-size:3rem}.divider{height:70px}.nav-links{gap:18px}.standard-top,.view-grid,.process-grid{grid-template-columns:1fr;gap:34px}.cards{grid-template-columns:1fr}.card img{height:260px}.cta-grid{grid-template-columns:1fr}.cta{padding:28px 0}.footer-grid{grid-template-columns:1fr}.footer-links{justify-content:flex-start;flex-wrap:wrap}.social{justify-content:flex-start}}
+    @media(max-width:980px){
+      .nav-inner{grid-template-columns:auto auto 1fr}.nav-links{position:absolute;top:92px;left:0;right:0;background:var(--navy);display:none;flex-direction:column;align-items:flex-start;padding:22px 28px;gap:5px}.nav-links.open{display:flex}.nav-links a{padding:10px 0}.nav-links a:after{bottom:3px}.menu-btn{display:block;justify-self:end}.topbar .btn{display:none}
+      .hero-inner{grid-template-columns:1fr}.hero-person{position:absolute;right:-50px;bottom:0;width:48%;opacity:.75}.hero-person img{height:510px}.hero-side{display:none}.hero-copy{max-width:680px;position:relative;z-index:3}.hero-bg{background-position:center}.intro-top,.process-grid{grid-template-columns:1fr;gap:35px}.cards{grid-template-columns:1fr}.card{display:grid;grid-template-columns:42% 58%}.card img{height:100%;min-height:210px}.steps{grid-template-columns:1fr}.step{border-left:0;border-top:1px solid #ddd4c5;padding:20px 0}.step:first-child{border-top:0}.cta-inner{flex-direction:column;align-items:flex-start}.cta-quote{text-align:left}
+    }
+
     @media(max-width:680px){
-      .container{width:min(100% - 28px,1180px)}.hero{min-height:520px}.hero-bg{background-position:center}.hero-inner{display:block;min-height:520px}.portrait-wrap{position:absolute;left:0;bottom:0;width:180px;height:230px;z-index:1;opacity:.95}.brand{position:relative;z-index:2;padding:38px 14px}.brand-name{font-size:2.2rem}.hero-quote{font-size:1.7rem;margin-top:26px}.agent{font-size:.9rem}.nav-inner{height:58px}.mobile{display:block}.nav-links{position:absolute;left:0;right:0;top:58px;background:#06182c;display:none;flex-direction:column;align-items:flex-start;padding:20px 24px;gap:4px}.nav-links.open{display:flex}.nav-links a{padding:9px 0}.nav-cta{margin-left:auto}.standard{padding-top:48px}.standard-photo{height:270px}.pillars{grid-template-columns:1fr}.pillar{padding:20px 10px}.pillar:not(:last-child):after{display:none}.discipline-head{display:block}.discipline-head p{margin-top:14px}.card img{height:220px}.footer-bottom{flex-direction:column}.form{grid-template-columns:1fr}.full{grid-column:auto}}
+      .container{width:min(100% - 28px,1180px)}.nav-inner{height:76px}.brand-copy{font-size:1.45rem}.mark{width:52px;height:52px;font-size:2.4rem}.mark:before{width:62px}.mark:after{height:62px}.nav-links{top:76px}.hero,.hero-inner{min-height:660px}.hero-copy{padding:64px 0 210px}.hero h1{font-size:4.3rem}.hero-copy p{font-size:.92rem;max-width:330px}.hero-actions{flex-direction:column;align-items:flex-start;gap:18px}.hero-person{width:72%;right:-42px}.hero-person img{height:360px}.intro{padding-top:48px}.intro-top{gap:25px}.intro-title{font-size:4rem}.cards{display:block}.card{display:block;margin-bottom:14px}.card img{height:210px}.process-title{font-size:4rem}.cta{padding:44px 0}.cta-brand .mark{display:none}.cta-name{font-size:2rem}.cta-quote{font-size:2.25rem}.footer-row{flex-direction:column;align-items:flex-start}.form{grid-template-columns:1fr}.full{grid-column:auto}
+    }
   </style>
 </head>
 <body>
-  <header class="hero" id="home">
-    <div class="hero-bg"></div>
-    <div class="container hero-inner">
-      <div class="portrait-wrap">
-        <img class="portrait" src="https://imagescdn.homes.com/i2/pv1jFw5l_k6SLUEpbHb77Y56QF17XLOG9m1_iZjJJ1o/117/nathanael-harbison.jpg?p=1" alt="Nathanael Harbison" />
-      </div>
-      <div class="brand">
-        <div class="brand-row">
-          <div class="mark"><span>H</span></div>
-          <div class="divider"></div>
-          <div class="brand-name">Harbison<br>Standard<small>Real Estate • Development • Investing</small></div>
-        </div>
-        <div class="hero-quote">It’s not what you do,<br><em>it’s how you do it.</em></div>
-        <div class="agent">Nathanael Harbison<small>REALTOR® &nbsp;|&nbsp; DRE# 02059393</small></div>
-      </div>
-      <div class="hero-right">
-        <div class="tag">People.<br>Properties.<br>Potential.</div>
-        <div class="ground">From the ground up.</div>
-      </div>
+
+  <header class="topbar">
+    <div class="container nav-inner">
+      <a class="brand-lockup" href="#home" aria-label="Harbison Standard home">
+        <div class="mark"><span>H</span></div>
+        <div class="brand-copy">Harbison<br>Standard<small>Real Estate • Development • Investing</small></div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a class="active" href="#home">Home</a>
+        <a href="#approach">Our Approach</a>
+        <a href="#properties">Properties</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+      <button class="btn open-contact">Let’s Talk</button>
     </div>
   </header>
 
-  <nav class="nav">
-    <div class="container nav-inner">
-      <button class="mobile" aria-label="Open navigation">☰</button>
-      <div class="nav-links">
-        <a class="active" href="#home">Home</a>
-        <a href="#approach">Approach</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#process">Process</a>
-        <a href="#properties">Properties</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <a class="nav-cta open-contact" href="#contact">Start a Conversation</a>
-    </div>
-  </nav>
-
   <main>
-    <section class="standard" id="approach">
-      <div class="container">
-        <div class="standard-top">
-          <div>
-            <p class="eyebrow">The Standard</p>
-            <h1 class="display">Less noise.<br>More <em>signal.</em></h1>
-            <p class="copy">The best opportunities are rarely the loudest. We bring clarity, judgment, and a steady hand to real estate, development, and investing across Kern County.</p>
-            <a class="btn" href="#capabilities">Our Approach <span>→</span></a>
-          </div>
-          <div>
-            <img class="standard-photo" src="https://images.homes.com/listings/115/1074073744-538664202/7318-woodshawn-dr-san-diego-ca-primaryphoto.jpg" alt="Remodeled Harbison Standard residence" />
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <div class="hero-kicker">Real Estate. Real Experience.</div>
+          <h1>Know what<br>you’re <em>looking at.</em></h1>
+          <div class="hero-rule"></div>
+          <p>Nathanael Harbison brings firsthand knowledge across real estate, construction, renovation, investing and development.</p>
+          <div class="hero-quote">It’s not what you do,<br><em>it’s how you do it.</em></div>
+          <div class="hero-actions">
+            <button class="btn open-contact">Let’s Talk <span>→</span></button>
+            <a class="text-link" href="#properties">View Properties <span>→</span></a>
           </div>
         </div>
-        <div class="pillars" id="capabilities">
-          <article class="pillar"><div class="icon">🤝</div><h3>Sell with confidence</h3><p>Thoughtful positioning, strategic pricing, and calm guidance for owners ready for what’s next.</p></article>
-          <article class="pillar"><div class="icon">⌂</div><h3>Build with intention</h3><p>A development lens grounded in design, feasibility, and execution from concept to completion.</p></article>
-          <article class="pillar"><div class="icon">↗</div><h3>Invest selectively</h3><p>We pursue opportunities where patience, precision, and disciplined underwriting create meaningful upside.</p></article>
+
+        <div class="hero-person" aria-hidden="true">
+          <img src="https://imagescdn.homes.com/i2/pv1jFw5l_k6SLUEpbHb77Y56QF17XLOG9m1_iZjJJ1o/117/nathanael-harbison.jpg?p=1" alt="Nathanael Harbison" />
+          <div class="hero-side">Same<br>Mountains.<br>Bigger<br>Opportunities.<br><br>Tehachapi<br>Kern County<br>California</div>
         </div>
       </div>
     </section>
 
-    <section class="view" id="properties">
-      <div class="container view-grid">
-        <div>
-          <p class="eyebrow">A Considered Point of View</p>
-          <h2 class="display">The right place<br>changes <em>everything.</em></h2>
-          <p class="copy">We are drawn to properties with a point of view, neighborhoods with momentum, and partners who believe the work is worth doing well.</p>
-          <a class="btn" href="#disciplines">View Properties <span>→</span></a>
+    <section class="intro" id="approach">
+      <div class="container">
+        <div class="intro-top">
+          <div>
+            <p class="eyebrow">From the Ground Up.</p>
+            <h2 class="intro-title">More than deals.<br>A <em>higher standard.</em></h2>
+          </div>
+          <div class="intro-copy" id="about">
+            <p>We find the right properties, improve them the right way, and create long-term value. Grounded in real-world experience, market knowledge, and a hands-on approach you won’t find in a spreadsheet.</p>
+          </div>
         </div>
-        <div class="quote-card">
-          <img src="https://images.homes.com/listings/102/1565433024-942719391/18024-pellisier-rd-tehachapi-ca-primaryphoto.jpg" alt="Tehachapi ranch property" />
-          <div class="quote-copy">“Good real estate is more than an asset.<br>It is a decision about how you want to live,<br>work, and grow.”<div class="quote-sign">Harbison Standard — The Long View</div></div>
+
+        <div class="cards" id="properties">
+          <article class="card">
+            <img src="https://images.homes.com/listings/115/1074073744-538664202/7318-woodshawn-dr-san-diego-ca-primaryphoto.jpg" alt="Residential real estate" />
+            <div class="card-body">
+              <div class="card-icon">
+                <svg viewBox="0 0 64 64"><path d="M8 31 32 10l24 21"/><path d="M14 27v27h36V27"/><path d="M25 54V38h14v16"/></svg>
+              </div>
+              <div><h3>Real Estate</h3><p>Finding opportunities others miss.</p><a class="learn open-contact" href="#contact">Learn More <span>→</span></a></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=82" alt="Home development and construction" />
+            <div class="card-body">
+              <div class="card-icon">
+                <svg viewBox="0 0 64 64"><path d="m12 12 40 40"/><path d="m18 8 8 8-8 8-8-8z"/><path d="M43 9a12 12 0 0 0-10 18L11 49l4 4 22-22A12 12 0 0 0 55 19l-8 8-8-8 8-8a12 12 0 0 0-4-2z"/></svg>
+              </div>
+              <div><h3>Development</h3><p>Adding value through smart construction and renovation.</p><a class="learn open-contact" href="#contact">Learn More <span>→</span></a></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=82" alt="Regional real estate market" />
+            <div class="card-body">
+              <div class="card-icon">
+                <svg viewBox="0 0 64 64"><path d="M10 54h44"/><path d="M15 48V34h8v14"/><path d="M28 48V25h8v23"/><path d="M41 48V15h8v33"/><path d="m14 24 12-8 9 3 14-10"/><path d="m42 9 7 0 0 7"/></svg>
+              </div>
+              <div><h3>Investing</h3><p>Strategic moves for long-term growth.</p><a class="learn open-contact" href="#contact">Learn More <span>→</span></a></div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -235,58 +244,40 @@
       <div class="container process-grid">
         <div>
           <p class="eyebrow">Our Process</p>
-          <h2 class="display">Clarity at<br><em>every turn.</em></h2>
-          <p class="copy">We start with the real context, create a focused path forward, and stay close to the work until the right results are in reach.</p>
-          <a class="btn open-contact" href="#contact">Our Process <span>→</span></a>
+          <h2 class="process-title">Clarity at<br><em>every turn.</em></h2>
         </div>
-        <div class="process-list">
-          <article class="step"><div class="num">01</div><div><h3>Listen closely</h3><p>Understand the goals, the property, and the bigger picture.</p></div></article>
-          <article class="step"><div class="num">02</div><div><h3>Find the throughline</h3><p>Turn data and experience into a clear strategy.</p></div></article>
-          <article class="step"><div class="num">03</div><div><h3>Move with intention</h3><p>Execute with discipline and keep the details in motion.</p></div></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="disciplines" id="disciplines">
-      <div class="container">
-        <div class="discipline-head">
-          <div><p class="eyebrow">One Perspective.</p><h2 class="display">Three <em>disciplines.</em></h2></div>
-          <p>A connected approach to real estate that keeps the big picture in view and the details in motion.</p>
-        </div>
-        <div class="cards">
-          <article class="card"><img src="https://images.homes.com/listings/115/1074073744-538664202/7318-woodshawn-dr-san-diego-ca-primaryphoto.jpg" alt="Real estate property"><div class="card-body"><h3>Real Estate</h3><p>Advisory grounded in place, timing, and the details that make a property matter.</p><a class="explore open-contact" href="#contact">Explore →</a></div></article>
-          <article class="card"><img src="https://images.homes.com/listings/102/1565433024-942719391/18024-pellisier-rd-tehachapi-ca-primaryphoto.jpg" alt="Development property"><div class="card-body"><h3>Development</h3><p>From first idea to final finish, we shape considered spaces with a lasting point of view.</p><a class="explore open-contact" href="#contact">Explore →</a></div></article>
-          <article class="card"><img src="https://images.homes.com/listings/102/1565433024-942719391/18024-pellisier-rd-tehachapi-ca-primaryphoto.jpg" alt="Investment property"><div class="card-body"><h3>Investing</h3><p>Selective partnerships built around alignment, diligence, and long-term conviction.</p><a class="explore open-contact" href="#contact">Explore →</a></div></article>
+        <div class="steps">
+          <article class="step"><div class="num">01</div><h3>Evaluate</h3><p>Understand the property, the numbers, and the bigger picture.</p></article>
+          <article class="step"><div class="num">02</div><h3>Execute</h3><p>Improve with discipline and attention to detail.</p></article>
+          <article class="step"><div class="num">03</div><h3>Create Value</h3><p>Sell or hold — always with a long-term mindset.</p></article>
         </div>
       </div>
     </section>
 
     <section class="cta" id="contact">
-      <div class="container cta-grid">
-        <div class="cta-title">Let’s build<br><em>what’s next.</em></div>
-        <div class="cta-mid"><p class="eyebrow">Start a Conversation</p><p>Tell us what you’re considering. We’ll follow up personally.</p></div>
-        <button class="btn open-contact">Get in Touch <span>→</span></button>
+      <div class="container cta-inner">
+        <div class="cta-brand">
+          <div class="mark"><span>H</span></div>
+          <div class="cta-name">Harbison<br>Standard<small>Real Estate • Development • Investing</small></div>
+        </div>
+        <div class="cta-quote">It’s not what you do,<br><em>it’s how you do it.</em><br><button class="btn open-contact">Let’s Talk <span>→</span></button></div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand"><div class="footer-mark">H</div><div class="footer-name">Harbison<br>Standard<small>Real Estate • Development • Investing</small></div></div>
-        <div class="footer-links"><a href="#home">Home</a><a href="#approach">Approach</a><a href="#capabilities">Capabilities</a><a href="#process">Process</a><a href="#properties">Properties</a><a href="#contact">Contact</a></div>
-        <div class="social"><span>◎</span><span>▶</span><span>in</span></div>
-      </div>
-      <div class="footer-bottom"><div>Bakersfield • Greater Kern County • California</div><div>© 2026 Harbison Standard. All Rights Reserved.</div><div>People. Properties. Potential.</div></div>
+    <div class="container footer-row">
+      <div class="location">Bakersfield • Tehachapi • Kern County • California</div>
+      <div class="social" aria-label="Social links"><span>◎</span><span>▶</span><span>in</span><span></span></div>
     </div>
   </footer>
 
   <div class="modal" id="modal" aria-hidden="true">
     <div class="modal-card">
-      <button class="close" aria-label="Close">×</button>
-      <p class="eyebrow">Start a Conversation</p>
-      <h2>Tell us what you’re considering.</h2>
-      <p class="copy">This layout is ready to connect to your CRM, Supabase, Formspree, HubSpot, or another lead endpoint.</p>
+      <button class="close" id="closeModal" aria-label="Close">×</button>
+      <p class="eyebrow">Let’s Talk</p>
+      <h2>Start a conversation.</h2>
+      <p style="color:#5b6370;margin:0">Tell us what you’re considering and we’ll follow up personally.</p>
       <form class="form" id="contactForm">
         <input required placeholder="Name">
         <input required type="email" placeholder="Email">
@@ -299,25 +290,35 @@
   </div>
 
   <script>
-    const mobile=document.querySelector('.mobile');
-    const navLinks=document.querySelector('.nav-links');
-    mobile.addEventListener('click',()=>navLinks.classList.toggle('open'));
+    const menuBtn=document.getElementById('menuBtn');
+    const navLinks=document.getElementById('navLinks');
+    if(menuBtn){menuBtn.addEventListener('click',()=>navLinks.classList.toggle('open'));}
     document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
 
     const modal=document.getElementById('modal');
+    const closeModal=document.getElementById('closeModal');
     const openers=document.querySelectorAll('.open-contact');
-    const close=document.querySelector('.close');
-    function openModal(e){if(e)e.preventDefault();modal.classList.add('open');modal.setAttribute('aria-hidden','false')}
-    function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}
-    openers.forEach(b=>b.addEventListener('click',openModal));
-    close.addEventListener('click',closeModal);
-    modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-    document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();alert('Form design is ready. Connect this submit action to your CRM or email endpoint before launch.')});
+    function openContact(e){if(e)e.preventDefault();modal.classList.add('open');modal.setAttribute('aria-hidden','false');}
+    function closeContact(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
+    openers.forEach(el=>el.addEventListener('click',openContact));
+    closeModal.addEventListener('click',closeContact);
+    modal.addEventListener('click',e=>{if(e.target===modal)closeContact();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeContact();});
 
-    const sections=[...document.querySelectorAll('header[id],section[id]')];
+    document.getElementById('contactForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      alert('The form design is ready. Connect this submit action to your CRM or email endpoint before launch.');
+    });
+
     const anchors=[...document.querySelectorAll('.nav-links a')];
-    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){anchors.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id))}})},{rootMargin:'-45% 0px -50% 0px'});
+    const sections=[...document.querySelectorAll('section[id]')];
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          anchors.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));
+        }
+      });
+    },{rootMargin:'-42% 0px -52% 0px'});
     sections.forEach(s=>observer.observe(s));
   </script>
 </body>
