@@ -22,6 +22,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - The current layout, colors (navy #031c2b, gold #edc66f, cream #f6f5ef), typography (Libre Caslon headings, Open Sans body), spacing, component anatomy, and overall look and feel are LOCKED.
 - Do not change any visual styling, CSS layout, color palette, fonts, or design direction unless the user explicitly requests it.
+- This lock applies to EVERY task regardless of what is being asked — never introduce color, style, or layout changes as a side effect of content, feature, or functionality work. Only change visuals if the user explicitly asks for a visual change.
 - User may change copy/text, content, features, and functionality — but visual presentation stays as-is.
 
 # Lead capture and SEO decisions — September 6, 2026
