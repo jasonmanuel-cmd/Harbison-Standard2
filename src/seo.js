@@ -7,8 +7,8 @@ export const siteUrl = 'https://www.harbisonstandard.com';
 
 export const ogImage = siteUrl + '/assets/hero.webp';
 
-const cities = ['Tehachapi, CA','Bakersfield, CA','California City, CA','Stallion Springs, CA','Lemon Grove, CA','San Diego, CA'];
-const counties = ['Kern County, CA','San Diego County, CA'];
+const cities = ['Tehachapi, CA','Bakersfield, CA','California City, CA','Stallion Springs, CA','Delano, CA','Lake Isabella, CA'];
+const counties = ['Kern County, CA'];
 const socials = [
   'https://www.facebook.com/nate85.realtor',
   'https://www.instagram.com/nathanaelharbison',
@@ -21,7 +21,7 @@ const base = () => ({
   '@type': 'RealEstateAgent',
   '@id': siteUrl + '/#agent',
   name: agent.name,
-  description: 'California REALTOR® and real estate agent with a hands-on construction background since 2017, serving buyers, sellers, builders, and investors across Kern County and San Diego County, California.',
+  description: 'California REALTOR® and real estate agent with a hands-on construction background since 2017, serving buyers, sellers, builders, and investors across Kern County, California.',
   slogan: 'Real estate guidance with a builder’s eye.',
   jobTitle: 'Real Estate Agent',
   image: [ogImage, siteUrl + '/assets/headshot.webp'],
@@ -46,7 +46,7 @@ const base = () => ({
     '@type': 'Organization',
     name: 'National Association of REALTORS®',
   },
-  knowsAbout: ['Real estate','New construction','Home development','Property renovation','Housing market','Real estate investing','Kern County real estate','San Diego real estate'],
+  knowsAbout: ['Real estate','New construction','Home development','Property renovation','Housing market','Real estate investing','Kern County real estate'],
   sameAs: socials,
   brand: {name: 'Harbison Standard', '@type': 'Brand'},
 });
@@ -133,16 +133,16 @@ const listingList = () => ({
 
 export const routes = {
   '/': {
-    title: 'Harbison Standard | Kern County & San Diego REALTOR®',
-    description: 'Real estate guidance with a builder’s eye in Kern County and San Diego. Nathanael Harbison, REALTOR® (DRE 02059393), helps buyers, sellers, and investors buy, sell, build, and invest. Call (661) 472-7499.',
+    title: 'Harbison Standard | Kern County REALTOR®',
+    description: 'Real estate guidance with a builder’s eye in Kern County, California. Nathanael Harbison, REALTOR® (DRE 02059393), helps buyers, sellers, and investors buy, sell, build, and invest. Call (661) 472-7499.',
   },
   '/about': {
     title: 'About Nathanael Harbison | Harbison Standard',
-    description: 'Meet Nathanael Harbison, a California REALTOR® with a construction background since 2017. Real estate guidance across Kern County (Tehachapi, Bakersfield, California City) and San Diego.',
+    description: 'Meet Nathanael Harbison, a California REALTOR® with a construction background since 2017. Real estate guidance across Kern County (Tehachapi, Bakersfield, California City, Delano, Lake Isabella).',
   },
   '/properties': {
     title: 'Past Sales & Results | Nathanael Harbison, REALTOR®',
-    description: 'Verified past sales by Nathanael Harbison, REALTOR® — from Tehachapi and California City to San Diego. Homes, locations, and results across Kern County and San Diego County.',
+    description: 'Verified past sales by Nathanael Harbison, REALTOR® — from Tehachapi and California City to Bakersfield. Homes, locations, and results across Kern County.',
   },
   '/contact': {
     title: 'Contact Nathanael Harbison | Call (661) 472-7499',
@@ -150,15 +150,15 @@ export const routes = {
   },
   '/real-estate': {
     title: 'Selling a Home in Kern County | Harbison Standard',
-    description: 'Selling your home in Kern County or San Diego? Get a clear plan for repairs, as-is sales, inherited homes, and time-sensitive moves. Talk with Nathanael Harbison, REALTOR®.',
+    description: 'Selling your home in Kern County? Get a clear plan for repairs, as-is sales, inherited homes, and time-sensitive moves. Talk with Nathanael Harbison, REALTOR®.',
   },
   '/development': {
     title: 'Building, Land & Spec Homes | Harbison Standard',
-    description: 'Think through building a home, buying a spec home, or buying land in Kern County or San Diego. Nathanael Harbison brings a builder’s perspective to the real estate side.',
+    description: 'Think through building a home, buying a spec home, or buying land in Kern County. Nathanael Harbison brings a builder’s perspective to the real estate side.',
   },
   '/investing': {
     title: 'Real Estate Investing Guidance | Harbison Standard',
-    description: 'Real estate investing guidance in Kern County and San Diego: investment properties, flips, and practical opportunities. Nathanael Harbison, REALTOR®, offers a long-term perspective.',
+    description: 'Real estate investing guidance in Kern County: investment properties, flips, and practical opportunities. Nathanael Harbison, REALTOR®, offers a long-term perspective.',
   },
   '/hq': {
     title: 'HQ | Harbison Standard',
@@ -180,10 +180,10 @@ function faq(pairs) {
 }
 
 export const homeFaq = [
-  {q: 'Who is Nathanael Harbison?', a: 'Nathanael Harbison is a California-licensed REALTOR® (DRE #02059393) at Harbison Standard with hands-on construction experience since 2017. He helps buyers, sellers, builders, and investors across Kern County and San Diego County.'},
-  {q: 'Where does Harbison Standard serve?', a: 'Harbison Standard serves Kern County, including Tehachapi, Bakersfield, California City, and Stallion Springs, plus San Diego County, California — for buying, selling, building, and investing.'},
+  {q: 'Who is Nathanael Harbison?', a: 'Nathanael Harbison is a California-licensed REALTOR® (DRE #02059393) at Harbison Standard with hands-on construction experience since 2017. He helps buyers, sellers, builders, and investors across Kern County.'},
+  {q: 'Where does Harbison Standard serve?', a: 'Harbison Standard serves Kern County, including Tehachapi, Bakersfield, California City, Stallion Springs, Delano, and Lake Isabella — for buying, selling, building, and investing.'},
   {q: 'Can Nathanael help me sell my home?', a: 'Yes. Nathanael guides sellers through planned moves, inherited properties, homes needing repairs, and time-sensitive situations, including selling as-is when that makes sense.'},
-  {q: 'Do you help with building a home or buying land?', a: 'Yes. Nathanael brings a builder’s perspective to building a home, buying a spec home, and evaluating land in Kern County and San Diego County.'},
+  {q: 'Do you help with building a home or buying land?', a: 'Yes. Nathanael brings a builder’s perspective to building a home, buying a spec home, and evaluating land in Kern County.'},
   {q: 'Do you work with real estate investors?', a: 'Yes. Nathanael works with investors on investment properties, flips, and value-add homes, and talks plainly about what makes sense for their goals.'},
   {q: 'How do I get in touch with Nathanael?', a: 'Call or text (661) 472-7499 or email nate85.realtor@gmail.com. Messages typically get a response within 24 hours.'},
 ];
@@ -192,7 +192,7 @@ const serviceFaqFor = path => (servicePages[path] && servicePages[path].faq) ? s
 
 export const contactFaq = [
   {q: 'Can I reach out if I’m not ready yet?', a: 'Of course. Many conversations start before a decision is made. There’s no pressure to commit.'},
-  {q: 'Do you work with both Kern County and San Diego clients?', a: 'Yes. Nathanael serves clients across Kern County (including Tehachapi, Bakersfield, California City, and Stallion Springs) and San Diego County.'},
+  {q: 'Where in California does Nathanael work?', a: 'Nathanael serves clients across Kern County, including Tehachapi, Bakersfield, California City, Stallion Springs, Delano, and Lake Isabella.'},
   {q: 'Should I call if my timeline is urgent?', a: 'For time-sensitive situations, calling (661) 472-7499 typically gets the fastest response. Text works too.'},
   {q: 'Can I ask about a specific property?', a: 'Absolutely. Share the property or the question you have, and Nathanael will help you understand the details.'},
   {q: 'Can I talk through multiple options before deciding?', a: 'Yes. Many clients explore a few directions — buying, selling, building, or investing — before landing on the right one.'},

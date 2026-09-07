@@ -100,7 +100,7 @@ export const servicePages = {
    {q:'Should I build a home or buy a spec home?',a:'Build if you want more control, customization, and design flexibility and have time for a longer process. Buy a spec home if you want newer construction sooner with a simpler purchase path.'},
    {q:'Do I need to be a builder to build a home?',a:'No. Most buyers work with builders and lenders to handle construction. Nathanael helps you think through the real estate side — location, land, budget, and timing — before you commit.'},
    {q:'Can a REALTOR help me find land?',a:'Yes. Nathanael can help you evaluate parcels, understand the bigger picture around a location, and think through what land might make sense for your goals.'},
-   {q:'Where can I explore building or new construction?',a:'Nathanael serves clients across Kern County and San Diego County, from Tehachapi and California City to the San Diego area. Call (661) 472-7499 to start a conversation.'},
+   {q:'Where can I explore building or new construction?',a:'Nathanael serves clients across Kern County, from Tehachapi and California City to Bakersfield and Lake Isabella. Call (661) 472-7499 to start a conversation.'},
   ]},
   proof:{eyebrow:'From the ground up',title:'The kind of work',accent:'behind the conversations.',body:'From framing to finished homes, these are examples of the building world Nathanael brings to discussions about land, builds, and new construction.',images:[
    {src:'/assets/development.webp',alt:'Timber framing inside a home under construction',caption:'Framing in progress'},
