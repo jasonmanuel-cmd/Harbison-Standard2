@@ -29,7 +29,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 - All inquiry funnels (homepage, contact page, and the three service pages) submit to Formspree at `https://formspree.io/f/xqpkdwrp`. The multi-step lead form now has real success/error states instead of a fake success message; it keeps "Open in email app" (mailto) and "Copy message" as backup fallbacks.
 - The Formspree submission sets `_replyto` to the visitor's email and `_cc` to nate85.realtor@gmail.com so Gmail receives a copy. Confirm the Formspree endpoint's dashboard is also configured to deliver to nate85.realtor@gmail.com.
-- SEO/GEO/AEO follows a full technical overhaul: per-page meta title/description, canonical URLs, Open Graph and Twitter cards, JSON-LD structured data (RealEstateAgent, WebPage, BreadcrumbList, FAQPage, Service), plus `public/sitemap.xml` and `public/robots.txt`.
+- SEO/GEO/AEO follows a full technical overhaul: per-page meta title/description, canonical URLs, Open Graph and Twitter cards, JSON-LD structured data (RealEstateAgent, WebPage, BreadcrumbList, FAQPage, Service, ProfessionalService, Website, ProfilePage, ContactPage, ItemList), plus `public/sitemap.xml` and `public/robots.txt`.
+- FAQ copy has ONE source of truth so visible content and FAQPage JSON-LD never drift: homepage = `src/seo.js` → `homeFaq` (rendered by `Home.jsx`), service pages = `src/serviceData.js` → `page.faq.items` (rendered by `ServicePage.jsx` and read by `src/seo.js` `serviceFaqFor`), contact = `src/seo.js` → `contactFaq` (rendered by `Pages.jsx`). Change FAQ text in those files only; never duplicate it in both a renderer and schema.
+- Static entity JSON-LD (RealEstateAgent / Organization / WebSite) lives in `index.html` so non-JS crawlers and answer engines can read the agent entity; the SPA injects per-route JSON-LD at runtime.
 - The live domain is set in ONE place: `src/seo.js` → `siteUrl` (currently `https://www.harbisonstandard.com`); `sitemap.xml`, `robots.txt`, and `index.html` hardcode the same domain and must be updated if the domain changes.
 
 # Service page decisions — September 6, 2026

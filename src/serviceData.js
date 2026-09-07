@@ -41,9 +41,9 @@ export const servicePages = {
   ]},
   faq:{eyebrow:'Seller FAQ',title:'Questions we',accent:'hear often.',items:[
    {q:'Should I repair my home before selling?',a:'It depends on the home, the timeline, and the likely buyer pool. A few targeted repairs can help in some cases; in others, selling as-is is the better move. Nathanael can help you weigh the tradeoffs.'},
-   {q:'Can I sell as-is?',a:'Yes. As-is sales happen often. Nathanael can help you understand pricing and positioning when a home is sold without repairs.'},
-   {q:'What if my timeline is urgent?',a:'Urgent timelines benefit from clarity even more. Reach out with your dates — the first step is understanding what’s realistic in your window.'},
-   {q:'What if I’m not ready yet?',a:'That’s fine. Many conversations start before a decision is made. There’s no pressure to move forward until you’re ready.'},
+   {q:'Can I sell a home as-is?',a:'Yes. As-is sales happen often. Nathanael can help you understand pricing and positioning when a home is sold without repairs.'},
+   {q:'What if my timeline is urgent?',a:'Urgent timelines benefit from clarity even more. Share your dates early; the first step is understanding what’s realistic in your window.'},
+   {q:'What if I’m not ready yet?',a:'That’s fine. Many conversations start before a decision is made, with no pressure to move forward.'},
    {q:'Can I reach out before making a final decision?',a:'Absolutely. You can ask questions first and decide later.'},
   ]},
   testimonial:{quote:'We weren’t sure whether to fix things up or sell as-is. Nathanael helped us think it through clearly and never made us feel pressured.',label:'Seller · Time-sensitive sale'},
@@ -66,7 +66,7 @@ export const servicePages = {
    ctas:[{label:'Discuss a Build',href:'#service-inquiry',kind:'gold'},{label:'Ask About Land',href:'#service-inquiry',kind:'link'},{label:'Call Nathanael',href:':phone',kind:'link'}],
    caption:'A practical view of building and new construction.',
   },
-  sections:['role','paths','compare','considerations','mistakes','proof','process'],
+  sections:['role','paths','compare','considerations','mistakes','faq','proof','process'],
   role:{eyebrow:'How Nathanael helps',title:'A builder’s perspective',accent:'on the real estate side.',body:'Nathanael helps clients think through the practical side of building and new construction: location, land, property fit, timing, goals, and the broader real estate picture. He brings a builder’s perspective into the conversation so clients can ask better questions and move forward more confidently.',bullets:[
    'Explore land opportunities',
    'Compare building vs buying',
@@ -94,6 +94,13 @@ export const servicePages = {
    'Focusing only on finishes instead of function',
    'Not thinking through timing early',
    'Moving forward without enough clarity around goals',
+  ]},
+  faq:{eyebrow:'Building & land FAQ',title:'Common questions about',accent:'building and buying new.',items:[
+   {q:'What is a spec home?',a:'A spec home is a newly built home constructed on speculation, without a buyer lined up in advance, and then sold. It offers new construction with fewer decisions — and usually a faster path than building.'},
+   {q:'Should I build a home or buy a spec home?',a:'Build if you want more control, customization, and design flexibility and have time for a longer process. Buy a spec home if you want newer construction sooner with a simpler purchase path.'},
+   {q:'Do I need to be a builder to build a home?',a:'No. Most buyers work with builders and lenders to handle construction. Nathanael helps you think through the real estate side — location, land, budget, and timing — before you commit.'},
+   {q:'Can a REALTOR help me find land?',a:'Yes. Nathanael can help you evaluate parcels, understand the bigger picture around a location, and think through what land might make sense for your goals.'},
+   {q:'Where can I explore building or new construction?',a:'Nathanael serves clients across Kern County and San Diego County, from Tehachapi and California City to the San Diego area. Call (661) 472-7499 to start a conversation.'},
   ]},
   proof:{eyebrow:'From the ground up',title:'The kind of work',accent:'behind the conversations.',body:'From framing to finished homes, these are examples of the building world Nathanael brings to discussions about land, builds, and new construction.',images:[
    {src:'/assets/development.webp',alt:'Timber framing inside a home under construction',caption:'Framing in progress'},
@@ -123,7 +130,7 @@ export const servicePages = {
    ctas:[{label:'Discuss an Investment',href:'#service-inquiry',kind:'gold'},{label:'Review a Deal',href:'#service-inquiry',kind:'link'},{label:'Call Nathanael',href:':phone',kind:'link'}],
    caption:'A property. A project. A conversation.',
   },
-  sections:['paths','role','who','scenarios','self','process','credibility'],
+  sections:['paths','role','who','scenarios','self','faq','process','credibility'],
   paths:{eyebrow:'What are you looking to do?',title:'Three paths',accent:'into investing.',intro:'Choose the direction that fits you, then explore the details with Nathanael.',cards:[
    {title:'Buy an investment property',copy:'Talk through goals, location, and the type of property that makes sense.',cta:'Discuss an Investment'},
    {title:'Evaluate a flip',copy:'Review the property, renovation scope, budget, and resale potential.',cta:'Review a Deal'},
@@ -152,6 +159,13 @@ export const servicePages = {
    {title:'Local opportunity conversation',copy:'An early-stage discussion around fit, goals, and whether there is a reason to go further.'},
   ]},
   self:{eyebrow:'About the company',title:'Interested in',accent:'Harbison Standard itself?',body:'If you’re interested in discussing possible future opportunities related to Harbison Standard, you can start with a conversation about your background, interests, and what you’re looking for. Any specific opportunity would depend on fit, structure, timing, and separate review.'},
+  faq:{eyebrow:'Investing FAQ',title:'Investor questions,',accent:'answered plainly.',tint:true,items:[
+   {q:'Can a real estate agent help with investment properties?',a:'Yes. Nathanael helps investors think through property potential, renovation scope, location fit, timeline, and whether a deal matches their goals.'},
+   {q:'What is a house flip?',a:'A flip is buying a property with the intent to renovate and resell it, often quickly, for a profit. The key details are purchase price, renovation scope, timeline, and resale value.'},
+   {q:'Should I hold a rental property or flip it?',a:'It depends on your goals, capital, and timeline. Holding typically trades cash flow and appreciation for slower growth, while a flip trades renovation work for a faster return. Nathanael can help you compare the two.'},
+   {q:'Can I ask about investing in Harbison Standard?',a:'You can start with a conversation about your background and interests. Any specific opportunity would depend on fit, structure, timing, and separate review.'},
+   {q:'How do investors get in touch?',a:'Call or text (661) 472-7499 or send a message through the inquiry form. Let Nathanael know the property or opportunity you’re considering.'},
+  ]},
   process:{eyebrow:'How it starts',title:'Start with the property, project,',accent:'or goal.',tint:true,steps:[
    {name:'Share the opportunity or idea',copy:'Bring a property, address, goal, or general direction.'},
    {name:'Review the practical details',copy:'Talk through condition, budget, timing, and likely path.'},
