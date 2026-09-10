@@ -28,7 +28,8 @@ for(const p of publishedProperties){
  if(!/^[a-z0-9-]+$/i.test(p.slug))throw new Error('Invalid property slug for output');
  const path='/property/'+p.slug;propertyPaths.push(path);
  const photo=p.imageUrl?new URL(p.imageUrl,siteUrl).href:ogImage;
- page(path,{title:p.address+' | '+p.status+' | Harbison Standard',description:p.description},[{'@context':'https://schema.org','@type':'RealEstateListing',name:p.address,url:siteUrl+path,description:p.description,image:photo,offers:{'@type':'Offer',price:p.price,priceCurrency:'USD'},about:{'@type':'SingleFamilyResidence',numberOfBedrooms:p.beds,numberOfBathroomsTotal:p.baths,floorSize:{'@type':'QuantitativeValue',value:p.sqft,unitCode:'FTK'},address:{'@type':'PostalAddress',streetAddress:p.address,addressLocality:p.city,addressRegion:p.state,postalCode:p.zip,addressCountry:'US'}}}],photo);
+ const description=p.description||p.context||'Past sale shown for reference; not currently offered for sale.';
+ page(path,{title:p.address+' | '+p.status+' | Harbison Standard',description},[{'@context':'https://schema.org','@type':'RealEstateListing',name:p.address,url:siteUrl+path,description,image:photo,offers:/^sold$/i.test(p.status)?undefined:{'@type':'Offer',price:p.price,priceCurrency:'USD'},about:{'@type':'SingleFamilyResidence',numberOfBedrooms:p.beds,numberOfBathroomsTotal:p.baths,floorSize:{'@type':'QuantitativeValue',value:p.sqft,unitCode:'FTK'},address:{'@type':'PostalAddress',streetAddress:p.address,addressLocality:p.city,addressRegion:p.state,postalCode:p.zip,addressCountry:'US'}}}],photo);
 }
 const paths=[...Object.keys(routes).filter(p=>p!=='/hq'),...propertyPaths];
 writeFileSync('dist/client/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+paths.map(path=>'<url><loc>'+escape(siteUrl+path)+'</loc></url>').join('')+'</urlset>');

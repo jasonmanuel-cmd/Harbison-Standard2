@@ -4,9 +4,10 @@
 
 alter table public.leads add column if not exists current_city text;
 alter table public.leads add column if not exists source text;
+alter table public.leads add column if not exists notes text;
 alter table public.leads add column if not exists desired_area text;
 alter table public.leads add column if not exists budget text;
-alter table public.leads add column if not exists bedrooms text;
+alter table public.leads add column if not exists bedrooms integer;
 alter table public.leads add column if not exists acreage_requirement text;
 alter table public.leads add column if not exists property_type text;
 alter table public.leads add column if not exists timeline text;

@@ -271,7 +271,7 @@ export function applyPropertySeo(property) {
     '@context':'https://schema.org','@type':'RealEstateListing',name:property.address||title,url:siteUrl+path,description,
     image:(property.images||[]).map(x=>x.startsWith('http')?x:siteUrl+x),
     address:{'@type':'PostalAddress',streetAddress:property.address||'',addressLocality:property.city||'',addressRegion:property.state||'CA',postalCode:property.zip||'',addressCountry:'US'},
-    offers:property.price?{'@type':'Offer',price:property.price,priceCurrency:'USD'}:undefined
+    offers:property.price&&!/^sold$/i.test(property.status)?{'@type':'Offer',price:property.price,priceCurrency:'USD'}:undefined
   };
   const el=document.createElement('script');el.type='application/ld+json';el.setAttribute('data-property-jsonld','true');el.text=JSON.stringify(schema);document.head.appendChild(el);
 }
