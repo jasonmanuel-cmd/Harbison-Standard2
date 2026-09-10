@@ -1,7 +1,7 @@
 export function initAnalytics() {
   if (typeof window === 'undefined' || /^\/hq\/?$/.test(window.location.pathname)) return;
-  const gaId = import.meta.env.VITE_GA4_ID;
-  const gtmId = import.meta.env.VITE_GTM_ID;
+  const gaId = import.meta.env.VITEGA4_ID;
+  const gtmId = import.meta.env.VITEGTMID;
   const googleAdsId = import.meta.env.VITE_GOOGLE_ADS_ID;
   const metaPixelId = import.meta.env.VITE_META_PIXEL_ID;
   const verification = import.meta.env.VITE_GOOGLE_SITE_VERIFICATION;
