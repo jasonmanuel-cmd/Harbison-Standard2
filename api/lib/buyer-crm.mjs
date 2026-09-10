@@ -30,17 +30,20 @@ export async function buyerDetail(request) {
   const path='leads?id=eq.'+id+'&brand=eq.harbison_standard';
   try {
     if(request.method==='PATCH'){
-      if(body.status!==undefined&&!statuses.has(body.status))return json({error:'Invalid status'},{status:400});
       const change={};
-      if(body.status!==undefined)change.status=body.status;
-      if(body.notes!==undefined)change.notes=String(body.notes).slice(0,5000);
+      const fields=['name','email','phone','current_city','desired_area','budget','bedrooms','acreage_requirement','property_type','timeline','financing_status','notes','status'];
+      for(const f of fields){if(body[f]!==undefined)change[f]=body[f];}
+      if(body.status!==undefined&&!statuses.has(body.status))return json({error:'Invalid status'},{status:400});
       if(!Object.keys(change).length)return json({error:'No changes supplied'},{status:400});
       const updated=await rows(path,{method:'PATCH',headers:{Prefer:'return=representation'},body:JSON.stringify(change)});
       return updated.length?json({ok:true}):json({error:'Not found'},{status:404});
     }
     const [lead]=await rows(path+'&select=*');
-    return lead?json({lead:normalize(lead),visits:[]}):json({error:'Not found'},{status:404});
-  }catch{return json({error:'Unable to access buyer inquiry'},{status:502});}
+    if(!lead)return json({error:'Not found'},{status:404});
+    // Fetch visits from Supabase
+    const visits = await rows('visits?session_id=eq.'+lead.session_id+'&select=path,referrer,utm_source,utm_medium,utm_campaign,created_at&order=created_at.asc');
+    return json({lead:normalize(lead),visits});
+  }catch{return json({error:'Unable to access buyer inquiry'},{status:502});
 }
 export async function buyerStats() {
   async function count(status) {
@@ -48,5 +51,15 @@ export async function buyerStats() {
     if(!r.ok)throw new Error('Count failed');
     return Number(r.headers.get('content-range')?.split('/')[1]||0);
   }
-  try{const [totalLeads,newLeads]=await Promise.all([count(),count('new')]);return json({totalLeads,newLeads,totalSessions:null,totalPageviews:null,bySource:[],byStatus:[],dailyLeads:[]});}catch{return json({error:'Unable to load buyer stats'},{status:502});}
+  async function sessionCount() {
+    const r=await supabaseRest('sessions?select=id',{method:'HEAD',headers:{Prefer:'count=exact'}});
+    if(!r.ok)return null;
+    return Number(r.headers.get('content-range')?.split('/')[1]||0);
+  }
+  async function visitCount() {
+    const r=await supabaseRest('visits?select=id',{method:'HEAD',headers:{Prefer:'count=exact'}});
+    if(!r.ok)return null;
+    return Number(r.headers.get('content-range')?.split('/')[1]||0);
+  }
+  try{const [totalLeads,newLeads,totalSessions,totalPageviews]=await Promise.all([count(),count('new'),sessionCount(),visitCount()]);return json({totalLeads,newLeads,totalSessions,totalPageviews,bySource:[],byStatus:[],dailyLeads:[]});}catch{return json({error:'Unable to load buyer stats'},{status:502});}
 }

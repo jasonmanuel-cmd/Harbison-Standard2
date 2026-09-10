@@ -1,9 +1,9 @@
-import { query, crmConfigured } from "./lib/db.mjs";
-import { json, readJson, notConfigured } from "./lib/auth.mjs";
+import { json, readJson } from "./lib/auth.mjs";
+import { supabaseConfigured, supabaseRest, supabaseNotConfigured } from "./lib/supabase.mjs";
 
 async function handler(request) {
   if (request.method !== "POST") return json({ error: "Method not allowed" }, { status: 405 });
-  if (!crmConfigured()) return notConfigured();
+  if (!supabaseConfigured()) return supabaseNotConfigured();
 
   const body = (await readJson(request)) || {};
   const sid = String(body.sessionId || "").slice(0, 100);
@@ -11,15 +11,30 @@ async function handler(request) {
   if (!sid || !path) return json({ error: "sessionId and path are required" }, { status: 400 });
 
   try {
-    await query`
-      INSERT INTO sessions (id, last_seen, visits)
-      VALUES (${sid}, now(), 1)
-      ON CONFLICT (id) DO UPDATE SET last_seen = now(), visits = sessions.visits + 1
-    `;
-    await query`
-      INSERT INTO visits (session_id, path, referrer, utm_source, utm_medium, utm_campaign)
-      VALUES (${sid}, ${path}, ${(body.referrer || "").slice(0, 500)}, ${(body.utmSource || "").slice(0, 200)}, ${(body.utmMedium || "").slice(0, 200)}, ${(body.utmCampaign || "").slice(0, 200)})
-    `;
+    // Upsert session: try insert first, on conflict update
+    const sessionRes = await supabaseRest('sessions', {
+      method: 'POST',
+      headers: { Prefer: 'resolution=merge-duplicates' },
+      body: JSON.stringify({ id: sid, last_seen: new Date().toISOString(), visits: 1 }),
+    });
+    if (!sessionRes.ok && sessionRes.status !== 409) {
+      const errText = await sessionRes.text();
+      console.error('[track session]', sessionRes.status, errText);
+    }
+
+    // Insert visit
+    await supabaseRest('visits', {
+      method: 'POST',
+      body: JSON.stringify({
+        session_id: sid,
+        path,
+        referrer: (body.referrer || "").slice(0, 500),
+        utm_source: (body.utmSource || "").slice(0, 200),
+        utm_medium: (body.utmMedium || "").slice(0, 200),
+        utm_campaign: (body.utmCampaign || "").slice(0, 200),
+      }),
+    });
+
     return json({ ok: true }, { status: 201 });
   } catch (err) {
     console.error("[track]", err);

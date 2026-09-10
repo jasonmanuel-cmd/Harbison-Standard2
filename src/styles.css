@@ -92,6 +92,11 @@ h1{font-family:Georgia,serif;font-weight:600;font-size:72px;line-height:.91;lett
 .hq-status-options{display:flex;gap:8px;flex-wrap:wrap}
 .hq-status-options button.on{background:var(--gold);border-color:var(--gold);color:#07131c}
 .hq-status-options button:disabled{opacity:.55;cursor:wait}
+.hq-edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hq-edit-grid label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#596365}
+.hq-edit-grid label.full{grid-column:1/-1}
+.hq-edit-grid input,.hq-edit-grid select,.hq-edit-grid textarea{border:1px solid #d8d1c3;border-radius:3px;padding:9px 11px;font:inherit;font-size:13px;color:#08142e;background:#fff;width:100%;resize:vertical}
+.hq-edit-grid input:focus,.hq-edit-grid select:focus,.hq-edit-grid textarea:focus{outline:none;border-color:var(--navy)}
 @media (max-width:900px){.hq-stats{grid-template-columns:repeat(2,1fr)}.hq-detail-grid{grid-template-columns:1fr}.hq-header{flex-direction:column;align-items:flex-start}.hq-row{flex-direction:column;align-items:flex-start;gap:10px}}
 .hero--standard{height:auto;min-height:600px;display:flex;align-items:center;padding:74px 0 84px}
 .hero--standard .hero-copy{padding:0 0 0 6.1%;max-width:840px}

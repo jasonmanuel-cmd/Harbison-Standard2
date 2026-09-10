@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {ArrowRight,CheckCircle} from '@phosphor-icons/react';
 import {captureAttribution} from './attribution';
 import {trackEvent} from './analytics';
+import {getSessionId} from './track';
 
 const initial={name:'',phone:'',email:'',currentCity:'',desiredArea:'Bakersfield / Kern County',budget:'',bedrooms:'',acreageRequirement:'',propertyType:'Single-family home',timeline:'Within 3 months',financingStatus:'Not sure yet',hasPropertyToSell:'no'};
 
@@ -13,7 +14,7 @@ export function BuyerIntentForm({propertyId=null,source='buyer-intent',earlyInte
   e.preventDefault(); if(status==='sending')return; setStatus('sending');setNotice('');
   const attribution=captureAttribution();
   try{
-   const res=await fetch('/api/buyer-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,hasPropertyToSell:data.hasPropertyToSell==='yes',propertyId,source,...attribution})});
+   const res=await fetch('/api/buyer-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,hasPropertyToSell:data.hasPropertyToSell==='yes',propertyId,source,sessionId:getSessionId(),...attribution})});
    if(!res.ok)throw new Error('send');
    const result=await res.json();
    if(result.notificationSent===false)setNotice('Your inquiry is saved, but the email notification could not be delivered. For a prompt response, call or text (661) 472-7499.');

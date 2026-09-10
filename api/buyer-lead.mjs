@@ -30,6 +30,7 @@ async function handler(request) {
     property_id: body.propertyId || null,
     brand: 'harbison_standard',
     source: text(body.source, 200),
+    session_id: text(body.sessionId, 100),
     landing_page: text(body.landingPage, 500),
     referrer: text(body.referrer, 1000),
     utm_source: text(body.utmSource, 200),
