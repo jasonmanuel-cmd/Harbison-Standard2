@@ -21,6 +21,8 @@ export function App(){
  const [menu,setMenu]=useState(false);
  useEffect(()=>{if(path==='/hq')return;captureAttribution();trackPageView(path)},[path]);
  useEffect(()=>{
+  // Keep generated property metadata intact while the property API loads.
+  if(/^\/property\/[^/]+$/.test(path))return;
   const route=routes[path]||{title:'Page not found | Harbison Standard',description:'',robots:''};
   const title=route.title||'Harbison Standard';
   document.title=title;

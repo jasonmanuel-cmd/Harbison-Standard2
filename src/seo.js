@@ -266,7 +266,7 @@ export function applyPropertySeo(property) {
   setMeta('meta[property="og:description"]','content',description);
   setMeta('meta[name="twitter:title"]','content',title);
   setMeta('meta[name="twitter:description"]','content',description);
-  document.querySelectorAll('script[data-property-jsonld]').forEach(s=>s.remove());
+  document.querySelectorAll('script[data-property-jsonld],script[data-seo-jsonld]').forEach(s=>s.remove());
   const schema={
     '@context':'https://schema.org','@type':'RealEstateListing',name:property.address||title,url:siteUrl+path,description,
     image:(property.images||[]).map(x=>x.startsWith('http')?x:siteUrl+x),

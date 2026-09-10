@@ -31,7 +31,7 @@ export function PropertyDetailPage({slug}){
  const [p,setP]=useState(null),[loading,setLoading]=useState(true),[all,setAll]=useState([]);
  useEffect(()=>{Promise.all([getProperty(slug),getProperties()]).then(([x,list])=>{setP(x);setAll(list||[]);if(x){applyPropertySeo(x);trackEvent('property_view',{property_id:x.id,property_slug:x.slug,source:'property_page'})}}).finally(()=>setLoading(false))},[slug]);
  const similar=useMemo(()=>all.filter(isAvailableProperty).filter(x=>String(x.id)!==String(p?.id)).filter(x=>!p?.city||x.city===p.city).slice(0,3),[all,p]);
- if(loading)return <section className="page-heading page-wrap"><p className="eyebrow">Property</p><h1>Loading <em>property details.</em></h1></section>;
+ if(loading)return <section className="page-heading page-wrap" style={{minHeight:'100vh'}}><p className="eyebrow">Property</p><h1>Loading <em>property details.</em></h1></section>;
  if(!p)return <section className="page-heading page-wrap"><p className="eyebrow">Property not found</p><h1>This property is <em>not available here.</em></h1><a className="gold" href="/properties">View properties <ArrowRight/></a></section>;
  const gallery=(p.images||[]).filter(Boolean).slice(0,8);
  return <>
