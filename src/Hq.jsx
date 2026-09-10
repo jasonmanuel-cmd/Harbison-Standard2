@@ -111,10 +111,10 @@ export function Hq(){
   if(phase==='login')return <main className="hq-page"><section className="hq-card hq-narrow"><p className="eyebrow">Harbison Standard · HQ</p><h1>Sign in to your leads.</h1><form className="hq-login" onSubmit={login}><label htmlFor="hq-pass">Password<Lock/></label><div className="login-row"><input ref={inputRef} id="hq-pass" type="password" autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="HQ password"/><button className="gold" type="submit">Enter <ArrowRight/></button></div></form>{msg&&<p className="hq-note hq-error" role="alert">{msg}</p>}<p className="hq-meta">Set the <code>ADMIN_TOKEN</code> environment variable to protect this page.</p></section></main>;
 
   return <main className="hq-page">
-   <header className="hq-header">
+   <div className="hq-header">
     <div><p className="eyebrow">Harbison Standard</p><h1>Leads</h1></div>
     <div className="hq-header-actions"><label>Inquiry source <select value={backend} onChange={e=>{sessionStorage.setItem('hs_hq_backend',e.target.value);setBackend(e.target.value);setSelected(null);setDetail(null)}}><option value="supabase">Buyer inquiries</option><option value="neon">Other inquiries</option></select></label><button className="hq-link" onClick={()=>location.href='/'}>View site <ArrowUpRight/></button><button className="hq-logout" onClick={logout}><SignOut/> Sign out</button></div>
-   </header>
+   </div>
    {msg&&<p className="hq-note hq-error" role="alert">{msg}</p>}<div className="hq-stats">{keyStats.map(s=><div key={s.label} className="hq-stat"><span>{s.value}</span><p>{s.label}</p></div>)}</div>
    {stats&&stats.topPaths&&<section className="hq-card">
     <div className="hq-card-head"><p className="eyebrow">Top pages</p></div>
@@ -140,7 +140,7 @@ export function Hq(){
     </div>
     <div className="hq-detail-grid">
      <dl className="hq-facts"><div><dt>Goal</dt><dd>{detail.lead.goal||'—'}</dd></div><div><dt>Source</dt><dd>{detail.lead.source||'—'}</dd></div><div><dt>Phone</dt><dd>{detail.lead.phone||'—'}</dd></div><div><dt>Location</dt><dd>{detail.lead.location||'—'}</dd></div><div><dt>Timing</dt><dd>{detail.lead.timing||'—'}</dd></div><div><dt>Status</dt><dd>{STATUS_LABEL[detail.lead.status]||detail.lead.status}</dd></div></dl>
-     <div className="hq-message"><p className="eyebrow">Message</p><p>{detail.lead.message||'No message.'}</p><p className="hq-notes-label">Notes</p><textarea rows={3} value={detail.lead.notes||''} onChange={e=>saveToNotes(e.target.value)} placeholder="Add a note about this lead…"/></div>
+     <div className="hq-message"><p className="eyebrow">Message</p><p>{detail.lead.message||'No message.'}</p><p className="hq-notes-label">Notes</p><textarea rows={3} value={detail.lead.notes||''} onChange={e=>saveToNotes(e.target.value)} placeholder="Add a note about this lead…"/><button className="hq-link" disabled={saving} onClick={()=>saveLead({notes:detail.lead.notes||''})}>{saving?'Saving…':'Save notes'}</button></div>
      <div className="hq-visit"><p className="eyebrow">Visit trail</p>{detail.visits.length===0?<p className="hq-note">No page-views recorded for this session.</p>:<ol>{detail.visits.map((v,i)=><li key={i}><code>{v.path}</code><span>{formatDate(v.created_at)}</span></li>)}</ol>}</div>
     </div>
     <div className="hq-detail-actions">
