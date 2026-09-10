@@ -37,6 +37,8 @@ export function trackPageView(path) {
         utmSource: params.get("utm_source") || undefined,
         utmMedium: params.get("utm_medium") || undefined,
         utmCampaign: params.get("utm_campaign") || undefined,
+        utmTerm: params.get("utm_term") || undefined,
+        utmContent: params.get("utm_content") || undefined,
       }),
     }).catch(() => {});
   } catch {

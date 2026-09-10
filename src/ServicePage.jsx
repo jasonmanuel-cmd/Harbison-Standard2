@@ -41,7 +41,6 @@ const renderers = {
 
 const finalCtas = {
  '/real-estate':{title:'Start with a conversation',accent:'about your home.',lede:'You don’t need to have everything figured out. A location, rough timing, and a few details are enough to get started.',btn:'Discuss Your Home'},
- '/development':{title:'Ready to explore a build,',accent:'a spec home, or a parcel?',lede:'Start with what you have in mind — a vision, a property, or a rough budget. Nathanael can help you sort through the rest.',btn:'Discuss a Build'},
  '/investing':{title:'Have a deal',accent:'or an idea worth a conversation?',lede:'Bring a property, a project, or a general direction. Nathanael can help you review the practical details.',btn:'Review a Deal'},
 };
 

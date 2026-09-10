@@ -6,7 +6,8 @@ const STATUSES=['new','contacted','qualified','closed'];
 const STATUS_LABEL={new:'New',contacted:'Contacted',qualified:'Qualified',closed:'Closed'};
 
 async function api(token,path,options={}){
-  const res=await fetch(path,{
+  const separator=path.includes('?')?'&':'?';
+  const res=await fetch(path+separator+'backend='+(sessionStorage.getItem('hs_hq_backend')||'supabase'),{
     ...options,
     headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{}),...(options.headers||{})},
   });
@@ -22,6 +23,7 @@ function formatDate(value){
 }
 
 export function Hq(){
+  const [backend,setBackend]=useState(()=>sessionStorage.getItem('hs_hq_backend')||'supabase');
   const [token,setToken]=useState(()=>sessionStorage.getItem('hs_hq')||'');
   const [authed,setAuthed]=useState(Boolean(sessionStorage.getItem('hs_hq')));
   const [password,setPassword]=useState('');
@@ -36,7 +38,7 @@ export function Hq(){
   const listLoaded=useRef(false);
   const inputRef=useRef(null);
 
-  useEffect(()=>{if(authed)loadAll()},[authed]);
+  useEffect(()=>{if(authed)loadAll()},[authed,backend]);
 
   async function loadAll(){
     setPhase('loading');
@@ -58,10 +60,10 @@ export function Hq(){
     try{
       const [s,l]=await Promise.all([
         api(token,'/api/stats'),
-        api(token,'/api/leads'+(filters.status?'?status='+encodeURIComponent(filters.status):'')+(filters.q?'&q='+encodeURIComponent(filters.q):'')),
+        api(token,'/api/leads'+'?'+new URLSearchParams({...filters})),
       ]);
       setStats(s);setLeads(l.leads);
-      if(selected)openLead(selected.id);
+      if(selected)openLead(selected);
     }catch(err){if(err.code===401)logout();}
   }
 
@@ -83,45 +85,45 @@ export function Hq(){
   }
 
   async function openLead(id){
-    setSelected(id);
+    setDetail(null);setSelected(id);
     try{setDetail(await api(token,'/api/lead?id='+id));}catch(err){if(err.code===401)logout();}
   }
 
-  async function saveLead(changes){
+  async function saveLead(changes,leadId=selected){
     setSaving(true);
     try{
-      await api(token,'/api/lead',{method:'PATCH',body:JSON.stringify({id:selected,...changes})});
+      await api(token,'/api/lead',{method:'PATCH',body:JSON.stringify({id:leadId,...changes})});
       await refresh();
-    }catch(err){if(err.code===401)logout();}
+    }catch(err){if(err.code===401)logout();else setMsg('Your change could not be saved. Please try again.');}
     setSaving(false);
   }
 
   const keyStats=[
     {label:'Total leads',value:stats?stats.totalLeads:0},
     {label:'New',value:stats?stats.newLeads:0},
-    {label:'Visitors',value:stats?stats.totalSessions:0},
-    {label:'Page views',value:stats?stats.totalPageviews:0},
+    {label:'Visitors',value:stats?.totalSessions??'Not connected'},
+    {label:'Page views',value:stats?.totalPageviews??'Not connected'},
   ];
 
   if(phase==='loading')return <main className="hq-page"><div className="hq-loader"><span/></div></main>;
-  if(phase==='unconfigured')return <main className="hq-page"><section className="hq-card hq-narrow"><p className="eyebrow">Harbison Standard · HQ</p><h1>Not configured yet.</h1><p className="hq-note">Add the <code>DATABASE_URL</code> (Neon) and <code>ADMIN_TOKEN</code> environment variables to your Vercel deployment, then reload this page.</p><a className="gold hq-cta" href="/">Back to site <ArrowRight/></a></section></main>;
-  if(phase==='error')return <main className="hq-page"><section className="hq-card hq-narrow"><p className="eyebrow">Harbison Standard · HQ</p><h1>Something went wrong.</h1><p className="hq-note">We couldn’t reach the CRM API. Check the server logs and try again.</p><button className="gold hq-cta" onClick={refresh}>Try again <ArrowRight/></button></section></main>;
+  if(phase==='unconfigured')return <main className="hq-page"><section className="hq-card hq-narrow"><p className="eyebrow">Harbison Standard · HQ</p><h1>Not configured yet.</h1><p className="hq-note">Configure Supabase or the existing Neon connection, plus the <code>ADMIN_TOKEN</code> environment variables to your Vercel deployment, then reload this page.</p><a className="gold hq-cta" href="/">Back to site <ArrowRight/></a></section></main>;
+  if(phase==='error')return <main className="hq-page"><section className="hq-card hq-narrow"><p className="eyebrow">Harbison Standard · HQ</p><h1>Something went wrong.</h1><p className="hq-note">We couldn’t reach the CRM API. Check the server logs and try again.</p><button className="gold hq-cta" onClick={loadAll}>Try again <ArrowRight/></button></section></main>;
   if(phase==='login')return <main className="hq-page"><section className="hq-card hq-narrow"><p className="eyebrow">Harbison Standard · HQ</p><h1>Sign in to your leads.</h1><form className="hq-login" onSubmit={login}><label htmlFor="hq-pass">Password<Lock/></label><div className="login-row"><input ref={inputRef} id="hq-pass" type="password" autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="HQ password"/><button className="gold" type="submit">Enter <ArrowRight/></button></div></form>{msg&&<p className="hq-note hq-error" role="alert">{msg}</p>}<p className="hq-meta">Set the <code>ADMIN_TOKEN</code> environment variable to protect this page.</p></section></main>;
 
   return <main className="hq-page">
    <header className="hq-header">
     <div><p className="eyebrow">Harbison Standard</p><h1>Leads</h1></div>
-    <div className="hq-header-actions"><button className="hq-link" onClick={()=>location.href='/'}>View site <ArrowUpRight/></button><button className="hq-logout" onClick={logout}><SignOut/> Sign out</button></div>
+    <div className="hq-header-actions"><label>Inquiry source <select value={backend} onChange={e=>{sessionStorage.setItem('hs_hq_backend',e.target.value);setBackend(e.target.value);setSelected(null);setDetail(null)}}><option value="supabase">Buyer inquiries</option><option value="neon">Other inquiries</option></select></label><button className="hq-link" onClick={()=>location.href='/'}>View site <ArrowUpRight/></button><button className="hq-logout" onClick={logout}><SignOut/> Sign out</button></div>
    </header>
-   <div className="hq-stats">{keyStats.map(s=><div key={s.label} className="hq-stat"><span>{s.value}</span><p>{s.label}</p></div>)}</div>
+   {msg&&<p className="hq-note hq-error" role="alert">{msg}</p>}<div className="hq-stats">{keyStats.map(s=><div key={s.label} className="hq-stat"><span>{s.value}</span><p>{s.label}</p></div>)}</div>
    {stats&&stats.topPaths&&<section className="hq-card">
     <div className="hq-card-head"><p className="eyebrow">Top pages</p></div>
     <div className="hq-path-list">{stats.topPaths.map(p=><div key={p.path}><code>{p.path}</code><span>{p.n}</span></div>)}</div>
    </section>}
    <section className="hq-card">
-    <div className="hq-card-head"><div><p className="eyebrow">Inquiries</p><p className="hq-note">Last 5 days · {leads.length} shown</p></div>
+    <div className="hq-card-head"><div><p className="eyebrow">Inquiries</p><p className="hq-note">Most recent inquiries · {leads.length} shown</p></div>
      <div className="hq-tools">
-      <div className="hq-search"><MagnifyingGlass/><input placeholder="MagnifyingGlass name or email" value={filters.q} onChange={e=>setFilters({...filters,q:e.target.value})}/></div>
+      <div className="hq-search"><MagnifyingGlass/><input placeholder="Search name or email" value={filters.q} onChange={e=>setFilters({...filters,q:e.target.value})}/></div>
       <div className="hq-filters">{['',...STATUSES].map(s=><button key={s||'all'} className={filters.status===s?'on':''} onClick={()=>setFilters({...filters,status:s})}>{s?STATUS_LABEL[s]:'All'}</button>)}</div>
       <button className="hq-link" onClick={refresh}>Refresh <ArrowRight/></button>
      </div>
@@ -151,7 +153,6 @@ export function Hq(){
   function saveToNotes(value){
     const saved=value;
     setDetail(d=>({...d,lead:{...d.lead,notes:saved}}));
-    clearTimeout(saveToNotes.timer);
-    saveToNotes.timer=setTimeout(()=>saveLead({notes:saved}),500);
+
   }
 }

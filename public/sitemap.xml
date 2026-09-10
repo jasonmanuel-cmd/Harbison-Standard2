@@ -30,16 +30,13 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-    <loc>https://www.harbisonstandard.com/development</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
+<url>
     <loc>https://www.harbisonstandard.com/investing</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url><loc>https://www.harbisonstandard.com/moving-from-los-angeles-to-bakersfield</loc></url>
+  <url><loc>https://www.harbisonstandard.com/past-sales</loc></url>
+  <url><loc>https://www.harbisonstandard.com/open-houses</loc></url>
 </urlset>

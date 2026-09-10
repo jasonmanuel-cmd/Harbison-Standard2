@@ -4,3 +4,7 @@ dist/
 .env
 .env.local
 .neon
+
+.vercel
+.env*
+!.env.example

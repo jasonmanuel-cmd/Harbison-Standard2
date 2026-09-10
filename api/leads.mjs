@@ -1,9 +1,12 @@
 import { query, crmConfigured } from "./lib/db.mjs";
 import { json, isAdmin, notConfigured } from "./lib/auth.mjs";
+import {supabaseConfigured} from './lib/supabase.mjs';
+import {buyerList} from './lib/buyer-crm.mjs';
 
-export default async function handler(request) {
+async function handler(request) {
   if (request.method !== "GET") return json({ error: "Method not allowed" }, { status: 405 });
   if (!isAdmin(request)) return json({ error: "Unauthorized" }, { status: 401 });
+  if ((!crmConfigured() || new URL(request.url).searchParams.get('backend')==='supabase') && supabaseConfigured()) return buyerList(request);
   if (!crmConfigured()) return notConfigured();
 
   const url = new URL(request.url);
@@ -27,3 +30,6 @@ export default async function handler(request) {
     return json({ error: "Failed to load inquiries" }, { status: 500 });
   }
 }
+
+// Vercel Web Standard handler; local development uses the same fetch function.
+export default {fetch:handler};

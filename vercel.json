@@ -5,6 +5,46 @@
   "outputDirectory": "dist/client",
   "rewrites": [
     {
+      "source": "/property/:slug",
+      "destination": "/property/:slug/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/index.html"
+    },
+    {
+      "source": "/properties",
+      "destination": "/properties/index.html"
+    },
+    {
+      "source": "/past-sales",
+      "destination": "/past-sales/index.html"
+    },
+    {
+      "source": "/open-houses",
+      "destination": "/open-houses/index.html"
+    },
+    {
+      "source": "/moving-from-los-angeles-to-bakersfield",
+      "destination": "/moving-from-los-angeles-to-bakersfield/index.html"
+    },
+    {
+      "source": "/real-estate",
+      "destination": "/real-estate/index.html"
+    },
+    {
+      "source": "/investing",
+      "destination": "/investing/index.html"
+    },
+    {
+      "source": "/hq",
+      "destination": "/hq/index.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }

@@ -3,7 +3,7 @@ import {ArrowRight,CheckCircle,Copy,Envelope,Check} from '@phosphor-icons/react'
 import {agent} from './data';
 import {getSessionId} from './track';
 const FORMSPREE='https://formspree.io/f/xqpkdwrp';
-const goals=['Buying','Selling','Investing','Building or renovating','Something else'];
+const goals=['Buying','Selling','Investing','Something else'];
 export function QuickForm(){
  const [data,setData]=useState({name:'',contact:'',goal:goals[0],message:''});
  const [status,setStatus]=useState('idle');

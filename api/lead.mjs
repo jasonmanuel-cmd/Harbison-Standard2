@@ -1,11 +1,14 @@
 import { query, crmConfigured } from "./lib/db.mjs";
 import { json, readJson, isAdmin, notConfigured } from "./lib/auth.mjs";
+import {supabaseConfigured} from './lib/supabase.mjs';
+import {buyerDetail} from './lib/buyer-crm.mjs';
 
 const STATUSES = new Set(["new", "contacted", "qualified", "closed"]);
 
-export default async function handler(request) {
+async function handler(request) {
   if (request.method === "POST") return create(request);
   if (!isAdmin(request)) return json({ error: "Unauthorized" }, { status: 401 });
+  if ((!crmConfigured() || new URL(request.url).searchParams.get('backend')==='supabase') && supabaseConfigured() && ['GET','PATCH'].includes(request.method)) return buyerDetail(request);
   if (request.method === "PATCH") return update(request);
   if (request.method === "GET") return one(request);
   return json({ error: "Method not allowed" }, { status: 405 });
@@ -74,3 +77,6 @@ async function update(request) {
     return json({ error: "Failed to update inquiry" }, { status: 500 });
   }
 }
+
+// Vercel Web Standard handler; local development uses the same fetch function.
+export default {fetch:handler};

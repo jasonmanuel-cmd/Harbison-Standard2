@@ -1,5 +1,11 @@
 # Prototype Instructions
 
+## September 10, 2026 continuation
+
+- User corrected the Supabase project: Harbison uses `pebqmuumwygrpjofdwfy`. The earlier `rfggwgbbmugrcpmjjvex` URL was supplied by mistake and belongs to a completely separate application. Do not modify that other project. Inspect the correct Harbison schema before applying setup.
+- Phase 1.1 buyer inquiries use Supabase; preserve existing Formspree and Neon/HQ code. This supersedes the earlier Neon-only decision for the buyer acquisition system.
+- Keep the existing visual design locked. The research PDF is background for the property-to-buyer-capture funnel, not authorization to launch advertising or create the Aspen website.
+
 Run the local server yourself and open the preview in the browser available to this environment. Do not give the user server-start instructions when you can run it.
 
 Before making substantial visual changes, use the Product Design plugin's `get-context` skill when the visual source is unclear or no longer matches the current goal. When the user gives durable prototype-specific design feedback, preferences, or decisions, record them in `AGENTS.md`.
@@ -53,3 +59,20 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - `vercel.json` rewrites everything except `/api/*` to `/index.html`. `worker/index.js` (OpenAI Sites backup host) does NOT serve `/api/*`; the CRM and `/hq` work on the Vercel primary only. Keep `tests/sites-worker.test.mjs` passing.
 - Required env vars (Vercel + optional local `.env` from `.env.example`): `DATABASE_URL` (Neon), `ADMIN_TOKEN`.
 - Lead list/detail/stats/status/notes are managed from `/hq` only; no public endpoint exposes lead data.
+
+## September 10: real estate and investment scope
+- User explicitly removed all building/development messaging from the entire public website. Harbison Standard now covers real estate and investment only; this supersedes prior building service, biography, tagline, and YouTube-build CTA decisions. Preserve the established visual style.
+- Properties shows current listings newest first; Past Sales and Open Houses are separate pages. Do not invent open-house dates.
+- User supplied 3304 Apollo St, Bakersfield CA 93306 and asking price $299,999.99. Video/media and current listing status need confirmation before publication.
+
+- Apollo is the only new listing (Guadalupe was a transcription error). User approved Coming Soon through October 1, 2026, at $299,999.99. Use early-information inquiries, not binding bids or deposits. Feature it and send social/video traffic to its individual page; photos/video still pending.
+
+- User removed all San Diego references from the public website, including service areas and past-sales examples; Kern County is the service focus. This supersedes older San Diego decisions. Apollo facts: 3 bedrooms, 2 full bathrooms, 1305 living sq ft, 6664 sq ft lot, single story, 1962, R-1 zoning, evaporative cooling, electric heating. Historical 1978 sale: 52600 dollars; historical 40 dollars/sq ft must never be presented as current asking price/sq ft. Preserve the editorial page style.
+
+## September 10: Phase 1 launch
+- User approved the supplied Google street-view and map images as temporary Apollo media. Preserve their visible attribution; a walkthrough video is optional until supplied.
+- Production domain is https://www.harbisonstandard.com with the bare domain redirecting to www. Vercel project is coaiebay-sources-projects/hswebsite. User authorized deployment and pushing this project to https://github.com/jasonmanuel-cmd/Harbison-Standard2.git while preserving its history.
+- Buyer inquiries save to Harbison Supabase first and notify Nathanael through the existing Formspree endpoint. Failure to send the email must not turn a saved inquiry into a submission failure; show a clear contact fallback.
+- HQ defaults to Supabase Buyer inquiries and retains Other inquiries for the existing Neon integration. Both require ADMIN_TOKEN. Buyer notes use the notes column confirmed present in Supabase. Notes have an explicit Save notes button.
+- Vercel API entry points export the Web Standard object `{fetch:handler}`. A default function receives Node requests on Vercel and is incompatible with this code's Web Request APIs. Local shim and prerendering call `.fetch` on the same exports.
+- Build generates static route metadata, property previews, and sitemap entries, including past-sale fallbacks. This is metadata prerendering, not full visible-content SSR. Keep the Sites packaging files intact.

@@ -26,7 +26,7 @@ export const servicePages = {
    'Clear communication through the process',
    'Support from first conversation to close',
   ]},
-  compare:{eyebrow:'As-is or improve first',title:'Should you sell as-is',accent:'or improve the home first?',intro:'That depends on the property, the timeline, the likely buyer pool, and the level of preparation that makes sense for your goals. Nathanael’s construction background can help you think through what repairs matter, what updates may be worth considering, and when it makes more sense to move forward as-is.',a:{title:'Sell as-is when',points:['Speed matters','The home needs more work than you want to take on','Simplicity is more important than maximizing every possible dollar']},b:{title:'Improve first when',points:['A few targeted repairs could significantly strengthen marketability','The timeline allows for some preparation','The work is realistic and worth the effort']}},
+  compare:{eyebrow:'As-is or improve first',title:'Should you sell as-is',accent:'or improve the home first?',intro:'That depends on the property, the timeline, the likely buyer pool, and the level of preparation that makes sense for your goals. Nathanael’s real estate experience can help you think through what repairs matter, what updates may be worth considering, and when it makes more sense to move forward as-is.',a:{title:'Sell as-is when',points:['Speed matters','The home needs more work than you want to take on','Simplicity is more important than maximizing every possible dollar']},b:{title:'Improve first when',points:['A few targeted repairs could significantly strengthen marketability','The timeline allows for some preparation','The work is realistic and worth the effort']}},
   special:{eyebrow:'Beyond the standard sale',title:'Some sales come with',accent:'more pressure or complexity.',cards:[
    {title:'Divorce or separation',copy:'A home sale may be one part of a much larger transition. Nathanael can talk through the property and what you need from a sale.'},
    {title:'Financial pressure or foreclosure timeline',copy:'When time matters, clarity matters even more. Share your timing and the professionals already helping you.'},
@@ -36,7 +36,7 @@ export const servicePages = {
   process:{eyebrow:'A clear path forward',title:'Simple steps,',accent:'clear next moves.',steps:[
    {name:'Start with your situation',copy:'Share the property, your timing, and your priorities.'},
    {name:'Review the options',copy:'Discuss condition, marketability, and possible next steps.'},
-   {name:'Build the plan',copy:'Decide whether to prepare, list, or move more quickly.'},
+   {name:'Plan the next steps',copy:'Decide whether to prepare, list, or move more quickly.'},
    {name:'Move forward with clarity',copy:'Take the next step with a strategy that fits your goals.'},
   ]},
   faq:{eyebrow:'Seller FAQ',title:'Questions we',accent:'hear often.',items:[
@@ -55,70 +55,6 @@ export const servicePages = {
    {name:'A time-sensitive sale',Icon:Clock,copy:'I have an important timeline'},
    {name:'Selling a home that needs repairs',Icon:Hammer,copy:'Discuss the property as it is'},
    {name:'Another selling situation',Icon:ChatCircle,copy:'Talk through my circumstances'},
-  ],
- },
- '/development': {
-  name:'Development',category:'Development',image:'development',alt:'Timber framing inside a home under construction',
-  hero:{
-   eyebrow:'Building, buying new, or land',
-   heading:'Guidance for building, buying new,',accent:'or evaluating land.',
-   intro:'Whether you want to build a home, explore a spec home, or understand the potential of a piece of land, Nathanael can help you think through the real estate side with a practical, construction-aware perspective.',
-   ctas:[{label:'Discuss a Build',href:'#service-inquiry',kind:'gold'},{label:'Ask About Land',href:'#service-inquiry',kind:'link'},{label:'Call Nathanael',href:':phone',kind:'link'}],
-   caption:'A practical view of building and new construction.',
-  },
-  sections:['role','paths','compare','considerations','mistakes','faq','proof','process'],
-  role:{eyebrow:'How Nathanael helps',title:'A builder’s perspective',accent:'on the real estate side.',body:'Nathanael helps clients think through the practical side of building and new construction: location, land, property fit, timing, goals, and the broader real estate picture. He brings a builder’s perspective into the conversation so clients can ask better questions and move forward more confidently.',bullets:[
-   'Explore land opportunities',
-   'Compare building vs buying',
-   'Discuss spec home options',
-   'Think through goals, budget, and timing',
-   'Evaluate next steps before committing',
-  ]},
-  paths:{eyebrow:'Choose your path',title:'Three common',accent:'starting points.',intro:'Each path starts with a conversation about what you want and what makes sense for your situation.',cards:[
-   {title:'Build a home',copy:'For people with a vision, a location in mind, or land already owned.',cta:'Talk About Building'},
-   {title:'Buy a spec home',copy:'For people who want newer construction with a simpler, faster path.',cta:'Explore Spec Homes'},
-   {title:'Evaluate land',copy:'For people considering a parcel and wanting to understand the bigger picture before moving forward.',cta:'Discuss a Parcel'},
-  ]},
-  compare:{eyebrow:'Build vs buy new',title:'Build a home,',accent:'or buy a spec home?',intro:'Both paths get you new construction. The right one depends on how much control you want and how quickly you want to move.',a:{title:'Build a home if you want',points:['More customization','More control over the result','Flexibility in design and layout','A longer planning horizon']},b:{title:'Buy a spec home if you want',points:['Newer construction sooner','Less decision fatigue','A simpler purchase path','Move-in readiness']}},
-  considerations:{eyebrow:'The early questions',title:'Think through these',accent:'before you commit.',tint:true,items:[
-   'Where you want to live',
-   'Whether you already own land',
-   'How custom the home needs to be',
-   'Your timeline',
-   'Your rough budget range',
-   'Whether you want to build or buy new',
-  ]},
-  mistakes:{eyebrow:'Common mistakes',title:'What Nathanael sees',accent:'before building or buying land.',items:[
-   'Falling in love with land before understanding the full picture',
-   'Underestimating site and prep costs',
-   'Focusing only on finishes instead of function',
-   'Not thinking through timing early',
-   'Moving forward without enough clarity around goals',
-  ]},
-  faq:{eyebrow:'Building & land FAQ',title:'Common questions about',accent:'building and buying new.',items:[
-   {q:'What is a spec home?',a:'A spec home is a newly built home constructed on speculation, without a buyer lined up in advance, and then sold. It offers new construction with fewer decisions — and usually a faster path than building.'},
-   {q:'Should I build a home or buy a spec home?',a:'Build if you want more control, customization, and design flexibility and have time for a longer process. Buy a spec home if you want newer construction sooner with a simpler purchase path.'},
-   {q:'Do I need to be a builder to build a home?',a:'No. Most buyers work with builders and lenders to handle construction. Nathanael helps you think through the real estate side — location, land, budget, and timing — before you commit.'},
-   {q:'Can a REALTOR help me find land?',a:'Yes. Nathanael can help you evaluate parcels, understand the bigger picture around a location, and think through what land might make sense for your goals.'},
-   {q:'Where can I explore building or new construction?',a:'Nathanael serves clients across Kern County and San Diego County, from Tehachapi and California City to the San Diego area. Call (661) 472-7499 to start a conversation.'},
-  ]},
-  proof:{eyebrow:'From the ground up',title:'The kind of work',accent:'behind the conversations.',body:'From framing to finished homes, these are examples of the building world Nathanael brings to discussions about land, builds, and new construction.',images:[
-   {src:'/assets/development.webp',alt:'Timber framing inside a home under construction',caption:'Framing in progress'},
-   {src:'/assets/house.webp',alt:'A completed California home with a landscaped front yard',caption:'A completed home'},
-   {src:'/assets/property-front.webp',alt:'The front of a property and home site',caption:'A property start'},
-  ]},
-  process:{eyebrow:'How it starts',title:'How the conversation',accent:'typically begins.',tint:true,steps:[
-   {name:'Share the idea',copy:'Tell Nathanael what you want to build, buy, or evaluate.'},
-   {name:'Review the practical picture',copy:'Talk through location, property type, goals, budget, and timing.'},
-   {name:'Identify the next best move',copy:'Move toward a clearer decision with less guesswork.'},
-  ]},
-  formTitle:'Thinking about building, buying new,',formAccent:'or exploring land?',
-  formCopy:'Tell Nathanael whether you’re looking to build a home, buy a spec home, or evaluate land. A preferred area and a rough budget are enough to start.',
-  messagePlaceholder:'Your ideal home, preferred area, budget range, and whether you already own land…',
-  goals:[
-   {name:'Building a home',Icon:Hammer,copy:'Bring my plans to life'},
-   {name:'Buying a spec home',Icon:Key,copy:'Find a new home built for sale'},
-   {name:'Exploring land for a home',Icon:HouseLine,copy:'Talk about a parcel or location'},
   ],
  },
  '/investing': {
@@ -172,7 +108,7 @@ export const servicePages = {
    {name:'Decide whether it makes sense',copy:'Move forward, adjust, or walk away with more clarity.'},
   ]},
   credibility:{eyebrow:'Why this perspective helps',title:'Investors value',accent:'a practical eye.',items:[
-   'Construction background',
+   'Property experience',
    'Real estate experience',
    'Practical thinking',
    'Straightforward communication',

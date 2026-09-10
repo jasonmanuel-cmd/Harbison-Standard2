@@ -1,7 +1,7 @@
 import { query, crmConfigured } from "./lib/db.mjs";
 import { json, readJson, notConfigured } from "./lib/auth.mjs";
 
-export default async function handler(request) {
+async function handler(request) {
   if (request.method !== "POST") return json({ error: "Method not allowed" }, { status: 405 });
   if (!crmConfigured()) return notConfigured();
 
@@ -26,3 +26,5 @@ export default async function handler(request) {
     return json({ error: "Failed to record visit" }, { status: 500 });
   }
 }
+// Vercel Web Standard handler; local development uses the same fetch function.
+export default {fetch:handler};

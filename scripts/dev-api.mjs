@@ -16,6 +16,8 @@ const routes = {
   "/api/leads": "leads.mjs",
   "/api/stats": "stats.mjs",
   "/api/track": "track.mjs",
+  "/api/properties": "properties.mjs",
+  "/api/buyer-lead": "buyer-lead.mjs",
 };
 
 const server = createServer(async (req, res) => {
@@ -34,7 +36,7 @@ const server = createServer(async (req, res) => {
       body: chunks.length ? Buffer.concat(chunks) : undefined,
     });
     const handler = (await import("../api/" + route)).default;
-    const response = await handler(request);
+    const response = await handler.fetch(request);
     res.writeHead(response.status, Object.fromEntries(response.headers));
     res.end(Buffer.from(await response.arrayBuffer()));
   } catch (err) {

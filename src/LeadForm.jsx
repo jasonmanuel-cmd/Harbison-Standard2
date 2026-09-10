@@ -2,7 +2,7 @@ import {useId,useRef,useState,useEffect} from 'react';
 import {ArrowRight,ArrowLeft,HouseLine,Key,Hammer,ChartLineUp,ChatCircle,Envelope,Check,Copy,CheckCircle} from '@phosphor-icons/react';
 import {agent} from './data';
 import {getSessionId} from './track';
-const defaultGoals=[{name:'Buying',Icon:Key,copy:'Find my next home'},{name:'Selling',Icon:HouseLine,copy:'Plan my next move'},{name:'Investing',Icon:ChartLineUp,copy:'Explore an opportunity'},{name:'Building or renovating',Icon:Hammer,copy:'Create something better'},{name:'Something else',Icon:ChatCircle,copy:'Let’s talk it through'}];
+const defaultGoals=[{name:'Buying',Icon:Key,copy:'Find my next home'},{name:'Selling',Icon:HouseLine,copy:'Plan my next move'},{name:'Investing',Icon:ChartLineUp,copy:'Explore an opportunity'},{name:'Something else',Icon:ChatCircle,copy:'Let’s talk it through'}];
 const FORMSPREE='https://formspree.io/f/xqpkdwrp';
 export function LeadForm({source,goalOptions=defaultGoals,messagePlaceholder="Your goals, price range, or questions…"}){
  const goals=goalOptions;

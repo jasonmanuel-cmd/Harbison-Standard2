@@ -18,8 +18,6 @@ export const socials = [
 // Past transactions can include either side of a sale; do not label all as seller representation.
 export const properties = [
   {id:'pellisier',address:'18024 Pellisier Road',city:'Tehachapi',zip:'93561',region:'Kern County',price:980000,beds:4,baths:3,sqft:2805,date:'2025-07-01',lot:'20.08 acres',context:'A unique mountain property with acreage, views, and a specific buyer profile.',description:'A mountain ranch with room to breathe. Set on more than 20 acres in Cummings Valley, this home brings together expansive views, a wraparound deck, and a barn with horse stalls.'},
-  {id:'crestline',address:'2574 Crestline Drive',city:'Lemon Grove',zip:'91945',region:'San Diego County',price:720000,beds:3,baths:2,sqft:1310,date:'2026-01-26',context:'A move-in-ready home in Lemon Grove'},
-  {id:'woodshawn',address:'7318 Woodshawn Drive',city:'San Diego',zip:'92114',region:'San Diego County',price:785000,beds:3,baths:2,sqft:1320,date:'2025-09-15',context:'A two-story home in San Diego with a flat backyard'},
   {id:'sheridan',address:'10618 Sheridan Street',city:'California City',zip:'93505',region:'Kern County',price:345000,beds:4,baths:2,sqft:1705,date:'2025-06-06',context:'A spacious single-story home in California City'},
   {id:'mendiburu',address:'9664 Mendiburu Road',city:'California City',zip:'93505',region:'Kern County',price:359000,beds:4,baths:2,sqft:2246,date:'2024-01-12',context:'Renovation potential on an open lot in California City'},
   {id:'alsab',address:'17400 Alsab Place',city:'Stallion Springs',zip:'93561',region:'Kern County',price:390000,beds:3,baths:2,sqft:1507,date:'2023-10-30',context:'A home in Stallion Springs with room to grow'},
@@ -27,8 +25,6 @@ export const properties = [
 ];
 export const testimonials = [
   {quote:'Nathanael was honest, responsive, and easy to work with from start to finish.',label:'Buyer · Tehachapi'},
-  {quote:'His construction knowledge gave us confidence when we were evaluating the home.',label:'Seller · Kern County'},
-  {quote:'He helped us think clearly, not just move fast.',label:'Investor · San Diego County'},
 ];
-export const money = value => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(value);
+export const money = value => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:Number.isInteger(Number(value))?0:2,maximumFractionDigits:2}).format(value);
 export const soldDate = value => new Date(value+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});

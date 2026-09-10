@@ -1,5 +1,5 @@
-import {agent,properties} from './data';
-import {servicePages} from './serviceData';
+import {agent,properties} from './data.js';
+import {servicePages} from './serviceData.js';
 
 // Change siteUrl here once your domain is live. It is used for canonical URLs,
 // Open Graph, JSON-LD structured data, and the sitemap.
@@ -7,8 +7,8 @@ export const siteUrl = 'https://www.harbisonstandard.com';
 
 export const ogImage = siteUrl + '/assets/hero.webp';
 
-const cities = ['Tehachapi, CA','Bakersfield, CA','California City, CA','Stallion Springs, CA','Lemon Grove, CA','San Diego, CA'];
-const counties = ['Kern County, CA','San Diego County, CA'];
+const cities = ['Tehachapi, CA','Bakersfield, CA','California City, CA','Stallion Springs, CA'];
+const counties = ['Kern County, CA'];
 const socials = [
   'https://www.facebook.com/nate85.realtor',
   'https://www.instagram.com/nathanaelharbison',
@@ -21,8 +21,8 @@ const base = () => ({
   '@type': 'RealEstateAgent',
   '@id': siteUrl + '/#agent',
   name: agent.name,
-  description: 'California REALTOR® and real estate agent with a hands-on construction background since 2017, serving buyers, sellers, builders, and investors across Kern County and San Diego County, California.',
-  slogan: 'Real estate guidance with a builder’s eye.',
+  description: 'California REALTOR® and real estate agent, serving buyers, sellers, and investors across Kern County, California.',
+  slogan: 'Real estate guidance with a local perspective.',
   jobTitle: 'Real Estate Agent',
   image: [ogImage, siteUrl + '/assets/headshot.webp'],
   url: siteUrl + '/',
@@ -46,7 +46,7 @@ const base = () => ({
     '@type': 'Organization',
     name: 'National Association of REALTORS®',
   },
-  knowsAbout: ['Real estate','New construction','Home development','Property renovation','Housing market','Real estate investing','Kern County real estate','San Diego real estate'],
+  knowsAbout: ['Real estate','Housing market','Real estate investing','Kern County real estate'],
   sameAs: socials,
   brand: {name: 'Harbison Standard', '@type': 'Brand'},
 });
@@ -58,7 +58,7 @@ const org = () => ({
   name: 'Harbison Standard',
   url: siteUrl + '/',
   logo: siteUrl + '/assets/logo.webp',
-  slogan: 'Real estate guidance with a builder’s eye.',
+  slogan: 'Real estate guidance with a local perspective.',
   telephone: agent.phone,
   email: agent.email,
   priceRange: '$$',
@@ -111,7 +111,7 @@ const listingList = () => ({
     item: {
       '@type': 'RealEstateListing',
       name: p.address + ', ' + p.city + ', CA',
-      url: siteUrl + '/properties',
+      url: siteUrl + '/property/' + p.id,
       image: siteUrl + '/assets/sold/' + p.id + '.webp',
       address: {
         '@type': 'PostalAddress',
@@ -133,32 +133,34 @@ const listingList = () => ({
 
 export const routes = {
   '/': {
-    title: 'Harbison Standard | Kern County & San Diego REALTOR®',
-    description: 'Real estate guidance with a builder’s eye in Kern County and San Diego. Nathanael Harbison, REALTOR® (DRE 02059393), helps buyers, sellers, and investors buy, sell, build, and invest. Call (661) 472-7499.',
+    title: 'Harbison Standard | Kern County REALTOR®',
+    description: 'Real estate guidance with a local perspective in Kern County. Nathanael Harbison, REALTOR® (DRE 02059393), helps buyers, sellers, and investors buy, sell, and invest. Call (661) 472-7499.',
   },
   '/about': {
     title: 'About Nathanael Harbison | Harbison Standard',
-    description: 'Meet Nathanael Harbison, a California REALTOR® with a construction background since 2017. Real estate guidance across Kern County (Tehachapi, Bakersfield, California City) and San Diego.',
+    description: 'Meet Nathanael Harbison, a California REALTOR®. Real estate guidance across Kern County (Tehachapi, Bakersfield, California City).',
   },
+  '/open-houses': {title:'Open Houses | Harbison Standard', description:'View upcoming open houses or ask Nathanael Harbison about a private showing.'},
+  '/past-sales': {title: 'Past Sales | Harbison Standard', description: 'Selected verified past transactions by Nathanael Harbison. These homes are not currently offered for sale.'},
   '/properties': {
-    title: 'Past Sales & Results | Nathanael Harbison, REALTOR®',
-    description: 'Verified past sales by Nathanael Harbison, REALTOR® — from Tehachapi and California City to San Diego. Homes, locations, and results across Kern County and San Diego County.',
+    title: 'Properties in Bakersfield & Tehachapi | Harbison Standard',
+    description: 'Explore current listings and available homes in Bakersfield, Tehachapi, Kern County, and other markets served by Nathanael Harbison, REALTOR®.',
+  },
+  '/moving-from-los-angeles-to-bakersfield': {
+    title: 'Moving from Los Angeles to Bakersfield | Homes & Relocation | Harbison Standard',
+    description: 'Moving from Los Angeles to Bakersfield? Compare what your budget can target, view relevant properties, and create a buyer profile for Bakersfield, Tehachapi, and Kern County.',
   },
   '/contact': {
     title: 'Contact Nathanael Harbison | Call (661) 472-7499',
-    description: 'Contact Nathanael Harbison, REALTOR®, about buying, selling, building, or investing. Call or text (661) 472-7499 or send a message — typical response within 24 hours.',
+    description: 'Contact Nathanael Harbison, REALTOR®, about buying, selling, or investing. Call or text (661) 472-7499 or send a message — typical response within 24 hours.',
   },
   '/real-estate': {
     title: 'Selling a Home in Kern County | Harbison Standard',
-    description: 'Selling your home in Kern County or San Diego? Get a clear plan for repairs, as-is sales, inherited homes, and time-sensitive moves. Talk with Nathanael Harbison, REALTOR®.',
-  },
-  '/development': {
-    title: 'Building, Land & Spec Homes | Harbison Standard',
-    description: 'Think through building a home, buying a spec home, or buying land in Kern County or San Diego. Nathanael Harbison brings a builder’s perspective to the real estate side.',
+    description: 'Selling your home in Kern County? Get a clear plan for repairs, as-is sales, inherited homes, and time-sensitive moves. Talk with Nathanael Harbison, REALTOR®.',
   },
   '/investing': {
     title: 'Real Estate Investing Guidance | Harbison Standard',
-    description: 'Real estate investing guidance in Kern County and San Diego: investment properties, flips, and practical opportunities. Nathanael Harbison, REALTOR®, offers a long-term perspective.',
+    description: 'Real estate investing guidance in Kern County: investment properties, flips, and practical opportunities. Nathanael Harbison, REALTOR®, offers a long-term perspective.',
   },
   '/hq': {
     title: 'HQ | Harbison Standard',
@@ -180,10 +182,9 @@ function faq(pairs) {
 }
 
 export const homeFaq = [
-  {q: 'Who is Nathanael Harbison?', a: 'Nathanael Harbison is a California-licensed REALTOR® (DRE #02059393) at Harbison Standard with hands-on construction experience since 2017. He helps buyers, sellers, builders, and investors across Kern County and San Diego County.'},
-  {q: 'Where does Harbison Standard serve?', a: 'Harbison Standard serves Kern County, including Tehachapi, Bakersfield, California City, and Stallion Springs, plus San Diego County, California — for buying, selling, building, and investing.'},
+  {q: 'Who is Nathanael Harbison?', a: 'Nathanael Harbison is a California-licensed REALTOR® (DRE #02059393) at Harbison Standard. He helps buyers, sellers, and investors across Kern County.'},
+  {q: 'Where does Harbison Standard serve?', a: 'Harbison Standard serves Kern County, including Tehachapi, Bakersfield, California City, and Stallion Springs, California — for buying, selling, and investing.'},
   {q: 'Can Nathanael help me sell my home?', a: 'Yes. Nathanael guides sellers through planned moves, inherited properties, homes needing repairs, and time-sensitive situations, including selling as-is when that makes sense.'},
-  {q: 'Do you help with building a home or buying land?', a: 'Yes. Nathanael brings a builder’s perspective to building a home, buying a spec home, and evaluating land in Kern County and San Diego County.'},
   {q: 'Do you work with real estate investors?', a: 'Yes. Nathanael works with investors on investment properties, flips, and value-add homes, and talks plainly about what makes sense for their goals.'},
   {q: 'How do I get in touch with Nathanael?', a: 'Call or text (661) 472-7499 or email nate85.realtor@gmail.com. Messages typically get a response within 24 hours.'},
 ];
@@ -192,10 +193,10 @@ const serviceFaqFor = path => (servicePages[path] && servicePages[path].faq) ? s
 
 export const contactFaq = [
   {q: 'Can I reach out if I’m not ready yet?', a: 'Of course. Many conversations start before a decision is made. There’s no pressure to commit.'},
-  {q: 'Do you work with both Kern County and San Diego clients?', a: 'Yes. Nathanael serves clients across Kern County (including Tehachapi, Bakersfield, California City, and Stallion Springs) and San Diego County.'},
+  {q: 'Which Kern County communities do you serve?', a: 'Yes. Nathanael serves clients across Kern County (including Tehachapi, Bakersfield, California City, and Stallion Springs).'},
   {q: 'Should I call if my timeline is urgent?', a: 'For time-sensitive situations, calling (661) 472-7499 typically gets the fastest response. Text works too.'},
   {q: 'Can I ask about a specific property?', a: 'Absolutely. Share the property or the question you have, and Nathanael will help you understand the details.'},
-  {q: 'Can I talk through multiple options before deciding?', a: 'Yes. Many clients explore a few directions — buying, selling, building, or investing — before landing on the right one.'},
+  {q: 'Can I talk through multiple options before deciding?', a: 'Yes. Many clients explore a few directions — buying, selling, or investing — before landing on the right one.'},
 ];
 
 export function jsonLdFor(path) {
@@ -213,8 +214,13 @@ export function jsonLdFor(path) {
       isPartOf: {'@id': siteUrl + '/#website'},
     }, breadcrumb([{name: 'Home', path: '/'}, {name: 'About', path: '/about'}])];
   }
+  if (path === '/open-houses') return [page(routes[path].title,routes[path].description,path),breadcrumb([{name:'Home',path:'/'},{name:'Open Houses',path}])];
+  if (path === '/past-sales') return [base(), org(), website(), page(routes[path].title, routes[path].description, path), listingList(), breadcrumb([{name:'Home',path:'/'},{name:'Past Sales',path}])];
   if (path === '/properties') {
-    return [base(), org(), website(), page(routes['/properties'].title, routes['/properties'].description, '/properties'), listingList(), breadcrumb([{name: 'Home', path: '/'}, {name: 'Properties', path: '/properties'}])];
+    return [base(), org(), website(), page(routes['/properties'].title, routes['/properties'].description, '/properties'), breadcrumb([{name: 'Home', path: '/'}, {name: 'Properties', path: '/properties'}])];
+  }
+  if (path === '/moving-from-los-angeles-to-bakersfield') {
+    return [base(), org(), website(), page(routes[path].title, routes[path].description, path), breadcrumb([{name: 'Home', path: '/'}, {name: 'Moving from Los Angeles to Bakersfield', path}])];
   }
   if (path === '/contact') {
     return [base(), org(), website(), {
@@ -229,7 +235,6 @@ export function jsonLdFor(path) {
   }
   const svc = {
     '/real-estate': {name: 'Selling a Home', type: 'Residential Real Estate Sales', desc: 'Support selling a home with a clear plan — planned moves, inherited homes, repairs, and time-sensitive situations.', path: '/real-estate'},
-    '/development': {name: 'Home Development', type: 'New Construction Real Estate Services', desc: 'Building a home, buying a spec home, and exploring land for new construction.', path: '/development'},
     '/investing': {name: 'Real Estate Investing', type: 'Real Estate Investment Advisory', desc: 'Real estate investment properties, flips, and discussions about possible opportunities with Harbison Standard.', path: '/investing'},
   };
   const s = svc[path];
@@ -245,4 +250,28 @@ export function jsonLdFor(path) {
     areaServed: counties,
     url: siteUrl + path,
   }, ...(pageFaq ? [faq(pageFaq)] : [])];
+}
+export function applyPropertySeo(property) {
+  if (!property || typeof document === 'undefined') return;
+  const path = `/property/${property.slug || property.id}`;
+  const location = [property.city, property.state || 'CA'].filter(Boolean).join(', ');
+  const title = `${property.address || 'Property'}${location ? ' | ' + location : ''} | Harbison Standard`;
+  const description = property.description || `Property details and buyer guidance from Nathanael Harbison, REALTOR®.`;
+  document.title = title;
+  const setMeta=(sel,attr,val)=>document.querySelector(sel)?.setAttribute(attr,val);
+  setMeta('meta[name="description"]','content',description);
+  setMeta('link[rel="canonical"]','href',siteUrl+path);
+  setMeta('meta[property="og:url"]','content',siteUrl+path);
+  setMeta('meta[property="og:title"]','content',title);
+  setMeta('meta[property="og:description"]','content',description);
+  setMeta('meta[name="twitter:title"]','content',title);
+  setMeta('meta[name="twitter:description"]','content',description);
+  document.querySelectorAll('script[data-property-jsonld]').forEach(s=>s.remove());
+  const schema={
+    '@context':'https://schema.org','@type':'RealEstateListing',name:property.address||title,url:siteUrl+path,description,
+    image:(property.images||[]).map(x=>x.startsWith('http')?x:siteUrl+x),
+    address:{'@type':'PostalAddress',streetAddress:property.address||'',addressLocality:property.city||'',addressRegion:property.state||'CA',postalCode:property.zip||'',addressCountry:'US'},
+    offers:property.price?{'@type':'Offer',price:property.price,priceCurrency:'USD'}:undefined
+  };
+  const el=document.createElement('script');el.type='application/ld+json';el.setAttribute('data-property-jsonld','true');el.text=JSON.stringify(schema);document.head.appendChild(el);
 }
