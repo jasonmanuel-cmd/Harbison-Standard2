@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Allow: /api/properties
 Disallow: /hq
 
 Sitemap: https://www.harbisonstandard.com/sitemap.xml

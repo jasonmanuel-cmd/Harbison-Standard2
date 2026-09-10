@@ -76,3 +76,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - HQ defaults to Supabase Buyer inquiries and retains Other inquiries for the existing Neon integration. Both require ADMIN_TOKEN. Buyer notes use the notes column confirmed present in Supabase. Notes have an explicit Save notes button.
 - Vercel API entry points export the Web Standard object `{fetch:handler}`. A default function receives Node requests on Vercel and is incompatible with this code's Web Request APIs. Local shim and prerendering call `.fetch` on the same exports.
 - Build generates static route metadata, property previews, and sitemap entries, including past-sale fallbacks. This is metadata prerendering, not full visible-content SSR. Keep the Sites packaging files intact.
+
+## September 10: property crawlability correction
+- Property pages now render their full existing React UI at build time, not just metadata. Embed only the normalized public property data and hydrate the same components in the browser. Keep initial content visible if the API is unavailable. This supersedes the metadata-only implementation above; no public design change is intended.
+- robots.txt allows /api/properties specifically while retaining Disallow /api/ and /hq for private endpoints. Public property content must not depend on a crawler-blocked request.
+- Run npm run build before node --test tests/property-prerender.test.mjs to verify initial HTML content and crawl directives. Published property edits require a new deployment to refresh the initial HTML snapshot.

@@ -14,10 +14,10 @@ import {siteUrl,routes,jsonLdFor} from './seo';
 import {trackEvent} from './analytics';
 import {captureAttribution} from './attribution';
 const pages={'/':{name:'Home',Component:Home},'/about':{name:'About',Component:About},'/properties':{name:'Properties',Component:PropertiesPage},'/past-sales':{name:'Past Sales',Component:PastSalesPage},'/open-houses':{name:'Open Houses',Component:OpenHousesPage},'/moving-from-los-angeles-to-bakersfield':{name:'LA to Bakersfield',Component:MovingFromLosAngeles},'/contact':{name:'Contact',Component:Contact},'/hq':{name:'HQ',Component:Hq}};
-export function App(){
- const path=window.location.pathname.replace(/\/+$/,'')||'/';
+export function App({initialPath,initialProperty}={}){
+ const path=(initialPath||window.location.pathname).replace(/\/+$/,'')||'/';
  const propertyMatch=path.match(/^\/property\/([^/]+)$/);
- const page=pages[path]||(propertyMatch?{name:'Property',Component:()=> <PropertyDetailPage slug={decodeURIComponent(propertyMatch[1])}/>}:(servicePages[path]?{name:servicePages[path].name,Component:ServicePage}:undefined));
+ const page=pages[path]||(propertyMatch?{name:'Property',Component:()=> <PropertyDetailPage slug={decodeURIComponent(propertyMatch[1])} initialProperty={initialProperty}/>}:(servicePages[path]?{name:servicePages[path].name,Component:ServicePage}:undefined));
  const [menu,setMenu]=useState(false);
  useEffect(()=>{if(path==='/hq')return;captureAttribution();trackPageView(path)},[path]);
  useEffect(()=>{
