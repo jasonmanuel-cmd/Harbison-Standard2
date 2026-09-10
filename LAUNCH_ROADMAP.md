@@ -29,7 +29,7 @@ Verified on production:
 Outstanding verification:
 - Actual Gmail receipt: user will confirm in the morning; Formspree acceptance is verified, inbox receipt is not.
 - Browser verification passed for Apollo at desktop and 390px mobile widths: content/images rendered, no horizontal overflow, no page errors, and a real form submission showed success and appeared in HQ. HQ login and mobile notes persistence were verified. The final HQ controls fix is deployed; live browser Save notes persistence and absence of mobile horizontal overflow were verified.
-- Google Analytics/GTM and Search Console IDs are not configured. Campaign fields are saved with inquiries; do not claim Google conversion reporting is active.
+- GA4 (G-2Q59BEZ4MJ) and GTM (GTM-M5HK83KW) configured and deployed. Campaign fields are saved with inquiries.
 
 ## Phase 2: traffic and follow-up
 1. Use tagged Apollo links for Facebook, Instagram, YouTube, and QR codes; see TRAFFIC_LINKS.md.
