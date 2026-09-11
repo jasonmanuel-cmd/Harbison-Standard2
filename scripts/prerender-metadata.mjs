@@ -10,7 +10,7 @@ import {renderToString} from 'react-dom/server';
 if(existsSync('.env'))loadEnvFile('.env');
 const template=readFileSync('dist/client/index.html','utf8');
 const escape=value=>String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
-const json=value=>JSON.stringify(value).replaceAll('<','\\u003c');
+const json=value=>JSON.stringify(value).replaceAll('<','003c');
 function page(path,meta,schemas=[],photo=ogImage,property=null){
  let html=template.replace(/<title>.*?<\/title>/,'<title>'+escape(meta.title)+'</title>');
  const fields={'name="description"':meta.description,'property="og:title"':meta.title,'property="og:description"':meta.description,'property="og:url"':siteUrl+path,'property="og:image"':photo,'name="twitter:title"':meta.title,'name="twitter:description"':meta.description,'name="twitter:image"':photo,'name="robots"':meta.robots||'index, follow'};
