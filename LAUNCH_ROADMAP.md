@@ -3,7 +3,7 @@
 ## Phase 1 finalization
 Implemented and locally verified: CRM field persistence and validation, general inquiry context, unified HQ view, atomic private visit tracking, single analytics initialization excluding HQ, published-inventory sitemaps, land schema, unavailable-property routing, and IndexNow submission tooling. User confirmed notification emails arrive. Apollo remains unpublished.
 
-Production build and 17 tests pass. Real Supabase integration checks passed and test records were removed. Deployment and final live checks are the current next step.
+Production build and 17 tests pass. Real Supabase integration checks passed and test records were removed. Deployment succeeded. Live inquiry persistence, tracking, current property HTML, sitemaps, and unpublished-property 404 checks passed.
 
 Owner/account checks still required:
 - Production HQ credential alignment: local and supplied values were rejected before deployment. Do not send passwords in chat; update the Production environment and redeploy.

@@ -9,12 +9,12 @@ React 19 and Vite 6, with application UI in src/. Vercel Web Standard API handle
 
 Active property, inquiry, and visit handlers use Harbison Supabase project pebqmuumwygrpjofdwfy. Legacy Neon files remain in the repository but are not selected by the current CRM routes. Formspree remains the notification channel. Buyer submissions save first; notification failure does not discard the saved lead. General forms send to Formspree and attempt a separate CRM copy.
 
-Private HQ is /hq and requires ADMIN_TOKEN. See the status report before relying on newer manual-entry, editing, backend selection, or analytics features.
+Private HQ is /hq and requires ADMIN_TOKEN. Manual entry and editing persist validated fields. HQ shows All inquiries from Supabase. See the status report for the remaining production password and external account checks.
 
 ## Configuration
 Server: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ADMIN_TOKEN. SUPABASE_ANON_KEY is an optional server fallback. Never expose server secrets under browser environment prefixes or commit .env files. DATABASE_URL belongs to retained legacy code.
 
-Current runtime analytics names are VITEGA4_ID and VITEGTMID; Google scripts also exist in index.html. These duplicate initialization paths need consolidation. Optional hooks include VITE_GOOGLE_SITE_VERIFICATION, VITE_GOOGLE_ADS_ID, and VITE_META_PIXEL_ID.
+Runtime analytics accepts VITE_GA4_ID / VITE_GTM_ID and the older VITEGA4_ID / VITEGTMID aliases, falling back to the confirmed public measurement IDs. Loaders are centralized in src/analytics.js, run once, and exclude HQ. Keep the direct GA4 tag out of GTM to avoid double counting. Optional hooks include VITE_GOOGLE_SITE_VERIFICATION, VITE_GOOGLE_ADS_ID, and VITE_META_PIXEL_ID.
 
 ## Commands
 - npm ci

@@ -1,3 +1,11 @@
+## Production closeout — September 11, 2026
+
+- Commit aa06f3b deployed successfully: https://vercel.com/coaiebay-sources-projects/hswebsite/4dKEqTPPFaEoWc5WAH2vBBu25Vjd
+- Live general inquiry write/readback and visit persistence passed; disposable records deleted. No new notification email was sent; the user already confirmed receipt.
+- Apollo and an unknown property URL return HTTP 404. Published Mariposa returns 200 with initial property content. Both XML sitemaps return 200. HQ HTML has no static Google loaders; anonymous private API reads return 401.
+- Production still rejects local and supplied HQ passwords. Do not claim authenticated production HQ verification complete; owner must align ADMIN_TOKEN in the correct Vercel Production environment and redeploy.
+- Build and 17 tests passed; no CSS/design changes. GA4 report collection, Search Console sitemap acceptance and Google Business Profile verification remain owner-account checks.
+
 ## Phase 1 finalization — September 10, 2026
 
 This section supersedes the earlier audit findings below. Code fixes are ready for deployment verification.
@@ -63,3 +71,5 @@ Local verification after corrections: npm run build succeeded; all 11 automated 
 - Live /api/leads and /api/stats now return 401 for anonymous requests. They also return 401 with the local ADMIN_TOKEN; local authenticated handlers return 200. Production password/environment alignment needs checking without sharing secrets in chat.
 - Apollo public property API returns 404, consistent with the publication hold. All 16 image URLs in the image sitemap return 200.
 - Built preview started on port 4183 and queued in the app. Automated browser access timed out; no fresh visual-browser verification is claimed.
+
+IndexNow command did not return an acknowledgment in the initial run and was stopped. Receipt is unconfirmed; no repeated submission was made. The command now reports progress and has an overall time limit.
