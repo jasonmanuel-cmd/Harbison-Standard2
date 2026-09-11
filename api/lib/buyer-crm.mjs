@@ -43,7 +43,7 @@ export async function buyerDetail(request) {
     // Fetch visits from Supabase
     const visits = await rows('visits?session_id=eq.'+lead.session_id+'&select=path,referrer,utm_source,utm_medium,utm_campaign,created_at&order=created_at.asc');
     return json({lead:normalize(lead),visits});
-  }catch{return json({error:'Unable to access buyer inquiry'},{status:502});
+  }catch{return json({error:'Unable to access buyer inquiry'},{status:502});}
 }
 export async function buyerStats() {
   async function count(status) {

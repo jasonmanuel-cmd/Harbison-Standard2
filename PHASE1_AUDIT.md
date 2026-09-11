@@ -1,3 +1,5 @@
+> Historical implementation notes. Current verification and outstanding issues are in PROJECT_STATUS.md and LAUNCH_ROADMAP.md. Older completion and infrastructure claims below may be superseded.
+
 # Harbison Standard — Phase 1 audit and implementation
 
 ## Existing project

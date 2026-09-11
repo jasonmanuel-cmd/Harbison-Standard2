@@ -2,16 +2,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 
-test('Apollo ships its visible content and public hydration data in the initial HTML',()=>{
- const html=readFileSync('dist/client/property/3304-apollo-st-bakersfield-ca/index.html','utf8');
- const body=html.split('<div id="root">')[1]?.split('<script id="hs-property-data"')[0];
- assert.ok(body?.includes('<h1>3304 Apollo St</h1>'));
- for(const text of ['$299,999.99','1,305','6,664','Request early information','/assets/apollo/streetview.jpg'])assert.ok(body.includes(text),text);
- assert.ok(!body.includes('Loading <em>property details'));
- const data=JSON.parse(html.match(/<script id="hs-property-data" type="application\/json">([\s\S]*?)<\/script>/)[1]);
- assert.equal(data.slug,'3304-apollo-st-bakersfield-ca');
- assert.equal(data.price,299999.99);
- assert.ok(!('notes' in data));
+test('published properties ship visible content and public hydration data',()=>{
+ const sitemap=readFileSync('dist/client/sitemap.xml','utf8');
+ const paths=[...sitemap.matchAll(new RegExp('<loc>https://www[.]harbisonstandard[.]com(/property/[^<]+)</loc>','g'))].map(m=>m[1]);
+ assert.ok(paths.length>0,'published property pages exist');
+ assert.ok(!sitemap.includes('3304-apollo-st'),'Apollo remains unpublished');
+ for(const path of paths){
+  const html=readFileSync('dist/client'+path+'/index.html','utf8');
+  const match=html.match(new RegExp('<script id="hs-property-data" type="application/json">([\\s\\S]*?)</script>'));
+  assert.ok(match,path+' has hydration data');
+  const data=JSON.parse(match[1]);
+  const body=html.split('<div id="root">')[1]?.split('<script id="hs-property-data"')[0];
+  assert.ok(body?.includes('<h1>'),path+' has visible heading');
+  assert.ok(!body.includes('Loading <em>property details'),path+' is not a loading shell');
+  assert.equal('/property/'+data.slug,path);
+  assert.ok(!('notes' in data));
+ }
 });
 
 test('crawlers may fetch public property data while private endpoints remain disallowed',()=>{

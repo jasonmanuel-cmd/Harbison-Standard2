@@ -1,34 +1,45 @@
-# September 10, 2026
+# Harbison Standard — current verified status
 
-Reviewed the supplied ChatGPT history and Buyer-Interception-Research.pdf against this React/Vite project. Preserved CSS, fonts, layout and imagery.
+Reviewed September 10, 2026 against local source, GitHub main, public production responses, and read-only Harbison Supabase access. This replaces earlier chronological status reports; those remain in Git history.
 
-Completed: local API routes for properties/buyer inquiries; attribution retention across internal navigation; duplicate Meta conversion fix; HQ exclusion from analytics/attribution; public property response field allowlist and draft exclusion; sold-property disclaimer and similar-home CTA; active-only relocation inventory; fallback property IDs no longer sent into a UUID foreign key; buyer source persistence; six passing regression/Sites tests and successful production build.
+## Repository and hosting
+- Repository: https://github.com/jasonmanuel-cmd/Harbison-Standard2
+- Local main and remote main both started this review at 33bdef91d05fd7d90370e399d3d91d2485c7679a, with a clean working tree.
+- Production: https://www.harbisonstandard.com
+- Vercel project: coaiebay-sources-projects/hswebsite.
+- GitHub reports a successful Vercel deployment for that commit: https://vercel.com/coaiebay-sources-projects/hswebsite/FGoSsmFPG45HYMAWmLexy6n83q8R
+- Direct Vercel dashboard/API access returned 403; CLI could not access the team. Environment settings, runtime logs, and dashboard-only jobs were not inspected. A successful deployment status does not guarantee healthy API execution.
 
-Local preview: http://localhost:5173, API: http://localhost:8787.
+## What is implemented
+- React 19 / Vite 6 site, established visual design, real estate and investment scope.
+- Separate current properties, past sales, open houses, About, Contact, real estate, investing, and LA-to-Bakersfield pages.
+- Correct Supabase project: pebqmuumwygrpjofdwfy. Properties, leads, sessions, and visits tables respond to authenticated reads.
+- Published feed currently contains 22208 Mariposa Rd ($40,000), 0 Chalet Dr ($199,000), and 585 N Wendy Dr ($880,000). All three live detail pages include visible content and hydration data in initial HTML.
+- User confirmed during this review: Apollo cannot be listed yet. Keep it unpublished and do not use its old campaign links. Its former URL currently returns a 200 app shell, not a published property snapshot.
+- Buyer qualification form saves to Supabase, then requests Formspree notification. General forms retain Formspree with a separate CRM write.
+- CRM handlers and tracking now use Supabase. Legacy Neon files/dependencies remain, but active handlers no longer select that backend.
+- HQ includes status, notes, edit, and manual-entry controls. Some newer controls have implementation gaps listed below.
+- GA4 G-2Q59BEZ4MJ and GTM GTM-M5HK83KW are present in production HTML. This proves installation code is present, not correct event collection.
+- Live XML sitemap (17 URLs), image sitemap (6 page entries), and robots.txt return 200 with appropriate content types. Google/Bing indexing acceptance is not verified.
+- IndexNow and Google Business Profile setup guides exist. No IndexNow key, submitting endpoint, Vercel cron configuration, or GitHub workflow was found in this repository.
 
-User confirmed sharing Supabase project rfggwgbbmugrcpmjjvex with the existing trucking application. Read-only API verification succeeded but found no properties/leads tables. No remote tables have been changed. Complete transactional setup is in supabase/setup-harbison.sql; it includes Phase 1.1 columns and locks the new tables to server-side access. Existing trucking tables are untouched.
+## Corrections made during this review
+- Fixed a missing closing brace in api/lib/buyer-crm.mjs. Before correction, the module could not parse and production /api/leads and /api/stats returned 500 even without authentication. Corrected local authenticated reads return 200.
+- Corrected JSON escaping in generated property/structured data so less-than characters retain their value after parsing.
+- Updated property prerender verification to cover actual published pages and assert that Apollo stays out of the sitemap.
+- Replaced obsolete status/roadmap/README claims and marked historical audit documents as superseded.
 
-Pending: execute setup through an authenticated Supabase SQL editor (dashboard was blank in the in-app browser; Chrome connection failed), verify a buyer write and readback, add a verified real available property, configure follow-up delivery/access for Supabase buyers, confirm current production domain and deployment target, supply actual analytics IDs, and deploy when ready. Existing HQ still uses Neon and does not display Supabase buyer leads. Analytics IDs and Neon/HQ environment values are empty. No advertising or deployment has been launched.
+## Remaining issues, in priority order
+1. Verify deployment of the CRM syntax correction; repeat authenticated production HQ reads and anonymous rejection checks.
+2. Finish CRM consolidation: the HQ Buyer/Other selector still points at the same Supabase handlers, while normalization labels every lead Buying and replaces the original general-inquiry message. Manual creation does not persist the buyer fields, status, or notes exposed in the form. Preserve general inquiry context, validate editable fields, and verify create/edit/readback before calling these complete.
+3. Analytics: hardcoded scripts and runtime initialization can load GTM twice; the static template loads analytics on private HQ despite the runtime exclusion. Consolidate initialization, exclude HQ, and verify one conversion and the expected page views in GA4/GTM. Container contents and conversion reporting are not verified.
+4. Tracking: session upsert resets visits to 1; visit insert failures are ignored while returning success. Confirm accurate counters and failure handling. Tracking SQL does not explicitly enable RLS/revoke public access; anonymous reads returned empty arrays, which does not prove access controls for populated tables. Verify database policies before relying on privacy guarantees.
+5. Routing/SEO: unpublished and unknown property URLs should return a deliberate unavailable/404 response instead of the homepage shell. Keep Apollo unpublished. Confirm Search Console/Bing sitemap acceptance independently.
+6. Image sitemap is static; keep it synchronized with published properties. Property structured data currently assumes SingleFamilyResidence, including land listings; make it reflect the actual property type.
+7. Confirm actual Gmail notification receipt. Earlier Formspree acceptance was verified, but inbox delivery remains unconfirmed. No new email was sent in this review.
+8. Configure/verify Google Business Profile, Bing/IndexNow, and social scheduling only when ready. Setup documents and recommended tools are not evidence of completed connections or published campaigns.
 
-Security reference: https://supabase.com/docs/guides/api/securing-your-api
+## Verification limits
+This is a repository and deployment audit with targeted checks, not certification of every browser flow or external account. No property publication, database migration, email, advertisement, or social post was performed during this review. Secrets and private lead contents were not printed. See LAUNCH_ROADMAP.md for the ordered work remaining.
 
-## Project correction
-User clarified that Harbison uses pebqmuumwygrpjofdwfy; the previous URL was supplied by mistake. No remote mutations were made. Local .env URL is corrected and wrong-project keys cleared. Need the matching Harbison server key entered locally, then inspect its schema before applying setup. Browser connection still fails before reading any dashboard content.
-
-Verified updated Harbison credentials: REST schema and property handler return HTTP 200. Both original tables exist; available property count is zero. Existing leads.bedrooms is integer and properties.gallery holds gallery media; handlers corrected and mocked regression checks passed. Attribution/source/desired_area/budget columns still need setup SQL. Supabase execute_sql connector returned permission denied; no remote mutations made.
-
-## Database verified after SQL setup
-Harbison schema now includes all Phase 1.1 fields. Restarted local API to load correct credentials. Real HTTP POST /api/buyer-lead returned 201; server-side readback verified buyer preferences, integer bedrooms, brand, source, and first/last attribution. Invalid submission returned 400; unauthenticated REST access returned 401/403. Deleted only the disposable test lead and verified absence. Properties table is empty; first real property details/media required. No deployment performed.
-
-Apollo record changed from draft to Coming Soon with anticipated October 1, 2026 launch and exact asking price 299999.99. Public API, current-listing filters, homepage feature, and early-interest form support this status. Build and six tests passed; direct property API verified. No production deployment or social posts sent. Photos and video pending.
-
-September 10 update: Removed public San Diego/Lemon Grove references and corresponding archive examples. Added user-provided Apollo specifications, features, and clearly labelled historical sale. Public API readback verified; build and six regression tests pass. See LAUNCH_ROADMAP.md for current Phase 1 launch gaps, dependencies, estimates, and Phase 2 scope.
-
-## Phase 1 production launch verification
-Latest status supersedes earlier pending items above. Correct project pebqmuumwygrpjofdwfy; notes column confirmed. Production https://www.harbisonstandard.com now serves deployment dpl_7trGS5FiwDii114xbJVkUzm1FCbA. Fixed Vercel request-format compatibility using Web Standard fetch exports on all API endpoints. All public route/image/sitemap checks passed. Real production Apollo inquiry saved, Formspree accepted its email, HQ readback/status/notes verified, disposable test deleted. Both Supabase and Neon stats return 200 with authentication; private endpoints reject anonymous requests. Nine automated tests pass. Actual Gmail receipt awaits user confirmation tomorrow morning. Google analytics IDs remain unconfigured. See LAUNCH_ROADMAP.md and TRAFFIC_LINKS.md.
-
-Browser verification update: Agent Browser succeeded after the in-app browser connection failed. Desktop and 390px mobile Apollo rendering verified, with no horizontal overflow or page errors. Real browser inquiry showed success and appeared in HQ. Verified private login and notes persistence; corrected missing Save notes button and HQ mobile overflow. GitHub main is linked to automatic Vercel production builds.
-
-Final verification: GitHub main auto-deployment serves the HQ save/mobile fixes. Live browser notes persisted and both disposable buyer tests were deleted. General inquiry flow reaches its review step; its server validation returns 400 for missing required fields. Apollo loading now reserves viewport space and retains generated property metadata instead of temporarily displaying a not-found title. Local mobile browser layout-shift check improved from approximately 0.588 on the prior production load to 0.00065 after the loading-space correction (lab observations, not field Core Web Vitals).
-
-Soft-404 correction: Google live inspection reported Apollo as soft 404 despite successful fetch. Found that robots.txt disallowed the API needed to render the otherwise empty app shell. Added a specific crawl allowance for public properties and full build-time React rendering with public-data hydration for property pages. Local built-page browser check retained full Apollo content when API response was unavailable, without hydration errors. Eleven tests pass. Google classification must be re-tested after deployment.
+Local verification after corrections: npm run build succeeded; all 11 automated checks passed, including published-property initial HTML, API privacy, attribution, email-failure handling, and Sites packaging. No visual styling was changed.

@@ -1,3 +1,5 @@
+> ON HOLD — September 10, 2026: The user confirmed Apollo cannot be listed yet. Do not publish or distribute the historical links below until explicitly approved. Choose a currently published property for new campaigns.
+
 # Apollo traffic links
 Use these URLs in approved posts or video descriptions. No posts or ads have been published.
 

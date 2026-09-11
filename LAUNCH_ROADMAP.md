@@ -1,42 +1,30 @@
 # Harbison Standard launch roadmap
-Updated September 10, 2026.
 
-## Phase 1: live acquisition website
-Production: https://www.harbisonstandard.com
-Apollo: https://www.harbisonstandard.com/property/3304-apollo-st-bakersfield-ca
-Private lead management: https://www.harbisonstandard.com/hq
+Updated September 10, 2026. Current audit evidence: PROJECT_STATUS.md.
 
-Implemented and deployed:
-- Existing visual identity, real estate/investment scope, and Kern County focus.
-- Current Listings, Past Sales, Open Houses, About, Contact, Real Estate, Investing, LA-to-Bakersfield, and individual property pages.
-- Apollo Coming Soon with anticipated October 1, 2026 launch; asking price $299,999.99 and supplied property facts.
-- Temporary supplied street-view photograph and location map, with source context and attribution preserved.
-- Supabase buyer capture, property association, preferences, and first/last campaign attribution.
-- Formspree buyer notifications after saving. Failed notification does not discard the saved lead.
-- Private HQ buyer list, details, statuses, and explicit Save notes. Existing Neon Other inquiries remains available.
-- Vercel Web Standard API handlers and generated route/share metadata, sitemap, and HQ noindex.
+## Phase 1 — stabilize the current site
+The public website and three published property pages are live. Phase 1 is not yet fully verified because the audit found CRM and measurement regressions.
 
-Verified on production:
-- Published Apollo API returns expected price and facts.
-- Test inquiry returned 201, persisted with Apollo association and normalized bedrooms, and Formspree accepted the notification.
-- HQ authenticated readback, status change, notes update, and both backend stats returned successful responses.
-- Invalid inquiry returns 400; unauthenticated private API requests return 401.
-- All checked public routes, past-sale detail, images, robots.txt, and sitemap return 200.
-- Bare domain redirects to www over HTTPS.
-- Disposable Supabase test record was removed.
-- Nine regression tests pass; Vercel production build succeeds.
+1. Deploy and verify the CRM module syntax correction: authenticated HQ reads succeed and private endpoints reject anonymous requests.
+2. Complete the Supabase CRM transition: preserve seller/investor messages, resolve the obsolete backend selector, and make manual entry/edit controls save all supported fields correctly.
+3. Consolidate GA4/GTM initialization, exclude HQ, verify conversion counts and source attribution. Repair visit persistence/counters and check tracking-table privacy policies.
+4. Keep Apollo unpublished until explicit release approval. Repair unavailable-property HTTP behavior; confirm current sitemap processing with Google and Bing.
+5. Confirm Gmail receipt and repeat a controlled end-to-end inquiry after CRM changes. Verify mobile HQ and public forms.
 
-Outstanding verification:
-- Actual Gmail receipt: user will confirm in the morning; Formspree acceptance is verified, inbox receipt is not.
-- Browser verification passed for Apollo at desktop and 390px mobile widths: content/images rendered, no horizontal overflow, no page errors, and a real form submission showed success and appeared in HQ. HQ login and mobile notes persistence were verified. The final HQ controls fix is deployed; live browser Save notes persistence and absence of mobile horizontal overflow were verified.
-- GA4 (G-2Q59BEZ4MJ) and GTM (GTM-M5HK83KW) configured and deployed. Campaign fields are saved with inquiries.
+## Already present
+- Live domain and GitHub-to-Vercel deployment integration.
+- Real estate/investment pages, current listings, past sales, open houses, relocation landing page.
+- Three published properties with photos: Mariposa Road, Chalet Drive, Wendy Drive.
+- Public property API, buyer qualification and attribution, Supabase storage, Formspree notification path, private HQ interface.
+- Initial HTML property content, metadata, XML/image sitemaps, robots directives.
+- GA4/GTM installation code; reporting accuracy still needs verification.
 
-## Phase 2: traffic and follow-up
-1. Use tagged Apollo links for Facebook, Instagram, YouTube, and QR codes; see TRAFFIC_LINKS.md.
-2. Create approved property posts and videos. No advertising, outreach, or social posting has been launched.
-3. Work incoming leads in HQ: New, Contacted, Qualified, Closed. Add notes and agree showing arrangements directly.
-4. Connect Google Analytics and Search Console, verify conversions, and report visits, inquiries, appointments, and lead quality.
-5. Add confirmed showing/open-house dates and approved photos/video when supplied.
-6. Expand relocation/search content and matching/follow-up automation after the manual process is reliable.
+## Phase 2 — acquire and follow up with buyers
+- Choose the property and approved facts for each campaign; Apollo is on hold.
+- Record real footage and create platform-specific posts with reviewed copy.
+- Connect the selected scheduler; recommendation is Metricool Starter with inexpensive AI drafting, or Buffer Free to start. No subscription or connection has been created by this review.
+- Use tagged links to the relevant property page; report inquiries, appointments, and qualified buyers by source.
+- Establish daily follow-up in HQ, then consider automation after the manual process works reliably.
+- Complete Google Business Profile and Bing/IndexNow setup. The existing guides do not mean these services are configured.
 
-A single-property inquiry site does not require an MLS feed. Professional media and a walkthrough can follow launch.
+Timing depends on fixing and testing the regressions and gaining access to external dashboards. Search indexing and email receipt cannot be guaranteed on a fixed deadline.

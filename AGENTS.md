@@ -81,3 +81,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Property pages now render their full existing React UI at build time, not just metadata. Embed only the normalized public property data and hydrate the same components in the browser. Keep initial content visible if the API is unavailable. This supersedes the metadata-only implementation above; no public design change is intended.
 - robots.txt allows /api/properties specifically while retaining Disallow /api/ and /hq for private endpoints. Public property content must not depend on a crawler-blocked request.
 - Run npm run build before node --test tests/property-prerender.test.mjs to verify initial HTML content and crawl directives. Published property edits require a new deployment to refresh the initial HTML snapshot.
+
+## September 10: current inventory and status review
+- User explicitly confirmed Apollo cannot be listed yet. Keep it unpublished; do not restore Coming Soon publication or distribute its historical campaign links without new authorization. This supersedes the earlier Apollo launch approval.
+- Current published inventory observed during audit: Mariposa Road, Chalet Drive, Wendy Drive. Preserve current records and supplied photos.
+- PROJECT_STATUS.md and LAUNCH_ROADMAP.md contain the latest verified audit. Active CRM handlers have moved to Supabase; legacy Neon files remain, and HQ consolidation is incomplete. Do not describe the older two-backend design as verified current behavior.
