@@ -5,3 +5,4 @@ Allow: /api/properties
 Disallow: /hq
 
 Sitemap: https://www.harbisonstandard.com/sitemap.xml
+Sitemap: https://www.harbisonstandard.com/sitemap-images.xml

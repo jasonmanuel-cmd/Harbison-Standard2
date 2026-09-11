@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.harbisonstandard.com/</loc>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/hero.webp</image:loc>
+      <image:title>Harbison Standard — Real estate and investing in Kern County</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.harbisonstandard.com/properties</loc>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy1.jpg</image:loc>
+      <image:title>585 N Wendy Dr, Newbury Park — Fully Remodeled Home</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy2.jpg</image:loc>
+      <image:title>585 N Wendy Dr — Kitchen</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy3.jpg</image:loc>
+      <image:title>585 N Wendy Dr — Living Room</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/chalet1.jpg</image:loc>
+      <image:title>0 Chalet Dr, Tehachapi — 20.25 Acres Land</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/mariposa1.jpg</image:loc>
+      <image:title>22208 Mariposa Rd, Tehachapi — 0.3 Acre Lot</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.harbisonstandard.com/property/585-n-wendy-dr-newbury-park-ca</loc>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy1.jpg</image:loc>
+      <image:title>585 N Wendy Dr, Newbury Park — Exterior</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy2.jpg</image:loc>
+      <image:title>585 N Wendy Dr — Kitchen</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy3.jpg</image:loc>
+      <image:title>585 N Wendy Dr — Living Room</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy4.jpg</image:loc>
+      <image:title>585 N Wendy Dr — Bedroom</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy5.jpg</image:loc>
+      <image:title>585 N Wendy Dr — Bathroom</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/wendy6.jpg</image:loc>
+      <image:title>585 N Wendy Dr — Backyard</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.harbisonstandard.com/property/0-chalet-dr-tehachapi-ca</loc>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/chalet1.jpg</image:loc>
+      <image:title>0 Chalet Dr, Tehachapi — Aerial View</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/chalet2.jpg</image:loc>
+      <image:title>0 Chalet Dr — Mountain Views</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/chalet3.jpg</image:loc>
+      <image:title>0 Chalet Dr — Valley View</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/chalet4.jpg</image:loc>
+      <image:title>0 Chalet Dr — Property Overview</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.harbisonstandard.com/property/22208-mariposa-rd-tehachapi-ca</loc>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/mariposa1.jpg</image:loc>
+      <image:title>22208 Mariposa Rd, Tehachapi — Lot View</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/mariposa2.jpg</image:loc>
+      <image:title>22208 Mariposa Rd — Street View</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/property/mariposa3.jpg</image:loc>
+      <image:title>22208 Mariposa Rd — Mountain Views</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.harbisonstandard.com/past-sales</loc>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/sold/pellisier.webp</image:loc>
+      <image:title>18024 Pellisier Road, Tehachapi — Sold</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.harbisonstandard.com/assets/sold/sheridan.webp</image:loc>
+      <image:title>10618 Sheridan Street, California City — Sold</image:title>
+    </image:image>
+  </url>
+</urlset>
