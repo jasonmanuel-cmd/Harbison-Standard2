@@ -10,8 +10,10 @@ async function rows(path, options) {
   return body ? JSON.parse(body) : [];
 }
 function normalize(row) {
-  return {...row, goal:row.goal||'Buying', location:row.location||row.desired_area||row.desired_city, timing:row.timing||row.timeline,
-    message:row.message||[['Current city',row.current_city],['Budget',row.budget],['Bedrooms',row.bedrooms],['Lot requirement',row.acreage_requirement],['Property type',row.property_type],['Financing',row.financing_status],['Property to sell',row.has_property_to_sell==null?'':row.has_property_to_sell?'Yes':'No'],['Property ID',row.property_id],['Campaign',row.utm_campaign],['First source',row.first_utm_source],['Last source',row.last_utm_source]].filter(([,v])=>v!==null&&v!==undefined&&v!=='').map(([k,v])=>k+': '+v).join('\n')};
+  const extra = [['Current city',row.current_city],['Budget',row.budget],['Bedrooms',row.bedrooms],['Lot requirement',row.acreage_requirement],['Property type',row.property_type],['Financing',row.financing_status],['Property to sell',row.has_property_to_sell==null?'':row.has_property_to_sell?'Yes':'No'],['Property ID',row.property_id],['Campaign',row.utm_campaign],['First source',row.first_utm_source],['Last source',row.last_utm_source]].filter(([,v])=>v!==null&&v!==undefined&&v!=='').map(([k,v])=>k+': '+v).join('\n');
+  const goal = (row.goal!==undefined&&row.goal!==null&&row.goal!=='')?row.goal:'Something else';
+  const message = row.message ? row.message+(extra?'\n\n'+extra:'') : (extra||'No message.');
+  return {...row, goal, location:row.location||row.desired_area||row.desired_city, timing:row.timing||row.timeline, message};
 }
 // Called only by existing routes after their isAdmin check.
 export async function buyerList(request) {

@@ -32,6 +32,18 @@ function normalize(row) {
   };
 }
 
+const isKernCounty = p => {
+  // If we have no identifying info, include it (don't filter out data we can't classify)
+  if(!p.city && !p.region && !p.zip) return true;
+  if(p.region && /kern/i.test(p.region)) return true;
+  if(p.city){
+    const kernCities = ['bakersfield','tehachapi','california city','stallion springs','mojave','ridgecrest','rosedale','taft','delano','mcFarland','shafter','wasco'];
+    if(kernCities.some(c=>p.city.toLowerCase().includes(c))) return true;
+  }
+  if(p.zip && /^93[0-9]{3}$/.test(p.zip)) return true;
+  return false;
+};
+
 async function handler(request) {
   if (request.method !== 'GET') return json({ error: 'Method not allowed' }, { status: 405 });
   if (!supabaseConfigured()) return supabaseNotConfigured();
@@ -44,10 +56,10 @@ async function handler(request) {
     const response = await supabaseRest(query, { method: 'GET' });
     const text = await response.text();
     if (!response.ok) {
-      console.error('[supabase properties]', response.status, text);
+      console.error('[supabase properties] Request rejected:', response.status);
       return json({ error: 'Failed to load properties' }, { status: 502 });
     }
-    const rows = JSON.parse(text || '[]').map(normalize);
+    const rows = JSON.parse(text || '[]').map(normalize).filter(p=>slug ? true : isKernCounty(p));
     if (slug && !rows.length) return json({ error: 'Property not found' }, { status: 404 });
     return json(slug ? { property: rows[0] } : { properties: rows });
   } catch (error) {

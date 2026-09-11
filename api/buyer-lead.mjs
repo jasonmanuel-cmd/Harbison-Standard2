@@ -62,7 +62,7 @@ async function handler(request) {
     });
     const resultText = await response.text();
     if (!response.ok) {
-      console.error('[supabase lead]', response.status, resultText);
+      console.error('[supabase lead] Request rejected:', response.status);
       return json({ error: 'Failed to save inquiry' }, { status: 502 });
     }
     const rows = resultText ? JSON.parse(resultText) : [];

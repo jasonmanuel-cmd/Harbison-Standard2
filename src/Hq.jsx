@@ -1,6 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
 import {ArrowLeft,ArrowRight,ArrowUpRight,Check,Envelope,Lock,SignOut,Phone,MagnifyingGlass,Plus,Pencil} from '@phosphor-icons/react';
-import {agent} from './data';
 
 const STATUSES=['new','contacted','qualified','closed'];
 const STATUS_LABEL={new:'New',contacted:'Contacted',qualified:'Qualified',closed:'Closed'};
@@ -37,81 +36,114 @@ export function Hq(){
   const [editForm,setEditForm]=useState(null);
   const [adding,setAdding]=useState(false);
   const [newLead,setNewLead]=useState({name:'',email:'',phone:'',desired_area:'',budget:'',bedrooms:'',timeline:'',status:'new',notes:''});
-  const listLoaded=useRef(false);
+  const listRequest=useRef(0);
+  const detailRequest=useRef(0);
+  const sessionVersion=useRef(0);
+  const mutationPending=useRef(false);
+  const loginPending=useRef(false);
   const inputRef=useRef(null);
 
-  useEffect(()=>{if(authed)loadAll()},[authed]);
+  useEffect(()=>{if(authed)loadAll()},[authed,filters.status,filters.q]);
+  useEffect(()=>()=>{sessionVersion.current++;listRequest.current++;detailRequest.current++;},[]);
 
   async function loadAll(){
-    setPhase('loading');
+    const request=++listRequest.current;
+    if(!stats)setPhase('loading');
     try{
       const [s,l]=await Promise.all([
         api(token,'/api/stats'),
-        api(token,'/api/leads'+(filters.status?'?status='+encodeURIComponent(filters.status):'')),
+        api(token,'/api/leads?'+new URLSearchParams(filters)),
       ]);
-      setStats(s);setLeads(l.leads);setPhase('ready');listLoaded.current=true;
+      if(request!==listRequest.current)return;
+      setStats(s);setLeads(l.leads);setPhase('ready');
     }catch(err){
-      if(err.code===401){setAuthed(false);setToken('');setPhase('login');}
+      if(request!==listRequest.current)return;
+      if(err.code===401)logout();
       else if(err.code===503){setPhase('unconfigured');}
       else setPhase('error');
     }
   }
 
   async function refresh(){
-    if(!authed)return;
-    try{
-      const [s,l]=await Promise.all([
-        api(token,'/api/stats'),
-        api(token,'/api/leads'+'?'+new URLSearchParams({...filters})),
-      ]);
-      setStats(s);setLeads(l.leads);
-      if(selected)await openLead(selected);
-    }catch(err){if(err.code===401)logout();}
+    if(authed)await loadAll();
   }
 
   function login(e){
     e.preventDefault();
+    if(loginPending.current)return;
+    loginPending.current=true;
+    const session=sessionVersion.current;
     setMsg('');
     api(password,'/api/leads?limit=1').then(()=>{
+      if(session!==sessionVersion.current)return;
       sessionStorage.setItem('hs_hq',password);
       setToken(password);setAuthed(true);
     }).catch(err=>{
+      if(session!==sessionVersion.current)return;
       if(err.code===503){sessionStorage.setItem('hs_hq',password);setToken(password);setAuthed(true);}
       else setMsg('That password didn’t work.');
     });
   }
 
   function logout(){
+    sessionVersion.current++;listRequest.current++;detailRequest.current++;
     sessionStorage.removeItem('hs_hq');
+    setPassword('');setMsg('');setAdding(false);setEditing(false);setEditForm(null);
+    setFilters({status:'',q:''});
+    setNewLead({name:'',email:'',phone:'',desired_area:'',budget:'',bedrooms:'',timeline:'',status:'new',notes:''});
     setToken('');setAuthed(false);setLeads([]);setStats(null);setSelected(null);setDetail(null);setPhase('login');
   }
 
+  function closeDetail(){
+    detailRequest.current++;
+    setDetail(null);setSelected(null);setEditing(false);setEditForm(null);
+  }
+
   async function openLead(id){
-    setDetail(null);setSelected(id);setEditing(false);
-    try{setDetail(await api(token,'/api/lead?id='+id));}catch(err){if(err.code===401)logout();else setMsg('Could not load this inquiry. Please try again.');}
+    if(mutationPending.current)return;
+    const request=++detailRequest.current;
+    setDetail(null);setSelected(id);setEditing(false);setAdding(false);setMsg('');
+    try{
+      const value=await api(token,'/api/lead?id='+encodeURIComponent(id));
+      if(request===detailRequest.current)setDetail(value);
+    }catch(err){
+      if(request!==detailRequest.current)return;
+      if(err.code===401)logout();else setMsg('Could not load this inquiry. Please try again.');
+    }
   }
 
   async function saveLead(changes,leadId=selected){
+    if(mutationPending.current)return false;
+    mutationPending.current=true;
+    const session=sessionVersion.current;
     setSaving(true);
     try{
       await api(token,'/api/lead',{method:'PATCH',body:JSON.stringify({id:leadId,...changes})});
+      if(session!==sessionVersion.current)return false;
+      setDetail(d=>d?.lead.id===leadId?{...d,lead:{...d.lead,...changes}}:d);
+      setMsg('');
       await refresh();
-      setMsg('');return true;
-    }catch(err){if(err.code===401)logout();else setMsg('Your change could not be saved. Please try again.');}
-    finally{setSaving(false);}
+      return session===sessionVersion.current;
+    }catch(err){
+      if(session===sessionVersion.current){if(err.code===401)logout();else setMsg('Your change could not be saved. Please try again.');}
+    }finally{mutationPending.current=false;setSaving(false);}
     return false;
   }
 
   async function createLead(e){
     e.preventDefault();
+    if(mutationPending.current)return;
+    mutationPending.current=true;
+    const session=sessionVersion.current;
     setSaving(true);
     try{
       await api(token,'/api/lead',{method:'POST',body:JSON.stringify({...newLead,source:'manual'})});
-      setAdding(false);
+      if(session!==sessionVersion.current)return;
+      setAdding(false);setMsg('');
       setNewLead({name:'',email:'',phone:'',desired_area:'',budget:'',bedrooms:'',timeline:'',status:'new',notes:''});
       await refresh();
-    }catch(err){setMsg('Could not create lead.');}
-    setSaving(false);
+    }catch(err){if(session===sessionVersion.current){if(err.code===401)logout();else setMsg('Could not create lead.');}}
+    finally{mutationPending.current=false;setSaving(false);}
   }
 
   const keyStats=[
@@ -139,14 +171,14 @@ export function Hq(){
    <section className="hq-card">
     <div className="hq-card-head"><div><p className="eyebrow">Inquiries</p><p className="hq-note">Most recent inquiries · {leads.length} shown</p></div>
      <div className="hq-tools">
-      <div className="hq-search"><MagnifyingGlass/><input placeholder="Search name or email" value={filters.q} onChange={e=>setFilters({...filters,q:e.target.value})}/></div>
-      <div className="hq-filters">{['',...STATUSES].map(s=><button key={s||'all'} className={filters.status===s?'on':''} onClick={()=>setFilters({...filters,status:s})}>{s?STATUS_LABEL[s]:'All'}</button>)}</div>
-      <button className="hq-link" onClick={refresh}>Refresh <ArrowRight/></button>
-      <button className="hq-link" onClick={()=>{setAdding(true);setDetail(null)}}><Plus/> Add lead</button>
+      <div className="hq-search"><MagnifyingGlass/><input disabled={saving} placeholder="Search name or email" value={filters.q} onChange={e=>setFilters({...filters,q:e.target.value})}/></div>
+      <div className="hq-filters">{['',...STATUSES].map(s=><button disabled={saving} key={s||'all'} className={filters.status===s?'on':''} onClick={()=>setFilters({...filters,status:s})}>{s?STATUS_LABEL[s]:'All'}</button>)}</div>
+      <button className="hq-link" disabled={saving} onClick={refresh}>Refresh <ArrowRight/></button>
+      <button className="hq-link" disabled={saving} onClick={()=>{closeDetail();setAdding(true)}}><Plus/> Add lead</button>
      </div>
     </div>
     {leads.length===0?<p className="hq-note">No inquiries yet. When someone sends a form, they’ll appear here.</p>:
-    <div className="hq-list">{leads.map(l=><button key={l.id} className={'hq-row'+(selected===l.id?' selected':'')} onClick={()=>openLead(l.id)}>
+    <div className="hq-list">{leads.map(l=><button key={l.id} className={'hq-row'+(selected===l.id?' selected':'')} disabled={saving} onClick={()=>openLead(l.id)}>
      <div className="hq-row-main"><strong>{l.name}</strong><span>{l.email}</span></div>
      <div className="hq-row-meta"><span className={'hq-status s-'+l.status}>{STATUS_LABEL[l.status]||l.status}</span><span>{l.source||'Site'}</span><span>{l.goal||''}</span><span>{formatDate(l.created_at)}</span></div>
     </button>)}</div>}
@@ -154,18 +186,18 @@ export function Hq(){
 
    {adding&&<section className="hq-card hq-detail">
     <div className="hq-card-head"><div><p className="eyebrow">Add new lead</p><h2>Manual entry</h2></div>
-     <button className="hq-link" onClick={()=>setAdding(false)}>Close <ArrowLeft/></button>
+     <button className="hq-link" disabled={saving} onClick={()=>setAdding(false)}>Close <ArrowLeft/></button>
     </div>
     <form className="hq-edit-grid" onSubmit={createLead}>
-     <label>Name<input required name="name" value={newLead.name} onChange={e=>setNewLead({...newLead,name:e.target.value})}/></label>
-     <label>Email<input required type="email" name="email" value={newLead.email} onChange={e=>setNewLead({...newLead,email:e.target.value})}/></label>
-     <label>Phone<input name="phone" value={newLead.phone} onChange={e=>setNewLead({...newLead,phone:e.target.value})}/></label>
-     <label>Desired area<input name="desired_area" value={newLead.desired_area} onChange={e=>setNewLead({...newLead,desired_area:e.target.value})}/></label>
-     <label>Budget<input name="budget" value={newLead.budget} onChange={e=>setNewLead({...newLead,budget:e.target.value})}/></label>
-     <label>Bedrooms<input name="bedrooms" value={newLead.bedrooms} onChange={e=>setNewLead({...newLead,bedrooms:e.target.value})}/></label>
-     <label>Timeline<input name="timeline" value={newLead.timeline} onChange={e=>setNewLead({...newLead,timeline:e.target.value})}/></label>
-     <label>Status<select name="status" value={newLead.status} onChange={e=>setNewLead({...newLead,status:e.target.value})}>{STATUSES.map(s=><option key={s} value={s}>{STATUS_LABEL[s]}</option>)}</select></label>
-     <label className="full">Notes<textarea rows={3} name="notes" value={newLead.notes} onChange={e=>setNewLead({...newLead,notes:e.target.value})}/></label>
+     <label>Name<input disabled={saving} required name="name" value={newLead.name} onChange={e=>setNewLead({...newLead,name:e.target.value})}/></label>
+     <label>Email<input disabled={saving} required type="email" name="email" value={newLead.email} onChange={e=>setNewLead({...newLead,email:e.target.value})}/></label>
+     <label>Phone<input disabled={saving} name="phone" value={newLead.phone} onChange={e=>setNewLead({...newLead,phone:e.target.value})}/></label>
+     <label>Desired area<input disabled={saving} name="desired_area" value={newLead.desired_area} onChange={e=>setNewLead({...newLead,desired_area:e.target.value})}/></label>
+     <label>Budget<input disabled={saving} name="budget" value={newLead.budget} onChange={e=>setNewLead({...newLead,budget:e.target.value})}/></label>
+     <label>Bedrooms<input disabled={saving} name="bedrooms" value={newLead.bedrooms} onChange={e=>setNewLead({...newLead,bedrooms:e.target.value})}/></label>
+     <label>Timeline<input disabled={saving} name="timeline" value={newLead.timeline} onChange={e=>setNewLead({...newLead,timeline:e.target.value})}/></label>
+     <label>Status<select disabled={saving} name="status" value={newLead.status} onChange={e=>setNewLead({...newLead,status:e.target.value})}>{STATUSES.map(s=><option key={s} value={s}>{STATUS_LABEL[s]}</option>)}</select></label>
+     <label className="full">Notes<textarea disabled={saving} rows={3} name="notes" value={newLead.notes} onChange={e=>setNewLead({...newLead,notes:e.target.value})}/></label>
      <div className="hq-detail-actions"><button className="gold" type="submit" disabled={saving}>{saving?'Saving…':'Create lead'}</button></div>
     </form>
    </section>}
@@ -175,45 +207,45 @@ export function Hq(){
      <div className="hq-contact-actions">
       <a href={'mailto:'+detail.lead.email} className="hq-link">Reply <Envelope/></a>
       {detail.lead.phone?<a href={'tel:'+detail.lead.phone.replace(/[^+\d]/g,'')} className="hq-link">Call <Phone/></a>:null}
-      <button className="hq-link" onClick={()=>{setEditForm({...detail.lead});setEditing(true);}}><Pencil/> Edit</button>
+      <button className="hq-link" disabled={saving} onClick={()=>{setEditForm({...detail.lead});setEditing(true);}}><Pencil/> Edit</button>
      </div>
     </div>
     <div className="hq-detail-grid">
      <dl className="hq-facts"><div><dt>Goal</dt><dd>{detail.lead.goal||'—'}</dd></div><div><dt>Source</dt><dd>{detail.lead.source||'—'}</dd></div><div><dt>Phone</dt><dd>{detail.lead.phone||'—'}</dd></div><div><dt>Location</dt><dd>{detail.lead.location||'—'}</dd></div><div><dt>Timing</dt><dd>{detail.lead.timing||'—'}</dd></div><div><dt>Status</dt><dd>{STATUS_LABEL[detail.lead.status]||detail.lead.status}</dd></div></dl>
-     <div className="hq-message"><p className="eyebrow">Message</p><p>{detail.lead.message||'No message.'}</p><p className="hq-notes-label">Notes</p><textarea rows={3} value={detail.lead.notes||''} onChange={e=>saveToNotes(e.target.value)} placeholder="Add a note about this lead…"/><button className="hq-link" disabled={saving} onClick={()=>saveLead({notes:detail.lead.notes||''})}>{saving?'Saving…':'Save notes'}</button></div>
+     <div className="hq-message"><p className="eyebrow">Message</p><p>{detail.lead.message||'No message.'}</p><p className="hq-notes-label">Notes</p><textarea disabled={saving || editing} rows={3} value={detail.lead.notes||''} onChange={e=>saveToNotes(e.target.value)} placeholder="Add a note about this lead…"/><button className="hq-link" disabled={saving || editing} onClick={()=>saveLead({notes:detail.lead.notes||''})}>{saving?'Saving…':'Save notes'}</button></div>
      <div className="hq-visit"><p className="eyebrow">Visit trail</p>{detail.visits.length===0?<p className="hq-note">No page-views recorded for this session.</p>:<ol>{detail.visits.map((v,i)=><li key={i}><code>{v.path}</code><span>{formatDate(v.created_at)}</span></li>)}</ol>}</div>
     </div>
     <div className="hq-detail-actions">
-     <div className="hq-status-options">{STATUSES.map(s=><button key={s} className={detail.lead.status===s?'on':''} onClick={()=>saveLead({status:s})} disabled={saving}>{s===detail.lead.status?<Check/>:null}{STATUS_LABEL[s]}</button>)}</div>
-     <button className="hq-link" onClick={()=>{setDetail(null);setSelected(null);setEditing(false);}}>Close <ArrowLeft/></button>
+     <div className="hq-status-options">{STATUSES.map(s=><button key={s} className={detail.lead.status===s?'on':''} onClick={()=>saveLead({status:s})} disabled={saving || editing}>{s===detail.lead.status?<Check/>:null}{STATUS_LABEL[s]}</button>)}</div>
+     <button className="hq-link" disabled={saving} onClick={closeDetail}>Close <ArrowLeft/></button>
     </div>
    </section>}
 
    {editing&&editForm&&<section className="hq-card hq-detail">
     <div className="hq-card-head"><div><p className="eyebrow">Edit lead</p><h2>{editForm.name}</h2></div>
-     <button className="hq-link" onClick={()=>setEditing(false)}>Cancel</button>
+     <button className="hq-link" disabled={saving} onClick={()=>setEditing(false)}>Cancel</button>
     </div>
     <div className="hq-edit-grid">
-     <label>Name<input name="name" value={editForm.name||''} onChange={e=>setEditForm({...editForm,name:e.target.value})}/></label>
-     <label>Email<input type="email" name="email" value={editForm.email||''} onChange={e=>setEditForm({...editForm,email:e.target.value})}/></label>
-     <label>Phone<input name="phone" value={editForm.phone||''} onChange={e=>setEditForm({...editForm,phone:e.target.value})}/></label>
-     <label>Desired area<input name="desired_area" value={editForm.desired_area||''} onChange={e=>setEditForm({...editForm,desired_area:e.target.value})}/></label>
-     <label>Budget<input name="budget" value={editForm.budget||''} onChange={e=>setEditForm({...editForm,budget:e.target.value})}/></label>
-     <label>Bedrooms<input name="bedrooms" value={editForm.bedrooms??''} onChange={e=>setEditForm({...editForm,bedrooms:e.target.value})}/></label>
-     <label>Timeline<input name="timeline" value={editForm.timeline||''} onChange={e=>setEditForm({...editForm,timeline:e.target.value})}/></label>
-     <label>Status<select name="status" value={editForm.status||'new'} onChange={e=>setEditForm({...editForm,status:e.target.value})}>{STATUSES.map(s=><option key={s} value={s}>{STATUS_LABEL[s]}</option>)}</select></label>
-     <label className="full">Notes<textarea rows={3} name="notes" value={editForm.notes||''} onChange={e=>setEditForm({...editForm,notes:e.target.value})}/></label>
+     <label>Name<input disabled={saving} name="name" value={editForm.name||''} onChange={e=>setEditForm({...editForm,name:e.target.value})}/></label>
+     <label>Email<input disabled={saving} type="email" name="email" value={editForm.email||''} onChange={e=>setEditForm({...editForm,email:e.target.value})}/></label>
+     <label>Phone<input disabled={saving} name="phone" value={editForm.phone||''} onChange={e=>setEditForm({...editForm,phone:e.target.value})}/></label>
+     <label>Desired area<input disabled={saving} name="desired_area" value={editForm.desired_area||''} onChange={e=>setEditForm({...editForm,desired_area:e.target.value})}/></label>
+     <label>Budget<input disabled={saving} name="budget" value={editForm.budget||''} onChange={e=>setEditForm({...editForm,budget:e.target.value})}/></label>
+     <label>Bedrooms<input disabled={saving} name="bedrooms" value={editForm.bedrooms??''} onChange={e=>setEditForm({...editForm,bedrooms:e.target.value})}/></label>
+     <label>Timeline<input disabled={saving} name="timeline" value={editForm.timeline||''} onChange={e=>setEditForm({...editForm,timeline:e.target.value})}/></label>
+     <label>Status<select disabled={saving} name="status" value={editForm.status||'new'} onChange={e=>setEditForm({...editForm,status:e.target.value})}>{STATUSES.map(s=><option key={s} value={s}>{STATUS_LABEL[s]}</option>)}</select></label>
+     <label className="full">Notes<textarea disabled={saving} rows={3} name="notes" value={editForm.notes||''} onChange={e=>setEditForm({...editForm,notes:e.target.value})}/></label>
     </div>
     <div className="hq-detail-actions">
      <button className="gold" disabled={saving} onClick={async()=>{const fields=['name','email','phone','desired_area','budget','bedrooms','timeline','status','notes'];const changes=Object.fromEntries(fields.map(key=>[key,editForm[key]??'']));if(await saveLead(changes))setEditing(false);}}>{saving?'Saving…':'Save changes'}</button>
-     <button className="hq-link" onClick={()=>setEditing(false)}>Cancel</button>
+     <button className="hq-link" disabled={saving} onClick={()=>setEditing(false)}>Cancel</button>
     </div>
    </section>}
   </main>;
 
   function saveToNotes(value){
     const saved=value;
-    setDetail(d=>({...d,lead:{...d.lead,notes:saved}}));
+    setDetail(d=>d?({...d,lead:{...d.lead,notes:saved}}):d);
 
   }
 }

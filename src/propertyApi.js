@@ -17,12 +17,26 @@ export const isAvailableProperty = p => /^(available|active|for sale|coming soon
 
 export const staticProperties = fallbackProperties.map(normalizeFallback);
 
+function isKernCounty(p){
+  if(!p.city && !p.region && !p.zip) return true;
+  if(p.region && /kern/i.test(p.region)) return true;
+  if(p.city){
+    const kernCities = ['bakersfield','tehachapi','california city','stallion springs','mojave','ridgecrest','rosedale','taft','delano','mcFarland','shafter','wasco'];
+    if(kernCities.some(c=>p.city.toLowerCase().includes(c))) return true;
+  }
+  if(p.zip && /^93[0-9]{3}$/.test(p.zip)) return true;
+  return false;
+}
+
 export async function getProperties() {
   try {
     const res = await fetch('/api/properties');
     if (!res.ok) throw new Error('api');
     const data = await res.json();
-    return Array.isArray(data.properties) && data.properties.length ? data.properties : staticProperties;
+    if(Array.isArray(data.properties) && data.properties.length){
+      return data.properties.filter(p=>isKernCounty(p)||/^(available|active|for sale|coming soon)$/i.test(p.status||''));
+    }
+    return staticProperties;
   } catch {
     return staticProperties;
   }

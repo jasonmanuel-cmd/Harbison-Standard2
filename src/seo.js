@@ -2,9 +2,8 @@ import {propertySchema} from './propertySchema.js';
 import {agent,properties} from './data.js';
 import {servicePages} from './serviceData.js';
 
-// Change siteUrl here once your domain is live. It is used for canonical URLs,
-// Open Graph, JSON-LD structured data, and the sitemap.
-export const siteUrl = 'https://www.harbisonstandard.com';
+import {siteUrl} from './siteConfig.js';
+export {siteUrl} from './siteConfig.js';
 
 export const ogImage = siteUrl + '/assets/hero.webp';
 
@@ -168,7 +167,51 @@ export const routes = {
     description: '',
     robots: 'noindex, nofollow',
   },
+  '/why-tehachapi': {
+    title: 'Why Move to Tehachapi, CA | Harbison Standard',
+    description: 'Thinking about moving to Tehachapi? Discover why people are choosing this mountain community — affordable land, four seasons, and a growing local economy.',
+  },
+  '/cheap-land-kern-county': {
+    title: 'Cheap Land for Sale in Kern County | Harbison Standard',
+    description: 'Looking for affordable land in Kern County? View current listings and learn what your budget buys in Bakersfield, Tehachapi, and the surrounding areas.',
+  },
+  '/bakersfield-home-prices': {
+    title: 'Bakersfield Home Prices & Market Trends | Harbison Standard',
+    description: 'What are homes selling for in Bakersfield? Explore price ranges, neighborhood comparisons, and what your budget can target in Kern County.',
+  },
+  '/tehachapi-home-prices': {
+    title: 'Tehachapi Home Prices & Market Trends | Harbison Standard',
+    description: 'Thinking about buying in Tehachapi? Explore home prices, land values, and what makes this mountain community different.',
+  },
 };
+
+export const whyTehachapiFaq = [
+  {q: 'Why are people moving to Tehachapi?', a: 'Tehachapi offers four distinct seasons, affordable land, clean air, and a growing local economy based on wind energy, aerospace, healthcare, wine, and outdoor recreation.'},
+  {q: 'Is Tehachapi expensive to live in?', a: 'Compared to many California cities, Tehachapi is more affordable. Land and home prices tend to be lower, making it attractive for remote workers, retirees, and investors.'},
+  {q: 'How far is Tehachapi from Bakersfield?', a: 'Tehachapi is about 35 miles from Bakersfield, roughly a 40-45 minute drive depending on conditions.'},
+  {q: 'What is there to do in Tehachapi?', a: 'Outdoor activities including hiking, hunting, horseback riding, cycling, and wine tasting. The community also hosts events like movie nights and mud runs.'},
+];
+
+export const cheapLandKernFaq = [
+  {q: 'How much does land cost in Kern County?', a: 'Land prices vary widely. Residential lots can be found under $50,000, while larger acreage parcels range from $100,000 to over $200,000 depending on location and utilities.'},
+  {q: 'What should I check before buying land in Kern County?', a: 'Verify zoning, utility access, legal access, soils and drainage, CC&Rs, and any HOA restrictions. Always check with Kern County before committing.'},
+  {q: 'Can I buy land in Kern County as an investment?', a: 'Yes. Many buyers purchase land as a long-term hold or for future development. Talk with a local agent about what makes sense for your goals.'},
+  {q: 'Is owner financing available for land in Tehachapi?', a: 'Some sellers offer owner financing. Check current listings for details or ask Nathanael about available options.'},
+];
+
+export const bakersfieldFaq = [
+  {q: 'What is the average home price in Bakersfield?', a: 'Bakersfield home prices vary widely by neighborhood and condition. Entry-level homes start around $200K–$250K, with mid-range family homes in the $350K–$500K range.'},
+  {q: 'Is Bakersfield a good place to buy a home?', a: 'Bakersfield offers more home for your money than many California cities. It has a growing job market, relatively affordable housing, and proximity to both mountains and farmland.'},
+  {q: 'What should I know about Bakersfield neighborhoods?', a: 'Seven Oaks is popular with families for its golf course and master-planned feel. Stockdale offers central, walkable neighborhoods. Southwest has newer construction. Rio Bravo provides larger lots and rural feel.'},
+  {q: 'How does Bakersfield compare to Los Angeles for home buyers?', a: 'Bakersfield typically offers significantly more square footage, larger lots, and lower prices than Los Angeles. The trade-off is distance — it is about 1.5 hours north of LA.'},
+];
+
+export const tehachapiFaq = [
+  {q: 'Why are people moving to Tehachapi?', a: 'Tehachapi offers four distinct seasons, affordable land, clean air, and a growing local economy based on wind energy, aerospace, healthcare, wine, and outdoor recreation.'},
+  {q: 'Is Tehachapi expensive to live in?', a: 'Compared to many California cities, Tehachapi is more affordable. Land and home prices tend to be lower, making it attractive for remote workers, retirees, and investors.'},
+  {q: 'How far is Tehachapi from Bakersfield?', a: 'Tehachapi is about 35 miles from Bakersfield, roughly a 40-45 minute drive depending on conditions.'},
+  {q: 'What is there to do in Tehachapi?', a: 'Outdoor activities including hiking, hunting, horseback riding, cycling, and wine tasting. The community also hosts events like movie nights and mud runs.'},
+];
 
 function faq(pairs) {
   return {
@@ -237,20 +280,39 @@ export function jsonLdFor(path) {
   const svc = {
     '/real-estate': {name: 'Selling a Home', type: 'Residential Real Estate Sales', desc: 'Support selling a home with a clear plan — planned moves, inherited homes, repairs, and time-sensitive situations.', path: '/real-estate'},
     '/investing': {name: 'Real Estate Investing', type: 'Real Estate Investment Advisory', desc: 'Real estate investment properties, flips, and discussions about possible opportunities with Harbison Standard.', path: '/investing'},
+    '/why-tehachapi': {name: 'Why Tehachapi', desc: 'Why people are choosing Tehachapi — affordable land, four seasons, and a growing local economy.', path: '/why-tehachapi'},
+    '/cheap-land-kern-county': {name: 'Cheap Land in Kern County', desc: 'Affordable land for sale in Kern County — current listings and what your budget buys.', path: '/cheap-land-kern-county'},
+    '/bakersfield-home-prices': {name: 'Bakersfield Home Prices', desc: 'What homes actually cost in Bakersfield — by neighborhood, by budget, and what your money buys.', path: '/bakersfield-home-prices'},
+    '/tehachapi-home-prices': {name: 'Tehachapi Home Prices', desc: 'What homes and land cost in Tehachapi — from condos to acreage.', path: '/tehachapi-home-prices'},
   };
   const s = svc[path];
   if (!s) return [];
-  const pageFaq = serviceFaqFor(path);
-  return [base(), org(), website(), page(routes[path].title, routes[path].description, path), breadcrumb([{name: 'Home', path: '/'}, {name: s.name, path: path}]), {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: s.name,
-    serviceType: s.type,
-    description: s.desc,
-    provider: {'@id': siteUrl + '/#agent'},
-    areaServed: counties,
-    url: siteUrl + path,
-  }, ...(pageFaq ? [faq(pageFaq)] : [])];
+  const faqPairs = {'/why-tehachapi': whyTehachapiFaq, '/cheap-land-kern-county': cheapLandKernFaq, '/bakersfield-home-prices': bakersfieldFaq, '/tehachapi-home-prices': tehachapiFaq}[path];
+  const schemas = [base(), org(), website(), page(routes[path].title, routes[path].description, path), breadcrumb([{name: 'Home', path: '/'}, {name: s.name, path: path}])];
+  if(s.type){
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: s.name,
+      serviceType: s.type,
+      description: s.desc,
+      provider: {'@id': siteUrl + '/#agent'},
+      areaServed: counties,
+      url: siteUrl + path,
+    });
+  } else {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      name: s.name,
+      description: s.desc,
+      author: {'@id': siteUrl + '/#agent'},
+      publisher: {'@id': siteUrl + '/#org'},
+      url: siteUrl + path,
+    });
+  }
+  if(faqPairs) schemas.push(faq(faqPairs));
+  return schemas;
 }
 export function applyPropertySeo(property) {
   if (!property || typeof document === 'undefined') return;

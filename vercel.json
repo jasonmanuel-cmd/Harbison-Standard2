@@ -45,6 +45,22 @@
       "destination": "/hq/index.html"
     },
     {
+      "source": "/why-tehachapi",
+      "destination": "/why-tehachapi/index.html"
+    },
+    {
+      "source": "/cheap-land-kern-county",
+      "destination": "/cheap-land-kern-county/index.html"
+    },
+    {
+      "source": "/bakersfield-home-prices",
+      "destination": "/bakersfield-home-prices/index.html"
+    },
+    {
+      "source": "/tehachapi-home-prices",
+      "destination": "/tehachapi-home-prices/index.html"
+    },
+    {
       "source": "/((?!api/|property/).*)",
       "destination": "/index.html"
     }

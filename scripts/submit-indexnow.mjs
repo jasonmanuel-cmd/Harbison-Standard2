@@ -1,5 +1,5 @@
 import {readFileSync} from 'node:fs';
-import {siteUrl} from '../src/seo.js';
+import {siteUrl} from '../src/siteConfig.js';
 const deadline=setTimeout(()=>{console.error('IndexNow submission timed out; receipt is unconfirmed.');process.exit(1);},60000);
 const key=readFileSync('public/indexnow-key.txt','utf8').trim();
 const keyLocation=siteUrl+'/indexnow-key.txt';
