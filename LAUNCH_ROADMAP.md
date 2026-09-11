@@ -5,7 +5,7 @@ Updated September 10, 2026. Current audit evidence: PROJECT_STATUS.md.
 ## Phase 1 — stabilize the current site
 The public website and three published property pages are live. Phase 1 is not yet fully verified because the audit found CRM and measurement regressions.
 
-1. Deploy and verify the CRM module syntax correction: authenticated HQ reads succeed and private endpoints reject anonymous requests.
+1. CRM syntax correction is deployed; anonymous requests correctly return 401. Verify production HQ access: the local ADMIN_TOKEN is rejected by production, so authenticated live reads remain unverified.
 2. Complete the Supabase CRM transition: preserve seller/investor messages, resolve the obsolete backend selector, and make manual entry/edit controls save all supported fields correctly.
 3. Consolidate GA4/GTM initialization, exclude HQ, verify conversion counts and source attribution. Repair visit persistence/counters and check tracking-table privacy policies.
 4. Keep Apollo unpublished until explicit release approval. Repair unavailable-property HTTP behavior; confirm current sitemap processing with Google and Bing.

@@ -30,7 +30,7 @@ Reviewed September 10, 2026 against local source, GitHub main, public production
 - Replaced obsolete status/roadmap/README claims and marked historical audit documents as superseded.
 
 ## Remaining issues, in priority order
-1. Verify deployment of the CRM syntax correction; repeat authenticated production HQ reads and anonymous rejection checks.
+1. CRM syntax correction is deployed and private endpoints now return 401 instead of 500. Production also rejects the local ADMIN_TOKEN, so verify with the actual production HQ password or reconcile the environment values. Authenticated production reads remain unverified.
 2. Finish CRM consolidation: the HQ Buyer/Other selector still points at the same Supabase handlers, while normalization labels every lead Buying and replaces the original general-inquiry message. Manual creation does not persist the buyer fields, status, or notes exposed in the form. Preserve general inquiry context, validate editable fields, and verify create/edit/readback before calling these complete.
 3. Analytics: hardcoded scripts and runtime initialization can load GTM twice; the static template loads analytics on private HQ despite the runtime exclusion. Consolidate initialization, exclude HQ, and verify one conversion and the expected page views in GA4/GTM. Container contents and conversion reporting are not verified.
 4. Tracking: session upsert resets visits to 1; visit insert failures are ignored while returning success. Confirm accurate counters and failure handling. Tracking SQL does not explicitly enable RLS/revoke public access; anonymous reads returned empty arrays, which does not prove access controls for populated tables. Verify database policies before relying on privacy guarantees.
@@ -43,3 +43,9 @@ Reviewed September 10, 2026 against local source, GitHub main, public production
 This is a repository and deployment audit with targeted checks, not certification of every browser flow or external account. No property publication, database migration, email, advertisement, or social post was performed during this review. Secrets and private lead contents were not printed. See LAUNCH_ROADMAP.md for the ordered work remaining.
 
 Local verification after corrections: npm run build succeeded; all 11 automated checks passed, including published-property initial HTML, API privacy, attribution, email-failure handling, and Sites packaging. No visual styling was changed.
+
+## Deployment follow-up
+- Fix/audit commit 0332531 is on GitHub main and Vercel reports successful deployment: https://vercel.com/coaiebay-sources-projects/hswebsite/CUXpq9HKjKTqixNwNMt7pUumDXZs
+- Live /api/leads and /api/stats now return 401 for anonymous requests. They also return 401 with the local ADMIN_TOKEN; local authenticated handlers return 200. Production password/environment alignment needs checking without sharing secrets in chat.
+- Apollo public property API returns 404, consistent with the publication hold. All 16 image URLs in the image sitemap return 200.
+- Built preview started on port 4183 and queued in the app. Automated browser access timed out; no fresh visual-browser verification is claimed.
