@@ -1,3 +1,4 @@
+import {propertySchema} from './propertySchema.js';
 import {agent,properties} from './data.js';
 import {servicePages} from './serviceData.js';
 
@@ -267,11 +268,6 @@ export function applyPropertySeo(property) {
   setMeta('meta[name="twitter:title"]','content',title);
   setMeta('meta[name="twitter:description"]','content',description);
   document.querySelectorAll('script[data-property-jsonld],script[data-seo-jsonld]').forEach(s=>s.remove());
-  const schema={
-    '@context':'https://schema.org','@type':'RealEstateListing',name:property.address||title,url:siteUrl+path,description,
-    image:(property.images||[]).map(x=>x.startsWith('http')?x:siteUrl+x),
-    address:{'@type':'PostalAddress',streetAddress:property.address||'',addressLocality:property.city||'',addressRegion:property.state||'CA',postalCode:property.zip||'',addressCountry:'US'},
-    offers:property.price&&!/^sold$/i.test(property.status)?{'@type':'Offer',price:property.price,priceCurrency:'USD'}:undefined
-  };
+  const schema=propertySchema(property,siteUrl);
   const el=document.createElement('script');el.type='application/ld+json';el.setAttribute('data-property-jsonld','true');el.text=JSON.stringify(schema);document.head.appendChild(el);
 }

@@ -1,30 +1,16 @@
-# Harbison Standard launch roadmap
+# Harbison Standard roadmap
 
-Updated September 10, 2026. Current audit evidence: PROJECT_STATUS.md.
+## Phase 1 finalization
+Implemented and locally verified: CRM field persistence and validation, general inquiry context, unified HQ view, atomic private visit tracking, single analytics initialization excluding HQ, published-inventory sitemaps, land schema, unavailable-property routing, and IndexNow submission tooling. User confirmed notification emails arrive. Apollo remains unpublished.
 
-## Phase 1 — stabilize the current site
-The public website and three published property pages are live. Phase 1 is not yet fully verified because the audit found CRM and measurement regressions.
+Production build and 17 tests pass. Real Supabase integration checks passed and test records were removed. Deployment and final live checks are the current next step.
 
-1. CRM syntax correction is deployed; anonymous requests correctly return 401. Verify production HQ access: the local ADMIN_TOKEN is rejected by production, so authenticated live reads remain unverified.
-2. Complete the Supabase CRM transition: preserve seller/investor messages, resolve the obsolete backend selector, and make manual entry/edit controls save all supported fields correctly.
-3. Consolidate GA4/GTM initialization, exclude HQ, verify conversion counts and source attribution. Repair visit persistence/counters and check tracking-table privacy policies.
-4. Keep Apollo unpublished until explicit release approval. Repair unavailable-property HTTP behavior; confirm current sitemap processing with Google and Bing.
-5. Confirm Gmail receipt and repeat a controlled end-to-end inquiry after CRM changes. Verify mobile HQ and public forms.
+Owner/account checks still required:
+- Production HQ credential alignment: local and supplied values were rejected before deployment. Do not send passwords in chat; update the Production environment and redeploy.
+- Verify GA4/GTM reporting in the account and Google Search Console sitemap acceptance. Installed tags and accessible sitemaps do not prove reporting/indexing.
+- Verify/claim the existing Google Business Profile using the owner's Google account and the verification method Google offers.
 
-## Already present
-- Live domain and GitHub-to-Vercel deployment integration.
-- Real estate/investment pages, current listings, past sales, open houses, relocation landing page.
-- Three published properties with photos: Mariposa Road, Chalet Drive, Wendy Drive.
-- Public property API, buyer qualification and attribution, Supabase storage, Formspree notification path, private HQ interface.
-- Initial HTML property content, metadata, XML/image sitemaps, robots directives.
-- GA4/GTM installation code; reporting accuracy still needs verification.
+## Phase 2
+Choose a currently published property, approve real media/copy, connect a scheduler, distribute tagged links, and follow up through HQ. Social scheduling, paid campaigns and automatic outreach have not been started. IndexNow command can be rerun after approved publication changes; it is not a cron job.
 
-## Phase 2 — acquire and follow up with buyers
-- Choose the property and approved facts for each campaign; Apollo is on hold.
-- Record real footage and create platform-specific posts with reviewed copy.
-- Connect the selected scheduler; recommendation is Metricool Starter with inexpensive AI drafting, or Buffer Free to start. No subscription or connection has been created by this review.
-- Use tagged links to the relevant property page; report inquiries, appointments, and qualified buyers by source.
-- Establish daily follow-up in HQ, then consider automation after the manual process works reliably.
-- Complete Google Business Profile and Bing/IndexNow setup. The existing guides do not mean these services are configured.
-
-Timing depends on fixing and testing the regressions and gaining access to external dashboards. Search indexing and email receipt cannot be guaranteed on a fixed deadline.
+See PROJECT_STATUS.md for evidence and deployment follow-up.

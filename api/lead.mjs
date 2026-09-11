@@ -1,60 +1,26 @@
-import {supabaseConfigured, supabaseRest, supabaseNotConfigured} from './lib/supabase.mjs';
+import {supabaseConfigured,supabaseRest,supabaseNotConfigured} from './lib/supabase.mjs';
 import {buyerDetail} from './lib/buyer-crm.mjs';
-import {json, isAdmin, readJson} from './lib/auth.mjs';
-
-async function handler(request) {
-  if (request.method === "POST") return create(request);
-  if (!isAdmin(request)) return json({ error: "Unauthorized" }, { status: 401 });
-  try {
-    if (!supabaseConfigured()) return supabaseNotConfigured();
-    return await buyerDetail(request);
-  } catch (err) {
-    console.error("[lead detail error]", err);
-    return json({ error: "Failed to load inquiry" }, { status: 500 });
-  }
+import {json,isAdmin,readJson} from './lib/auth.mjs';
+import {leadFields} from './lib/lead-fields.mjs';
+async function handler(request){
+ if(!['GET','POST','PATCH'].includes(request.method))return json({error:'Method not allowed'},{status:405});
+ if(request.method!=='POST'){
+  if(!isAdmin(request))return json({error:'Unauthorized'},{status:401});
+  if(!supabaseConfigured())return supabaseNotConfigured();
+  return buyerDetail(request);
+ }
+ if(!supabaseConfigured())return supabaseNotConfigured();
+ const body=await readJson(request);
+ const manual=body?.source==='manual';
+ if(manual&&!isAdmin(request))return json({error:'Unauthorized'},{status:401});
+ let fields;
+ try{fields=leadFields(body,{required:true});}catch(error){return json({error:error.message},{status:400});}
+ if(!manual){delete fields.notes;fields.status='new';}
+ const lead={...fields,session_id:String(body.sessionId||'').slice(0,100)||null,source:String(body.source||'website').slice(0,100),goal:fields.goal||(manual?'Buying':'Something else'),brand:'harbison_standard'};
+ try{
+  const response=await supabaseRest('leads',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify(lead)});
+  if(!response.ok)return json({error:'Failed to save inquiry'},{status:502});
+  const rows=await response.json();return json({ok:true,id:rows[0]?.id??null},{status:201});
+ }catch{return json({error:'Failed to save inquiry'},{status:502});}
 }
-
-async function create(request) {
-  if (!supabaseConfigured()) return supabaseNotConfigured();
-  const body = (await readJson(request)) || {};
-  const name = String(body.name || "").trim().slice(0, 100);
-  const email = String(body.email || "").trim().slice(0, 200).toLowerCase();
-  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return json({ error: "name and a valid email are required" }, { status: 400 });
-  }
-  const sid = String(body.sessionId || "").slice(0, 100);
-
-  try {
-    const lead = {
-      name,
-      email,
-      session_id: sid || null,
-      source: (body.source || "manual").slice(0, 100),
-      goal: (body.goal || "").slice(0, 100),
-      interest: (body.interest || "").slice(0, 200),
-      phone: (body.phone || "").slice(0, 30),
-      location: (body.location || "").slice(0, 120),
-      timing: (body.timing || "").slice(0, 40),
-      message: (body.message || "").slice(0, 3000),
-      brand: 'harbison_standard',
-    };
-    const response = await supabaseRest('leads', {
-      method: 'POST',
-      headers: { Prefer: 'return=representation' },
-      body: JSON.stringify(lead),
-    });
-    const resultText = await response.text();
-    if (!response.ok) {
-      console.error('[lead create]', response.status, resultText);
-      return json({ error: "Failed to save inquiry" }, { status: 502 });
-    }
-    const rows = resultText ? JSON.parse(resultText) : [];
-    return json({ ok: true, id: rows?.[0]?.id ?? null }, { status: 201 });
-  } catch (err) {
-    console.error("[lead create]", err);
-    return json({ error: "Failed to save inquiry" }, { status: 500 });
-  }
-}
-
-// Vercel Web Standard handler; local development uses the same fetch function.
 export default {fetch:handler};

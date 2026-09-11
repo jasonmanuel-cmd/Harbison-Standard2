@@ -1,3 +1,4 @@
+import {propertySchema} from '../src/propertySchema.js';
 import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
 import {loadEnvFile} from 'node:process';
 import {routes,jsonLdFor,siteUrl,ogImage} from '../src/seo.js';
@@ -40,9 +41,15 @@ for(const p of publishedProperties){
  const path='/property/'+p.slug;propertyPaths.push(path);
  const photo=p.imageUrl?new URL(p.imageUrl,siteUrl).href:ogImage;
  const description=p.description||p.context||'Past sale shown for reference; not currently offered for sale.';
- page(path,{title:p.address+' | '+p.status+' | Harbison Standard',description},[{'@context':'https://schema.org','@type':'RealEstateListing',name:p.address,url:siteUrl+path,description,image:photo,offers:/^sold$/i.test(p.status)?undefined:{'@type':'Offer',price:p.price,priceCurrency:'USD'},about:{'@type':'SingleFamilyResidence',numberOfBedrooms:p.beds,numberOfBathroomsTotal:p.baths,floorSize:{'@type':'QuantitativeValue',value:p.sqft,unitCode:'FTK'},address:{'@type':'PostalAddress',streetAddress:p.address,addressLocality:p.city,addressRegion:p.state,postalCode:p.zip,addressCountry:'US'}}}],photo,p);
+ page(path,{title:p.address+' | '+p.status+' | Harbison Standard',description},[propertySchema(p,siteUrl)],photo,p);
 }
+const notFound=template.replace(/<title>.*?<\/title>/,'<title>Page not found | Harbison Standard</title>').replace(/(<meta name="robots" content=")[^"]*/, '$1noindex, follow').replace('<div id="root"></div>',()=>'<div id="root">'+renderToString(createElement(App,{initialPath:'/not-found'}))+'</div>');
+writeFileSync('dist/client/404.html',notFound);
 } finally {await renderer.close();}
 const paths=[...Object.keys(routes).filter(p=>p!=='/hq'),...propertyPaths];
 writeFileSync('dist/client/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+paths.map(path=>'<url><loc>'+escape(siteUrl+path)+'</loc></url>').join('')+'</urlset>');
 console.log('Prepared metadata for '+paths.length+' public routes and private HQ.');
+
+const imageEntries=publishedProperties.map(p=>({path:'/property/'+p.slug,images:[...new Set([p.imageUrl,...(p.images||[])].filter(Boolean))]}));
+imageEntries.unshift({path:'/',images:[ogImage]});
+writeFileSync('dist/client/sitemap-images.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'+imageEntries.filter(e=>e.images.length).map(e=>'<url><loc>'+escape(siteUrl+e.path)+'</loc>'+e.images.map(image=>'<image:image><image:loc>'+escape(new URL(image,siteUrl).href)+'</image:loc></image:image>').join('')+'</url>').join('')+'</urlset>');

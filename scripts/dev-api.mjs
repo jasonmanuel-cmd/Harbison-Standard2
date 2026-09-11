@@ -49,5 +49,5 @@ const server = createServer(async (req, res) => {
 const port = Number(process.env.PORT) || 8787;
 server.listen(port, () => {
   console.log("Harbison Standard CRM API on http://localhost:" + port);
-  if (!process.env.DATABASE_URL) console.log("No DATABASE_URL set — API will return 503 until it is added to .env");
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) console.log("Supabase server credentials are missing.");
 });

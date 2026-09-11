@@ -22,6 +22,7 @@ export function getSessionId() {
 }
 
 export function trackPageView(path) {
+  if(/^\/hq(?:\/|$)/i.test(path))return;
   try {
     const url = new URL(window.location.href);
     const params = url.searchParams;

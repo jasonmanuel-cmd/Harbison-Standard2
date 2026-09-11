@@ -45,7 +45,7 @@
       "destination": "/hq/index.html"
     },
     {
-      "source": "/((?!api/).*)",
+      "source": "/((?!api/|property/).*)",
       "destination": "/index.html"
     }
   ]

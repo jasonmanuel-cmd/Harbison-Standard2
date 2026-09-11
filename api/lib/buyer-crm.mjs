@@ -1,7 +1,7 @@
 import {supabaseRest} from './supabase.mjs';
 import {json, readJson} from './auth.mjs';
 
-const statuses = new Set(['new','contacted','qualified','closed']);
+import {leadFields,statuses} from './lead-fields.mjs';
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 async function rows(path, options) {
   const response = await supabaseRest(path, options);
@@ -10,8 +10,8 @@ async function rows(path, options) {
   return body ? JSON.parse(body) : [];
 }
 function normalize(row) {
-  return {...row, goal:'Buying', location:row.desired_area || row.desired_city, timing:row.timeline,
-    message:[['Current city',row.current_city],['Budget',row.budget],['Bedrooms',row.bedrooms],['Lot requirement',row.acreage_requirement],['Property type',row.property_type],['Financing',row.financing_status],['Property to sell',row.has_property_to_sell?'Yes':'No'],['Property ID',row.property_id],['Campaign',row.utm_campaign],['First source',row.first_utm_source],['Last source',row.last_utm_source]].filter(([,v])=>v!==null&&v!==undefined&&v!=='').map(([k,v])=>k+': '+v).join('\n')};
+  return {...row, goal:row.goal||'Buying', location:row.location||row.desired_area||row.desired_city, timing:row.timing||row.timeline,
+    message:row.message||[['Current city',row.current_city],['Budget',row.budget],['Bedrooms',row.bedrooms],['Lot requirement',row.acreage_requirement],['Property type',row.property_type],['Financing',row.financing_status],['Property to sell',row.has_property_to_sell==null?'':row.has_property_to_sell?'Yes':'No'],['Property ID',row.property_id],['Campaign',row.utm_campaign],['First source',row.first_utm_source],['Last source',row.last_utm_source]].filter(([,v])=>v!==null&&v!==undefined&&v!=='').map(([k,v])=>k+': '+v).join('\n')};
 }
 // Called only by existing routes after their isAdmin check.
 export async function buyerList(request) {
@@ -30,10 +30,8 @@ export async function buyerDetail(request) {
   const path='leads?id=eq.'+id+'&brand=eq.harbison_standard';
   try {
     if(request.method==='PATCH'){
-      const change={};
-      const fields=['name','email','phone','current_city','desired_area','budget','bedrooms','acreage_requirement','property_type','timeline','financing_status','notes','status'];
-      for(const f of fields){if(body[f]!==undefined)change[f]=body[f];}
-      if(body.status!==undefined&&!statuses.has(body.status))return json({error:'Invalid status'},{status:400});
+      let change;
+      try{change=leadFields(body);}catch(error){return json({error:error.message},{status:400});}
       if(!Object.keys(change).length)return json({error:'No changes supplied'},{status:400});
       const updated=await rows(path,{method:'PATCH',headers:{Prefer:'return=representation'},body:JSON.stringify(change)});
       return updated.length?json({ok:true}):json({error:'Not found'},{status:404});
@@ -41,7 +39,7 @@ export async function buyerDetail(request) {
     const [lead]=await rows(path+'&select=*');
     if(!lead)return json({error:'Not found'},{status:404});
     // Fetch visits from Supabase
-    const visits = await rows('visits?session_id=eq.'+lead.session_id+'&select=path,referrer,utm_source,utm_medium,utm_campaign,created_at&order=created_at.asc');
+    const visits = lead.session_id?await rows('visits?session_id=eq.'+encodeURIComponent(lead.session_id)+'&select=path,referrer,utm_source,utm_medium,utm_campaign,created_at&order=created_at.asc&limit=200'):[];
     return json({lead:normalize(lead),visits});
   }catch{return json({error:'Unable to access buyer inquiry'},{status:502});}
 }

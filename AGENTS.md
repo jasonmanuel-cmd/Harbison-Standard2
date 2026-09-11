@@ -86,3 +86,9 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - User explicitly confirmed Apollo cannot be listed yet. Keep it unpublished; do not restore Coming Soon publication or distribute its historical campaign links without new authorization. This supersedes the earlier Apollo launch approval.
 - Current published inventory observed during audit: Mariposa Road, Chalet Drive, Wendy Drive. Preserve current records and supplied photos.
 - PROJECT_STATUS.md and LAUNCH_ROADMAP.md contain the latest verified audit. Active CRM handlers have moved to Supabase; legacy Neon files remain, and HQ consolidation is incomplete. Do not describe the older two-backend design as verified current behavior.
+
+## Phase 1 finalization decisions
+- Supabase is the active inquiry/tracking backend; HQ now shows all inquiries in one view. Preserve legacy Neon files but do not advertise a working second backend.
+- User confirmed receipt of inquiry emails. Never record HQ credentials in documentation or source.
+- Analytics initialization lives in src/analytics.js only, excludes HQ, and loads each provider once. Do not reintroduce hardcoded loaders in index.html or configure a second GA4 tag in GTM without removing the existing direct configuration.
+- supabase/phase1-finalization.sql was run and verified; the service-role-only record_hs_visit function atomically persists visits and session counts.

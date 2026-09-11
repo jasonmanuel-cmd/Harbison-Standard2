@@ -1,3 +1,17 @@
+## Phase 1 finalization — September 10, 2026
+
+This section supersedes the earlier audit findings below. Code fixes are ready for deployment verification.
+
+- Supabase finalization SQL was run by the user and verified through the API. Inquiry fields and atomic tracking RPC exist; anonymous leads/sessions/visits access returns 401.
+- General inquiries preserve goal, location, timing and message. Manual HQ entries persist buyer preferences, status and notes; creation requires admin. Edits validate values and nullable bedroom counts. HQ shows All inquiries instead of an obsolete two-backend selector.
+- Session and visit writes are atomic, count concurrent visits correctly, retain campaign content, and report failures instead of false success. HQ is excluded from tracking.
+- Removed static duplicate Google loaders. Runtime loads each provider once and skips HQ; confirmed the retrieved published GTM script did not contain the GA4 measurement ID. Actual GA4 account reporting is still an external verification.
+- Property and image sitemaps are generated from published inventory. Land schema uses Place without invented house measurements. Property paths are excluded from the homepage catch-all; 404 template added. Apollo stays unpublished.
+- IndexNow verification file and npm run indexnow command added; initial submission awaits deployment. No recurring job or social campaign created.
+- User confirmed Gmail inquiry notifications have been received.
+- Production build and all 17 tests pass. Real database create/edit/readback and three concurrent visits passed; disposable records removed. Browser preview displayed Mariposa with its images and inquiry form. Vercel dashboard navigation did not load usable account controls.
+- Both supplied HQ credentials and the local .env credential were rejected by production before deployment. Production ADMIN_TOKEN alignment remains necessary; credentials are not recorded here.
+
 # Harbison Standard — current verified status
 
 Reviewed September 10, 2026 against local source, GitHub main, public production responses, and read-only Harbison Supabase access. This replaces earlier chronological status reports; those remain in Git history.
