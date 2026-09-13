@@ -58,15 +58,34 @@ Baseline infrastructure verified. All core pages route through prerender pipelin
   - Tracks home_value_click analytics for conversion monitoring
   - Places home valuation tool directly in high-traffic mobile path
 - Updated ServicePage renderer to display intro copy in helps section
+- **Expanded /real-estate page with financial clarity for sellers (1,200+ words)**
+  - New "costs" section with 5 detailed breakdowns:
+    * Closing costs: 2-3% of sale price ($8K-$12K on $400K)
+    * Typical repairs: $5K-$50K range with specific examples
+    * Improvement ROI: 60-80% recovery (kitchen/bath recover best)
+    * Timeline impact: 7-30 days depending on condition/preparation
+    * Holding costs: $1K-$2K+ monthly if urgent
+  - Enhanced "compare" section with:
+    * Real Kern County cost data ($5K-$50K+ repair range)
+    * As-is path: 7-14 day timeline, investor buyers
+    * Improvement path: 30+ days, owner-occupant appeal
+  - Expanded "special situations" from 4 to 6 scenarios:
+    * Divorce/separation: 30-60 day timeline, cost clarity
+    * Foreclosure: 7-14 day as-is sales, 70-85% recovery
+    * Inherited property: No-decision path, $8K-$15K closing cost
+    * Major repairs: Cost-benefit analysis vs as-is path
+    * Relocation: 30-45 day realistic expectation, cost planning
+    * Underwater/short sale: Lender approval path discussion
+  - 6 FAQ entries (expanded from 5) addressing:
+    * Repair ROI expectations and break-even math
+    * As-is pricing discounts (20-30% vs market)
+    * Timeline expectations by property condition
+    * No-pressure early inquiry option
 
 🔵 **In Progress:**
-- Expand /real-estate page content to 1,200+ words with cost data
-  - Typical repair costs ($5K-$50K+)
-  - Closing cost percentages (2-3%)
-  - As-is vs improved ROI data (60-80% recovery typical)
-  - Timeline expectations (7-30 days on market)
-- Add real cost examples to special situations cards
 - Rebuild /past-sales with photo grid and context
+- Add cost-benefit calculator for repair decisions
+- Expand investing page with deal analysis framework
 
 ---
 
