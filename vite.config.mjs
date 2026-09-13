@@ -1,5 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import {existsSync} from 'node:fs';
+import {resolve,sep} from 'node:path';
+
+// Match Vercel's generated-page routing when previewing the production build.
+const previewPages={name:'preview-generated-pages',configurePreviewServer(server){
+ const root=resolve(server.config.root,server.config.build.outDir);
+ server.middlewares.use((req,res,next)=>{
+  const url=new URL(req.url,'http://localhost');
+  const path=url.pathname.replace(/\/+$/,'');
+  const file=resolve(root,'.'+path,'index.html');
+  if(path&&!path.startsWith('/api/')&&!path.startsWith('/hq/api/')&&file.startsWith(root+sep)&&existsSync(file))req.url=path+'/index.html'+url.search;
+  next();
+ });
+}};
 
 export default defineConfig({
   envPrefix: "VITE",
@@ -20,5 +34,5 @@ export default defineConfig({
       clientFiles: ["./src/main.jsx"],
     },
   },
-  plugins: [react()],
+  plugins: [react(),previewPages],
 });
