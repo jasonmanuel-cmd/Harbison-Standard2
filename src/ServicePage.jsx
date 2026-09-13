@@ -24,7 +24,8 @@ function Compare({data}) {
 const renderers = {
  who:s=><Wrap tint={s.tint}><Head eyebrow={s.eyebrow} title={s.title} accent={s.accent}/><Checklist items={s.items}/></Wrap>,
  helps:s=><Wrap tint={s.tint}><Head eyebrow={s.eyebrow} title={s.title} accent={s.accent}/>{s.copy&&<p>{s.copy}</p>}<div className="cards2">{s.items.map((item,i)=><article className="card-t" key={item}><span className="number">0{i+1}</span><h3>{item}</h3></article>)}</div></Wrap>,
- compare:s=><Wrap tint={s.tint}><Head eyebrow={s.eyebrow} title={s.title} accent={s.accent} intro={s.intro}/><Compare data={s}/></Wrap>,
+ compare:s=><Wrap tint={s.tint}><Head eyebrow={s.eyebrow} title={s.title} accent={s.accent} intro={s.intro}/>{s.costContext&&<p className="svc-context">{s.costContext}</p>}<Compare data={s}/></Wrap>,
+ costs:s=><Wrap tint={s.tint}><Head eyebrow={s.eyebrow} title={s.title} accent={s.accent} intro={s.intro}/><div className="cost-grid">{s.items.map(item=><div key={item.label} className="cost-item"><div className="cost-label"><h3>{item.label}</h3><p className="cost-value">{item.value}</p></div><p className="cost-detail">{item.detail}</p></div>)}</div></Wrap>,
  special:s=><Wrap tint={s.tint}><Head eyebrow={s.eyebrow} title={s.title} accent={s.accent}/><Cards cards={s.cards}/></Wrap>,
  role:s=><Wrap tint={s.tint}><div className="svc-split"><div><p className="eyebrow">{s.eyebrow}</p><h2>{s.title} <em>{s.accent}</em></h2><p className="svc-body">{s.body}</p></div><Checklist items={s.bullets}/></div></Wrap>,
  paths:s=><Wrap tint={s.tint}><Head eyebrow={s.eyebrow} title={s.title} accent={s.accent} intro={s.intro}/><Cards cards={s.cards} numbered/></Wrap>,
