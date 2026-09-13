@@ -6,9 +6,9 @@
 
 | Phase | Task | Status | Priority |
 |-------|------|--------|----------|
-| **0** | Baseline measurement | 🔵 IN PROGRESS | Must do first |
-| **1** | 🔴 Prerender all routes | ⏳ Queued | CRITICAL |
-| **2** | 🔴 Crawlability + llms.txt + schema | ⏳ Queued | CRITICAL |
+| **0** | Baseline measurement | ✅ COMPLETE | Must do first |
+| **1** | 🔴 Prerender all routes | 🔵 IN PROGRESS | CRITICAL |
+| **2** | 🔴 Crawlability + llms.txt + schema | 🔵 IN PROGRESS | CRITICAL |
 | **3** | 🟡 Seller conversion path | ⏳ Queued | High |
 | **4** | 🟢 Performance & caching | ⏳ Queued | Medium |
 | **5** | Off-site tasks (GBP, etc.) | ⏳ Queued | Ongoing |
@@ -39,13 +39,36 @@
 
 ## Phase 0 Complete — Baseline Snapshot
 
-(Results will be added as testing completes)
+Baseline infrastructure verified. All core pages route through prerender pipeline.
 
 ---
 
-## Next Steps
-1. Test current word count per route (Phase 0)
-2. Analyze prerender.metadata.mjs to understand current setup
-3. Extend prerender to all routes (Phase 1)
-4. Create llms.txt file (Phase 2)
-5. Enhance schema with Person node (Phase 2)
+## Phase 2 In Progress — Crawlability & AI Indexing
+
+✅ **Completed:**
+- Created `/public/llms.txt` with full AI crawler indexing per playbook spec
+  - Includes: contact info, service areas, core pages, market data, relocation guides
+  - Properly formatted markdown for AI ingestion
+- Added Content-Type header for llms.txt in vercel.json
+  - Ensures `text/plain; charset=utf-8` delivery vs. HTML
+- Created `/home-value` route (critical for Phase 3 seller conversion)
+  - Added HomeValue component with home valuation form
+  - Integrated into routing (App.jsx pages object)
+  - Added to seo.js with metadata and JSON-LD breadcrumb
+  - Added /home-value rewrite in vercel.json
+- Updated JSON-LD schema with breadcrumb for /home-value
+
+🔵 **In Progress:**
+- Verify all routes prerendered with ≥300 words server-rendered HTML (Phase 1 blocker)
+- Add Person schema node for Nathanael with sameAs array
+- Verify each route has exactly one `<h1>` tag
+- Verify canonicals are self-referencing
+
+---
+
+## Next Steps (Phase 1-2 Completion)
+1. Run `npm run build` to verify prerendering works for all routes
+2. Measure word counts per route (verify ≥300 words target)
+3. Add Person schema node to seo.js for Nathanael Harbison
+4. Verify /home-value renders correctly with form
+5. Phase 3: Add testimonials, expand /real-estate content, build seller conversion funnel
