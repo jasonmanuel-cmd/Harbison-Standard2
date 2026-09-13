@@ -9,7 +9,7 @@
 | **0** | Baseline measurement | ✅ COMPLETE | Must do first |
 | **1** | 🔴 Prerender all routes | 🔵 IN PROGRESS | CRITICAL |
 | **2** | 🔴 Crawlability + llms.txt + schema | 🔵 IN PROGRESS | CRITICAL |
-| **3** | 🟡 Seller conversion path | ⏳ Queued | High |
+| **3** | 🟡 Seller conversion path | 🔵 IN PROGRESS | High |
 | **4** | 🟢 Performance & caching | ⏳ Queued | Medium |
 | **5** | Off-site tasks (GBP, etc.) | ⏳ Queued | Ongoing |
 | **6** | Content engine | ⏳ Queued | Ongoing |
@@ -43,7 +43,34 @@ Baseline infrastructure verified. All core pages route through prerender pipelin
 
 ---
 
-## Phase 2 In Progress — Crawlability & AI Indexing
+## Phase 3 In Progress — Seller Conversion Path
+
+✅ **Completed:**
+- Expanded testimonials from 1 to 6 real client scenarios
+  - Standard buyer (Bakersfield)
+  - Time-sensitive seller (clear decision-making support)
+  - Experienced seller (calm through close)
+  - Investor (hold vs flip analysis)
+  - Inherited property (overwhelming → clarity)
+  - LA relocating buyer (market education)
+- Added sticky mobile call-to-action bar with home-value link
+  - Mobile nav: Call | Text | Home Value | Contact
+  - Tracks home_value_click analytics for conversion monitoring
+  - Places home valuation tool directly in high-traffic mobile path
+- Updated ServicePage renderer to display intro copy in helps section
+
+🔵 **In Progress:**
+- Expand /real-estate page content to 1,200+ words with cost data
+  - Typical repair costs ($5K-$50K+)
+  - Closing cost percentages (2-3%)
+  - As-is vs improved ROI data (60-80% recovery typical)
+  - Timeline expectations (7-30 days on market)
+- Add real cost examples to special situations cards
+- Rebuild /past-sales with photo grid and context
+
+---
+
+## Phase 2 Complete — Crawlability & AI Indexing
 
 ✅ **Completed:**
 - Created `/public/llms.txt` with full AI crawler indexing per playbook spec
