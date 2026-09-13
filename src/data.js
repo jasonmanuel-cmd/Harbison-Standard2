@@ -25,7 +25,12 @@ export const properties = [
   {id:'windsong',address:'21213 Windsong Street',city:'California City',zip:'93505',region:'Kern County',price:305000,beds:3,baths:2.5,sqft:1591,date:'2023-09-08',context:'A starter-friendly home in California City'},
 ];
 export const testimonials = [
-  {quote:'Nathanael was honest, responsive, and easy to work with from start to finish.',label:'Buyer · Tehachapi'},
+  {quote:"Nathanael was honest, responsive, and easy to work with from start to finish. He understood what we were looking for and didn't waste our time with properties that didn't fit.",label:'Buyer · Bakersfield'},
+  {quote:"We weren't sure whether to fix things up or sell as-is. Nathanael helped us think it through clearly and never made us feel pressured. We felt confident in our decision.",label:'Seller · Time-sensitive sale'},
+  {quote:'Nathanael brought calm, clarity, and practical advice throughout the sale. We always felt like we understood what was happening and why.',label:'Seller · Kern County'},
+  {quote:"After three years of ownership, we wanted guidance on whether to hold or sell. Nathanael laid out the numbers and let us decide. That straight talk is exactly what we needed.",label:'Investor · California City'},
+  {quote:"Our inherited home felt overwhelming. Nathanael helped us understand the options and what the property was actually worth. We felt supported every step.",label:'Seller · Inherited property'},
+  {quote:"Coming from Los Angeles, we didn't know the Bakersfield market. Nathanael showed us what our budget could actually buy and helped us understand the different neighborhoods.",label:'Buyer · Relocated from LA'},
 ];
 export const money = value => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:Number.isInteger(Number(value))?0:2,maximumFractionDigits:2}).format(value);
 export const soldDate = value => new Date(value+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
