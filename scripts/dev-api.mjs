@@ -12,6 +12,8 @@ for (const file of envFiles) {
 }
 
 const routes = {
+  "/hq/api/openhouse": "openhouse.mjs",
+  "/api/openhouse": "openhouse.mjs",
   "/api/lead": "lead.mjs",
   "/api/leads": "leads.mjs",
   "/api/stats": "stats.mjs",

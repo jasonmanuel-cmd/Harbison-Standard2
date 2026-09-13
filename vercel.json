@@ -5,6 +5,10 @@
   "outputDirectory": "dist/client",
   "rewrites": [
     {
+      "source": "/hq/api/openhouse",
+      "destination": "/api/openhouse"
+    },
+    {
       "source": "/property/:slug",
       "destination": "/property/:slug/index.html"
     },

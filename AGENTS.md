@@ -1,5 +1,9 @@
 # Prototype Instructions
 
+## September 12: open-house CRM integration
+- User requested `/hq/api/openhouse` using the Wendy CRM_INTEGRATION_GUIDE.md JSON contract. Save into the active Harbison Supabase CRM with Formspree fallback; preserve the existing design.
+- The supplied standalone forms live in Downloads/585 n wendy dr and require HTTPS, response validation and direct Formspree fallback when the endpoint is unreachable. Their hosted location is not yet confirmed. See OPENHOUSE_INTEGRATION.md.
+
 ## September 10, 2026 continuation
 
 - User corrected the Supabase project: Harbison uses `pebqmuumwygrpjofdwfy`. The earlier `rfggwgbbmugrcpmjjvex` URL was supplied by mistake and belongs to a completely separate application. Do not modify that other project. Inspect the correct Harbison schema before applying setup.
