@@ -10,7 +10,7 @@
 | **1** | 🔴 Prerender all routes | 🔵 IN PROGRESS | CRITICAL |
 | **2** | 🔴 Crawlability + llms.txt + schema | 🔵 IN PROGRESS | CRITICAL |
 | **3** | 🟡 Seller conversion path | 🔵 IN PROGRESS | High |
-| **4** | 🟢 Performance & caching | ⏳ Queued | Medium |
+| **4** | 🟢 Performance & caching | ✅ COMPLETE | Medium |
 | **5** | Off-site tasks (GBP, etc.) | ⏳ Queued | Ongoing |
 | **6** | Content engine | ⏳ Queued | Ongoing |
 | **7** | Monitoring setup | ⏳ Queued | Final |
@@ -70,6 +70,31 @@ Baseline infrastructure verified. All core pages route through prerender pipelin
 
 ---
 
+## Phase 4 Complete — Performance & Caching
+
+✅ **Completed:**
+- Added immutable cache headers for all static assets in vercel.json
+  - `/assets/*` pattern: Cache-Control: public, max-age=31536000, immutable
+  - Static file types (js, css, webp, woff2): max-age=31536000, immutable
+  - 1-year TTL eliminates redundant downloads for unchanged assets
+- Vite's content-hash build strategy enables safe aggressive caching
+  - Old assets never served when content changes (hash changes = new filename)
+
+💡 **Image Optimization Strategy (Future Enhancement):**
+- Identified large property images requiring optimization:
+  - Pellisier property: 4 images averaging 963KB (largest set)
+  - Woodshawn property: 5 images averaging 726KB
+  - Sheridan property: 5 JPGs averaging 188KB
+  - Other properties: 85-200KB range
+- Recommended post-deployment optimization:
+  1. Use Vercel's automatic image optimization (next/image component)
+  2. Consider WebP conversion for JPG assets (30-50% size reduction typical)
+  3. Implement lazy loading on property grids and detail pages
+  4. Add responsive image srcsets for mobile (50-70% smaller on mobile)
+- Current caching prevents regressive loads; optimization targets first-visit performance
+
+---
+
 ## Phase 2 Complete — Crawlability & AI Indexing
 
 ✅ **Completed:**
@@ -93,9 +118,10 @@ Baseline infrastructure verified. All core pages route through prerender pipelin
 
 ---
 
-## Next Steps (Phase 1-2 Completion)
-1. Run `npm run build` to verify prerendering works for all routes
-2. Measure word counts per route (verify ≥300 words target)
-3. Add Person schema node to seo.js for Nathanael Harbison
-4. Verify /home-value renders correctly with form
-5. Phase 3: Add testimonials, expand /real-estate content, build seller conversion funnel
+## Next Steps (Phase 5 & Beyond)
+1. **Phase 5 (Off-site):** GBP claim optimization, citation consistency, claim competitor profiles
+2. **Phase 3 Expansion:** Expand /real-estate content to 1,200+ words with actual closing cost & repair data
+3. **Phase 1 Validation:** Verify all routes prerendered with ≥300 words server-rendered HTML
+4. **Schema Enhancements:** Add Person schema node for Nathanael with sameAs array
+5. **Phase 6 (Content):** GEO/AEO content engine for market pages
+6. **Phase 7 (Monitoring):** GA4 event tracking, AI crawler indexing metrics, Core Web Vitals dashboard
