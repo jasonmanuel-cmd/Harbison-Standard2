@@ -82,8 +82,13 @@ Baseline infrastructure verified. All core pages route through prerender pipelin
     * Timeline expectations by property condition
     * No-pressure early inquiry option
 
-🔵 **In Progress:**
+✅ **Completed:**
 - Rebuild /past-sales with photo grid and context
+  - Dynamic transaction statistics (total, avg price, range, regions)
+  - Featured property with gallery preview
+  - Responsive layout with CSS Grid
+
+🔵 **In Progress:**
 - Add cost-benefit calculator for repair decisions
 - Expand investing page with deal analysis framework
 
