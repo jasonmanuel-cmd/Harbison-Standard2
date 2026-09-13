@@ -28,17 +28,17 @@ function isKernCounty(p){
   return false;
 }
 
-export async function getProperties() {
+export async function getProperties(fallback=null) {
   try {
     const res = await fetch('/api/properties');
     if (!res.ok) throw new Error('api');
     const data = await res.json();
-    if(Array.isArray(data.properties) && data.properties.length){
+    if(Array.isArray(data.properties)){
       return data.properties.filter(p=>isKernCounty(p)||/^(available|active|for sale|coming soon)$/i.test(p.status||''));
     }
-    return staticProperties;
+    return fallback ?? staticProperties.filter(p=>/^sold$/i.test(p.status));
   } catch {
-    return staticProperties;
+    return fallback ?? staticProperties.filter(p=>/^sold$/i.test(p.status));
   }
 }
 

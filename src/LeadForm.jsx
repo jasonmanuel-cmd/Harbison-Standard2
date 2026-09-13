@@ -8,7 +8,8 @@ const FORMSPREE='https://formspree.io/f/xqpkdwrp';
 export function LeadForm({source,goalOptions=defaultGoals,messagePlaceholder="Your goals, price range, or questions…"}){
  const goals=goalOptions;
  const id=useId();
- const queryGoal=new URLSearchParams(window.location.search).get('goal');
+ const queryGoal=null;
+ useEffect(()=>{const goal=new URLSearchParams(window.location.search).get('goal');if(goals.some(g=>g.name===goal))setData(current=>({...current,goal}));},[]);
  const [step,setStep]=useState(1),[data,setData]=useState({goal:goals.some(g=>g.name===queryGoal)?queryGoal:goals[0].name,name:'',email:'',phone:'',location:'',timing:'Just exploring',message:''}),[notice,setNotice]=useState(''),[status,setStatus]=useState('idle');
  const title=useRef(null),previousStep=useRef(step);
  useEffect(()=>{if(previousStep.current!==step)title.current?.focus();previousStep.current=step},[step]);

@@ -12,17 +12,17 @@ if(existsSync('.env'))loadEnvFile('.env');
 const template=readFileSync('dist/client/index.html','utf8');
 const escape=value=>String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const json=value=>JSON.stringify(value).replaceAll('<','\\u003c');
-function page(path,meta,schemas=[],photo=ogImage,property=null){
+function page(path,meta,schemas=[],photo=ogImage,property=null,inventory=null){
  let html=template.replace(/<title>.*?<\/title>/,'<title>'+escape(meta.title)+'</title>');
  const fields={'name="description"':meta.description,'property="og:title"':meta.title,'property="og:description"':meta.description,'property="og:url"':siteUrl+path,'property="og:image"':photo,'name="twitter:title"':meta.title,'name="twitter:description"':meta.description,'name="twitter:image"':photo,'name="robots"':meta.robots||'index, follow'};
  for(const [field,value] of Object.entries(fields))html=html.replace(new RegExp('(<meta '+field+' content=")[^"]*("[^>]*>)'),(_,a,b)=>a+escape(value||'')+b);
  html=html.replace(/(<link rel="canonical" href=")[^"]*/,(_,a)=>a+escape(siteUrl+path));
  html=html.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g,'');
  html=html.replace('</head>',schemas.map(x=>'<script type="application/ld+json" data-seo-jsonld="true">'+json(x)+'</script>').join('\n')+'\n</head>');
- if(property){
-  const content=renderToString(createElement(App,{initialPath:path,initialProperty:property}));
+ if(property||inventory){
+  const content=renderToString(createElement(App,{initialPath:path,initialProperty:property,initialProperties:inventory}));
   html=html.replace('<div id="root"></div>',()=>'<div id="root">'+content+'</div>');
-  html=html.replace('</body>',()=>'<script id="hs-property-data" type="application/json">'+json(property)+'</script></body>');
+  html=html.replace('</body>',()=>'<script id="'+(property?'hs-property-data':'hs-inventory-data')+'" type="application/json">'+json(property||inventory)+'</script></body>');
  }
  const directory='dist/client'+(path==='/'?'':path);
  mkdirSync(directory,{recursive:true});writeFileSync(directory+'/index.html',html);
@@ -36,6 +36,7 @@ const publishedProperties=[...properties,...staticProperties.filter(p=>!properti
 const renderer=await createServer({server:{middlewareMode:true,warmup:{clientFiles:[]}},appType:'custom'});
 const {App}=await renderer.ssrLoadModule('/src/App.jsx');
 try {
+for(const path of ['/','/properties'])page(path,routes[path],jsonLdFor(path),ogImage,null,properties);
 for(const p of publishedProperties){
  if(!/^[a-z0-9-]+$/i.test(p.slug))throw new Error('Invalid property slug for output');
  const path='/property/'+p.slug;propertyPaths.push(path);

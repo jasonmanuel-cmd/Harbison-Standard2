@@ -1,5 +1,10 @@
 # Prototype Instructions
 
+## September 13: website polish
+- User confirmed the homepage headline: “It’s not what you do. It’s how you do it.” Keep the existing visual identity.
+- Use distinct photos for Sell Your Home, Buy a Home, and Investing. Show all available listings with direct property links on the homepage, and make current inventory quick to reach.
+- Expand useful About and Contact information without inventing experience or listing facts. A brief, subtle top-left logo motion is approved; honor reduced-motion preferences.
+
 ## September 12: open-house CRM integration
 - User requested `/hq/api/openhouse` using the Wendy CRM_INTEGRATION_GUIDE.md JSON contract. Save into the active Harbison Supabase CRM with Formspree fallback; preserve the existing design.
 - The supplied standalone forms live in Downloads/585 n wendy dr and require HTTPS, response validation and direct Formspree fallback when the endpoint is unreachable. Their hosted location is not yet confirmed. See OPENHOUSE_INTEGRATION.md.

@@ -8,10 +8,11 @@ initAnalytics();
 
 const root=document.getElementById('root');
 const initialProperty=JSON.parse(document.getElementById('hs-property-data')?.textContent||'null');
+const initialProperties=JSON.parse(document.getElementById('hs-inventory-data')?.textContent||'null');
 const app=(
   <React.StrictMode>
-    <App initialProperty={initialProperty}/>
+    <App initialProperty={initialProperty} initialProperties={initialProperties}/>
   </React.StrictMode>
 );
-if(initialProperty)hydrateRoot(root,app);
+if(initialProperty||initialProperties)hydrateRoot(root,app);
 else createRoot(root).render(app);

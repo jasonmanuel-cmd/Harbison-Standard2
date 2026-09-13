@@ -22,7 +22,7 @@ const base = () => ({
   '@id': siteUrl + '/#agent',
   name: agent.name,
   description: 'California REALTOR® and real estate agent, serving buyers, sellers, and investors across Kern County, California.',
-  slogan: 'Real estate guidance with a local perspective.',
+  slogan: 'It’s not what you do. It’s how you do it.',
   jobTitle: 'Real Estate Agent',
   image: [ogImage, siteUrl + '/assets/headshot.webp'],
   url: siteUrl + '/',
@@ -58,7 +58,7 @@ const org = () => ({
   name: 'Harbison Standard',
   url: siteUrl + '/',
   logo: siteUrl + '/assets/logo.webp',
-  slogan: 'Real estate guidance with a local perspective.',
+  slogan: 'It’s not what you do. It’s how you do it.',
   telephone: agent.phone,
   email: agent.email,
   priceRange: '$$',
@@ -105,7 +105,7 @@ const listingList = () => ({
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Past sales by Nathanael Harbison, REALTOR®',
-  itemListElement: properties.map((p, i) => ({
+  itemListElement: properties.filter(p=>!p.status||/^sold$/i.test(p.status)).map((p, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     item: {
@@ -133,12 +133,12 @@ const listingList = () => ({
 
 export const routes = {
   '/': {
-    title: 'Harbison Standard | Kern County REALTOR®',
-    description: 'Real estate guidance with a local perspective in Kern County. Nathanael Harbison, REALTOR® (DRE 02059393), helps buyers, sellers, and investors buy, sell, and invest. Call (661) 472-7499.',
+    title: 'Buy, Sell & Invest in Kern County | Harbison Standard',
+    description: 'Buy, sell, or invest in Kern County with Nathanael Harbison. Explore current listings and get practical guidance in Bakersfield, Tehachapi, and nearby communities.',
   },
   '/about': {
     title: 'About Nathanael Harbison | Harbison Standard',
-    description: 'Meet Nathanael Harbison, a California REALTOR®. Real estate guidance across Kern County (Tehachapi, Bakersfield, California City).',
+    description: 'Meet Nathanael Harbison, a Kern County REALTOR® helping buyers, sellers, and investors with property preparation, home searches, and clear next steps.',
   },
   '/open-houses': {title:'Open Houses | Harbison Standard', description:'View upcoming open houses or ask Nathanael Harbison about a private showing.'},
   '/past-sales': {title: 'Past Sales | Harbison Standard', description: 'Selected verified past transactions by Nathanael Harbison. These homes are not currently offered for sale.'},
