@@ -185,7 +185,7 @@ export const routes = {
   },
   '/home-value': {
     title: 'What Is Your Home Worth? | Home Valuation | Harbison Standard',
-    description: 'Get an estimate of your home's value in Kern County. Nathanael Harbison provides quick valuations for sellers across Tehachapi, Bakersfield, and the surrounding communities.',
+    description: "Get an estimate of your home's value in Kern County. Nathanael Harbison provides quick valuations for sellers across Tehachapi, Bakersfield, and the surrounding communities.",
   },
 };
 
