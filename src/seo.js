@@ -183,6 +183,10 @@ export const routes = {
     title: 'Tehachapi Home Prices & Market Trends | Harbison Standard',
     description: 'Thinking about buying in Tehachapi? Explore home prices, land values, and what makes this mountain community different.',
   },
+  '/home-value': {
+    title: 'What Is Your Home Worth? | Home Valuation | Harbison Standard',
+    description: "Get an estimate of your home's value in Kern County. Nathanael Harbison provides quick valuations for sellers across Tehachapi, Bakersfield, and the surrounding communities.",
+  },
 };
 
 export const whyTehachapiFaq = [
@@ -276,6 +280,9 @@ export function jsonLdFor(path) {
       isPartOf: {'@id': siteUrl + '/#website'},
       about: {'@id': siteUrl + '/#org'},
     }, breadcrumb([{name: 'Home', path: '/'}, {name: 'Contact', path: '/contact'}]), faq(contactFaq)];
+  }
+  if (path === '/home-value') {
+    return [base(), org(), website(), page(routes[path].title, routes[path].description, path), breadcrumb([{name: 'Home', path: '/'}, {name: 'Home Value', path}])];
   }
   const svc = {
     '/real-estate': {name: 'Selling a Home', type: 'Residential Real Estate Sales', desc: 'Support selling a home with a clear plan — planned moves, inherited homes, repairs, and time-sensitive situations.', path: '/real-estate'},

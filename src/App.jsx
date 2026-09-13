@@ -1,9 +1,9 @@
 import {useEffect,useState} from 'react';
-import {ArrowRight,List,X,Phone,ChatCircleText,Envelope} from '@phosphor-icons/react';
+import {ArrowRight,List,X,Phone,ChatCircleText,Envelope,HouseLine} from '@phosphor-icons/react';
 import {Home} from './Home';
 import {ServicePage} from './ServicePage';
 import {servicePages} from './serviceData';
-import {About,Contact} from './Pages';
+import {About,Contact,HomeValue} from './Pages';
 import {PropertiesPage,PropertyDetailPage,PastSalesPage,OpenHousesPage} from './PropertyPages';
 import {MovingFromLosAngeles} from './MovingFromLA';
 import {SocialLinks} from './SocialLinks';
@@ -15,7 +15,7 @@ import {siteUrl,routes,jsonLdFor} from './seo';
 import {trackEvent} from './analytics';
 import {captureAttribution} from './attribution';
 import {agent} from './data';
-const pages={'/':{name:'Home',Component:Home},'/about':{name:'About',Component:About},'/properties':{name:'Properties',Component:PropertiesPage},'/past-sales':{name:'Past Sales',Component:PastSalesPage},'/open-houses':{name:'Open Houses',Component:OpenHousesPage},'/moving-from-los-angeles-to-bakersfield':{name:'LA to Bakersfield',Component:MovingFromLosAngeles},'/contact':{name:'Contact',Component:Contact},'/hq':{name:'HQ',Component:Hq},'/why-tehachapi':{name:'Why Tehachapi',Component:WhyTehachapi},'/cheap-land-kern-county':{name:'Cheap Land',Component:CheapLandKernCounty},'/bakersfield-home-prices':{name:'Bakersfield Prices',Component:BakersfieldHomePrices},'/tehachapi-home-prices':{name:'Tehachapi Prices',Component:TehachapiHomePrices}};
+const pages={'/':{name:'Home',Component:Home},'/about':{name:'About',Component:About},'/properties':{name:'Properties',Component:PropertiesPage},'/past-sales':{name:'Past Sales',Component:PastSalesPage},'/open-houses':{name:'Open Houses',Component:OpenHousesPage},'/moving-from-los-angeles-to-bakersfield':{name:'LA to Bakersfield',Component:MovingFromLosAngeles},'/contact':{name:'Contact',Component:Contact},'/home-value':{name:'Home Value',Component:HomeValue},'/hq':{name:'HQ',Component:Hq},'/why-tehachapi':{name:'Why Tehachapi',Component:WhyTehachapi},'/cheap-land-kern-county':{name:'Cheap Land',Component:CheapLandKernCounty},'/bakersfield-home-prices':{name:'Bakersfield Prices',Component:BakersfieldHomePrices},'/tehachapi-home-prices':{name:'Tehachapi Prices',Component:TehachapiHomePrices}};
 export function App({initialPath,initialProperty,initialProperties=null}={}){
  const path=(initialPath||window.location.pathname).replace(/\/+$/,'')||'/';
  const propertyMatch=path.match(/^\/property\/([^/]+)$/);
@@ -48,5 +48,5 @@ export function App({initialPath,initialProperty,initialProperties=null}={}){
  <main id="main">{Component?<Component key={path} {...(propertyMatch?{slug:decodeURIComponent(propertyMatch[1]),initialProperty}:{initialProperties})}/>:<section className="page-heading page-wrap"><p className="eyebrow">404 · Page not found</p><h1>Let’s get you <em>home.</em></h1><a href="/" className="gold">Back to home <ArrowRight/></a></section>}
  <section className="closing"><a href="/" aria-label="Harbison Standard home"><img className="footer-logo" src="/assets/logo.webp" alt="Harbison Standard"/></a><div><p className="motto">It’s not what you do,<br/><em>it’s how you do it.</em></p><a className="gold" href="/contact">Let’s talk <ArrowRight/></a></div></section></main>
  <footer className="site-footer"><div><p>Bakersfield · Tehachapi · Kern County</p><p className="footer-credentials"><a href={agent.phoneHref} onClick={()=>trackEvent('phone_click',{placement:'footer'})}>{agent.phone}</a> · <a href={'mailto:'+agent.email}>{agent.email}</a></p><p className="footer-credentials">{agent.name} · REALTOR® · Harbison Standard · DRE #{agent.license}</p><p className="footer-credentials">Equal Housing Opportunity</p></div><SocialLinks/></footer>
- <div className="mobile-contact" role="navigation" aria-label="Quick contact"><a href={agent.phoneHref} onClick={()=>trackEvent('phone_click',{placement:'mobile_bar'})}><Phone/>Call</a><a href={agent.smsHref} onClick={()=>trackEvent('sms_click',{placement:'mobile_bar'})}><ChatCircleText/>Text</a><a href="/contact"><Envelope/>Contact</a></div></>;
+ <div className="mobile-contact" role="navigation" aria-label="Quick contact"><a href={agent.phoneHref} onClick={()=>trackEvent('phone_click',{placement:'mobile_bar'})}><Phone/>Call</a><a href={agent.smsHref} onClick={()=>trackEvent('sms_click',{placement:'mobile_bar'})}><ChatCircleText/>Text</a><a href="/home-value" onClick={()=>trackEvent('home_value_click',{placement:'mobile_bar'})}><HouseLine/>Value</a><a href="/contact"><Envelope/>Contact</a></div></>;
 }
