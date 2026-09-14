@@ -1,5 +1,5 @@
-import {json, readJson} from './lib/auth.mjs';
-import {supabaseRest, supabaseConfigured} from './lib/supabase.mjs';
+import {json, readJson} from '../lib/auth.mjs';
+import {supabaseRest, supabaseConfigured} from '../lib/supabase.mjs';
 
 // Public write-only intake; HQ reads still require authentication.
 const headers = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type','X-Robots-Tag':'noindex, nofollow'};

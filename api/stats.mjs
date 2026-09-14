@@ -1,6 +1,6 @@
-import {supabaseConfigured} from './lib/supabase.mjs';
-import {buyerStats} from './lib/buyer-crm.mjs';
-import {json, isAdmin} from './lib/auth.mjs';
+import {supabaseConfigured} from '../lib/supabase.mjs';
+import {buyerStats} from '../lib/buyer-crm.mjs';
+import {json, isAdmin} from '../lib/auth.mjs';
 
 async function handler(request) {
   if (request.method !== "GET") return json({ error: "Method not allowed" }, { status: 405 });

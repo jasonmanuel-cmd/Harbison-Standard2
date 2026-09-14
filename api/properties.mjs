@@ -1,5 +1,5 @@
-import { json } from './lib/auth.mjs';
-import { supabaseConfigured, supabaseRest, supabaseNotConfigured } from './lib/supabase.mjs';
+import { json } from '../lib/auth.mjs';
+import { supabaseConfigured, supabaseRest, supabaseNotConfigured } from '../lib/supabase.mjs';
 
 function normalize(row) {
   const slug = row.slug || row.id || row.property_slug || '';

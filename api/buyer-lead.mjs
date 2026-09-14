@@ -1,5 +1,5 @@
-import { json, readJson } from './lib/auth.mjs';
-import { supabaseConfigured, supabaseRest, supabaseNotConfigured } from './lib/supabase.mjs';
+import { json, readJson } from '../lib/auth.mjs';
+import { supabaseConfigured, supabaseRest, supabaseNotConfigured } from '../lib/supabase.mjs';
 
 const text = (value, max = 500) => String(value || '').trim().slice(0, max);
 

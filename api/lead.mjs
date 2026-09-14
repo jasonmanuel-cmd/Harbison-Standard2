@@ -1,7 +1,7 @@
-import {supabaseConfigured,supabaseRest,supabaseNotConfigured} from './lib/supabase.mjs';
-import {buyerDetail} from './lib/buyer-crm.mjs';
-import {json,isAdmin,readJson} from './lib/auth.mjs';
-import {leadFields} from './lib/lead-fields.mjs';
+import {supabaseConfigured,supabaseRest,supabaseNotConfigured} from '../lib/supabase.mjs';
+import {buyerDetail} from '../lib/buyer-crm.mjs';
+import {json,isAdmin,readJson} from '../lib/auth.mjs';
+import {leadFields} from '../lib/lead-fields.mjs';
 async function handler(request){
  if(!['GET','POST','PATCH'].includes(request.method))return json({error:'Method not allowed'},{status:405});
  if(request.method!=='POST'){

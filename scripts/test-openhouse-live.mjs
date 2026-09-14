@@ -1,6 +1,6 @@
 import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
-import {supabaseRest} from '../api/lib/supabase.mjs';
+import {supabaseRest} from '../lib/supabase.mjs';
 const url=process.argv[2]||'http://localhost:5173/hq/api/openhouse';
 assert.equal(new URL(process.env.SUPABASE_URL).hostname,'pebqmuumwygrpjofdwfy.supabase.co');
 const schema=await supabaseRest('leads?select=id,name,email,phone,location,interest,source,goal,status,brand,message&limit=0');

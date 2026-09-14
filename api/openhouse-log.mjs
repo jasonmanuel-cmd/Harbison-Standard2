@@ -1,4 +1,4 @@
-import { supabaseRest, supabaseConfigured } from './lib/supabase.mjs';
+import { supabaseRest, supabaseConfigured } from '../lib/supabase.mjs';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',

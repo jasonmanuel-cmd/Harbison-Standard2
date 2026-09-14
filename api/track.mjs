@@ -1,5 +1,5 @@
-import {json,readJson} from './lib/auth.mjs';
-import {supabaseConfigured,supabaseRest,supabaseNotConfigured} from './lib/supabase.mjs';
+import {json,readJson} from '../lib/auth.mjs';
+import {supabaseConfigured,supabaseRest,supabaseNotConfigured} from '../lib/supabase.mjs';
 const text=(v,n)=>String(v??'').slice(0,n);
 async function handler(request){
  if(request.method!=='POST')return json({error:'Method not allowed'},{status:405});
