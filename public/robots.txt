@@ -1,5 +1,22 @@
 User-agent: *
 Allow: /
+
+# AI crawlers — allow indexing for citation
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Disallow: /api/
 Allow: /api/properties
 Disallow: /hq

@@ -77,6 +77,7 @@ export function CheapLandKernCounty(){
   <section className="svc svc--tint"><div className="svc-head"><div><p className="eyebrow">Explore more</p><h2>Related <em>resources.</em></h2></div></div><div className="cards3">
    <article className="card-t"><h3>Why Tehachapi?</h3><p>Learn what makes this mountain community different from the rest of California.</p><a className="inline-link" href="/why-tehachapi">Discover Tehachapi <ArrowRight/></a></article>
    <article className="card-t"><h3>Investing in Kern County</h3><p>Talk through investment properties, flips, and opportunities with a practical eye.</p><a className="inline-link" href="/investing">Explore investing <ArrowRight/></a></article>
+   <article className="card-t"><h3>Private sale & off-market deals</h3><p>Find homes not on MLS or Zillow — private sellers and off-market deals across Kern County.</p><a className="inline-link" href="/private-sale">Private Sale <ArrowRight/></a><a className="inline-link" href="/off-market-deals">Off-Market Deals <ArrowRight/></a></article>
    <article className="card-t"><h3>Talk to Nathanael</h3><p>Get guidance on land purchases, zoning, and what to look for.</p><a className="inline-link" href="/contact">Contact <ArrowRight/></a></article>
   </div></section>
   <section className="svc"><div className="svc-head"><div><p className="eyebrow">Land buyer questions</p><h2>Land in Kern County, <em>answered.</em></h2></div></div><div className="faq">{cheapLandKernFaq.map(({q,a})=><details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div></section>
