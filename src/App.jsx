@@ -10,12 +10,13 @@ import {SocialLinks} from './SocialLinks';
 import {Hq} from './Hq';
 import {WhyTehachapi, CheapLandKernCounty} from './data/ContentPages';
 import {BakersfieldHomePrices, TehachapiHomePrices} from './data/MarketPages';
+import {PrivateSale} from './data/PrivateSale';
 import {trackPageView} from './track';
 import {siteUrl,routes,jsonLdFor} from './seo';
 import {trackEvent} from './analytics';
 import {captureAttribution} from './attribution';
 import {agent} from './data';
-const pages={'/':{name:'Home',Component:Home},'/about':{name:'About',Component:About},'/properties':{name:'Properties',Component:PropertiesPage},'/past-sales':{name:'Past Sales',Component:PastSalesPage},'/open-houses':{name:'Open Houses',Component:OpenHousesPage},'/moving-from-los-angeles-to-bakersfield':{name:'LA to Bakersfield',Component:MovingFromLosAngeles},'/contact':{name:'Contact',Component:Contact},'/home-value':{name:'Home Value',Component:HomeValue},'/hq':{name:'HQ',Component:Hq},'/why-tehachapi':{name:'Why Tehachapi',Component:WhyTehachapi},'/cheap-land-kern-county':{name:'Cheap Land',Component:CheapLandKernCounty},'/bakersfield-home-prices':{name:'Bakersfield Prices',Component:BakersfieldHomePrices},'/tehachapi-home-prices':{name:'Tehachapi Prices',Component:TehachapiHomePrices}};
+const pages={'/':{name:'Home',Component:Home},'/about':{name:'About',Component:About},'/properties':{name:'Properties',Component:PropertiesPage},'/past-sales':{name:'Past Sales',Component:PastSalesPage},'/open-houses':{name:'Open Houses',Component:OpenHousesPage},'/moving-from-los-angeles-to-bakersfield':{name:'LA to Bakersfield',Component:MovingFromLosAngeles},'/contact':{name:'Contact',Component:Contact},'/home-value':{name:'Home Value',Component:HomeValue},'/hq':{name:'HQ',Component:Hq},'/why-tehachapi':{name:'Why Tehachapi',Component:WhyTehachapi},'/cheap-land-kern-county':{name:'Cheap Land',Component:CheapLandKernCounty},'/bakersfield-home-prices':{name:'Bakersfield Prices',Component:BakersfieldHomePrices},'/tehachapi-home-prices':{name:'Tehachapi Prices',Component:TehachapiHomePrices},'/private-sale':{name:'Private Sale',Component:PrivateSale}};
 export function App({initialPath,initialProperty,initialProperties=null}={}){
  const path=(initialPath||window.location.pathname).replace(/\/+$/,'')||'/';
  const propertyMatch=path.match(/^\/property\/([^/]+)$/);
