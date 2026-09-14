@@ -1,4 +1,4 @@
-import { json } from './lib/auth.mjs';
+import { json, readJson } from './lib/auth.mjs';
 import { supabaseConfigured, supabaseRest, supabaseNotConfigured } from './lib/supabase.mjs';
 
 function normalize(row) {
@@ -33,7 +33,6 @@ function normalize(row) {
 }
 
 const isKernCounty = p => {
-  // If we have no identifying info, include it (don't filter out data we can't classify)
   if(!p.city && !p.region && !p.zip) return true;
   if(p.region && /kern/i.test(p.region)) return true;
   if(p.city){
@@ -44,29 +43,73 @@ const isKernCounty = p => {
   return false;
 };
 
+const text = (value, max = 500) => String(value || '').trim().slice(0, max);
+
 async function handler(request) {
-  if (request.method !== 'GET') return json({ error: 'Method not allowed' }, { status: 405 });
-  if (!supabaseConfigured()) return supabaseNotConfigured();
   const url = new URL(request.url);
-  const slug = url.searchParams.get('slug');
-  const query = slug
-    ? `properties?select=*&status=in.(available,active,for%20sale,sold,Available,Active,For%20Sale,Sold,Coming%20Soon,coming%20soon)&slug=eq.${encodeURIComponent(slug)}&limit=1`
-    : 'properties?select=*&order=created_at.desc&status=in.(available,active,for%20sale,sold,Available,Active,For%20Sale,Sold,Coming%20Soon,coming%20soon)';
-  try {
-    const response = await supabaseRest(query, { method: 'GET' });
-    const text = await response.text();
-    if (!response.ok) {
-      console.error('[supabase properties] Request rejected:', response.status);
-      return json({ error: 'Failed to load properties' }, { status: 502 });
+  const method = request.method;
+  const openhouse = url.searchParams.get('openhouse');
+
+  // GET /api/properties or /api/properties?slug=xxx - fetch property data (public)
+  if (method === 'GET') {
+    if (!supabaseConfigured()) return supabaseNotConfigured();
+    const slug = url.searchParams.get('slug');
+    const query = slug
+      ? `properties?select=*&status=in.(available,active,for%20sale,sold,Available,Active,For%20Sale,Sold,Coming%20Soon,coming%20soon)&slug=eq.${encodeURIComponent(slug)}&limit=1`
+      : 'properties?select=*&order=created_at.desc&status=in.(available,active,for%20sale,sold,Available,Active,For%20Sale,Sold,Coming%20Soon,coming%20soon)';
+    try {
+      const response = await supabaseRest(query, { method: 'GET' });
+      const text = await response.text();
+      if (!response.ok) {
+        console.error('[supabase properties] Request rejected:', response.status);
+        return json({ error: 'Failed to load properties' }, { status: 502 });
+      }
+      const rows = JSON.parse(text || '[]').map(normalize).filter(p=>slug ? true : isKernCounty(p));
+      if (slug && !rows.length) return json({ error: 'Property not found' }, { status: 404 });
+      return json(slug ? { property: rows[0] } : { properties: rows });
+    } catch (error) {
+      console.error('[properties]', error);
+      return json({ error: 'Failed to load properties' }, { status: 500 });
     }
-    const rows = JSON.parse(text || '[]').map(normalize).filter(p=>slug ? true : isKernCounty(p));
-    if (slug && !rows.length) return json({ error: 'Property not found' }, { status: 404 });
-    return json(slug ? { property: rows[0] } : { properties: rows });
-  } catch (error) {
-    console.error('[properties]', error);
-    return json({ error: 'Failed to load properties' }, { status: 500 });
   }
+
+  // POST /api/properties?openhouse=true - open house registration (public)
+  if (method === 'POST' && openhouse === 'true') {
+    if (!supabaseConfigured()) return supabaseNotConfigured();
+    const headers = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type','X-Robots-Tag':'noindex, nofollow'};
+    const reply = (body, status = 200) => json(body, {status, headers});
+
+    const body = await readJson(request);
+    if (!body || typeof body !== 'object' || Array.isArray(body)) return reply({success:false,error:'Invalid JSON object'},400);
+
+    const limits = {name:100,email:200,phone:40,property:200,location:200,source:200,date_time:100,submission_date:100};
+    const data = {};
+    for (const [key,max] of Object.entries(limits)) {
+      if (typeof body[key] !== 'string' || !body[key].trim() || body[key].length > max) return reply({success:false,error:'Invalid or missing '+key},400);
+      data[key] = body[key].trim();
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || !Number.isFinite(Date.parse(data.submission_date))) return reply({success:false,error:'Invalid email or submission_date'},400);
+
+    const lead = {name:data.name,email:data.email.toLowerCase(),phone:data.phone,location:data.location,interest:data.property,source:data.source,goal:'Open house',status:'new',brand:'harbison_standard',message:JSON.stringify(data,null,2)};
+    try {
+      const saved = await supabaseRest('leads', {method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify(lead),signal:AbortSignal.timeout(8000)});
+      if (!saved.ok) throw new Error('CRM rejected registration');
+      return reply({success:true,message:'Registration recorded'});
+    } catch {
+      try {
+        const backup = await fetch('https://formspree.io/f/xqpkdwrp', {method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},signal:AbortSignal.timeout(8000),body:JSON.stringify({...data,_subject:'Harbison Standard - open house registration',_replyto:data.email})});
+        if (backup.ok) return reply({success:true,message:'Registration received through backup',delivery:'formspree'});
+      } catch { }
+      return reply({success:false,error:'Unable to save registration. Please retry.'},503);
+    }
+  }
+
+  // OPTIONS for CORS preflight (openhouse endpoint)
+  if (method === 'OPTIONS' && openhouse === 'true') {
+    return new Response(null, {status:204, headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'}});
+  }
+
+  return json({ error: 'Method not allowed' }, { status: 405 });
 }
 
-// Vercel Web Standard handler; local development uses the same fetch function.
-export default {fetch:handler};
+export default { fetch: handler };
