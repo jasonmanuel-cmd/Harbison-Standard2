@@ -9,6 +9,10 @@
       "destination": "/api/openhouse"
     },
     {
+      "source": "/hq/api/openhouse-log",
+      "destination": "/api/openhouse-log"
+    },
+    {
       "source": "/property/:slug",
       "destination": "/property/:slug/index.html"
     },
