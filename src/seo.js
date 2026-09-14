@@ -187,6 +187,10 @@ export const routes = {
     title: 'What Is Your Home Worth? | Home Valuation | Harbison Standard',
     description: "Get an estimate of your home's value in Kern County. Nathanael Harbison provides quick valuations for sellers across Tehachapi, Bakersfield, and the surrounding communities.",
   },
+  '/off-market-deals': {
+    title: 'Off-Market Deals in Kern County — Private Listings Not on Zillow | Harbison Standard',
+    description: 'Off-market deals in Bakersfield, Tehachapi, California City — private listings not on MLS or Zillow. Tax-defaulted, pre-foreclosure, probate, FSBO, vacant. Get alerts 21 days before Zillow. Harbison Standard Private Lead System.',
+  },
   '/private-sale': {
     title: 'Sell Your House Privately in Kern County — No MLS, No Zillow | Harbison Standard',
     description: 'Sell your Bakersfield or Tehachapi house privately — no MLS, no open houses, no sign in yard. As-is, confidential, fast close. Private Sale Program by Nathanael Harbison, REALTOR® DRE #02059393. Call (661) 472-7499 confidential.',
@@ -219,6 +223,14 @@ export const tehachapiFaq = [
   {q: 'Is Tehachapi expensive to live in?', a: 'Compared to many California cities, Tehachapi is more affordable. Land and home prices tend to be lower, making it attractive for remote workers, retirees, and investors.'},
   {q: 'How far is Tehachapi from Bakersfield?', a: 'Tehachapi is about 35 miles from Bakersfield, roughly a 40-45 minute drive depending on conditions.'},
   {q: 'What is there to do in Tehachapi?', a: 'Outdoor activities including hiking, hunting, horseback riding, cycling, and wine tasting. The community also hosts events like movie nights and mud runs.'},
+];
+
+export const offMarketFaq = [
+  {q: 'What are off-market deals?', a: 'Off-market deals are properties for sale that are not listed on MLS, Zillow, or Realtor.com. They include private sales, FSBO, tax-defaulted, pre-foreclosure, probate, and vacant houses. Harbison Standard finds them through county records, direct mail, driving for dollars, and private seller network.'},
+  {q: 'How do you find off-market deals in Kern County?', a: 'We scrape Craigslist by owner, Zillow FSBO, Kern County tax-defaulted auction lists, Notice of Default filings, probate cases, code violations, Facebook Marketplace, wholesaler lists, and driving for dollars in Golden Hills, Bear Valley Springs, Stallion Springs, and California City. All scored 1-10 for deal quality.'},
+  {q: 'Can I get alerts for off-market deals?', a: 'Yes. Create a buyer profile with your budget, area (Tehachapi, Bakersfield, California City), and type (land under $50k, flip under $250k, etc). We text you within 1 hour when a private lead matches — 21 days before Zillow.'},
+  {q: 'Are off-market deals cheaper?', a: 'Often 10-30% below market. Tax-defaulted $5k-20k, pre-foreclosure 15% below, probate as-is, vacant distressed. We comp every deal: price per sqft vs 90-day comps, DOM, motivation keywords.'},
+  {q: 'Do you work with investors?', a: 'Yes. 70% of off-market buyers are investors. We have private buyer network of 20+ cash buyers who want off-market not on MLS. Join by telling us your buy box.'},
 ];
 
 export const privateSaleFaq = [
@@ -306,11 +318,12 @@ export function jsonLdFor(path) {
     '/cheap-land-kern-county': {name: 'Cheap Land in Kern County', desc: 'Affordable land for sale in Kern County — current listings and what your budget buys.', path: '/cheap-land-kern-county'},
     '/bakersfield-home-prices': {name: 'Bakersfield Home Prices', desc: 'What homes actually cost in Bakersfield — by neighborhood, by budget, and what your money buys.', path: '/bakersfield-home-prices'},
     '/tehachapi-home-prices': {name: 'Tehachapi Home Prices', desc: 'What homes and land cost in Tehachapi — from condos to acreage.', path: '/tehachapi-home-prices'},
+    '/off-market-deals': {name: 'Off-Market Deals', type: 'Off-Market Real Estate', desc: 'Off-market deals in Kern County — private listings not on MLS or Zillow. Tax-defaulted, pre-foreclosure, probate, FSBO, vacant. Get alerts before Zillow.', path: '/off-market-deals'},
     '/private-sale': {name: 'Private Home Sale Program', type: 'Real Estate Sales Without MLS', desc: 'Sell your house privately in Kern County — no MLS, no Zillow, no open houses, no sign in yard. As-is, confidential, fast close. Private Sale Program by Nathanael Harbison.', path: '/private-sale'},
   };
   const s = svc[path];
   if (!s) return [];
-  const faqPairs = {'/why-tehachapi': whyTehachapiFaq, '/cheap-land-kern-county': cheapLandKernFaq, '/bakersfield-home-prices': bakersfieldFaq, '/tehachapi-home-prices': tehachapiFaq, '/private-sale': privateSaleFaq}[path];
+  const faqPairs = {'/why-tehachapi': whyTehachapiFaq, '/cheap-land-kern-county': cheapLandKernFaq, '/bakersfield-home-prices': bakersfieldFaq, '/tehachapi-home-prices': tehachapiFaq, '/private-sale': privateSaleFaq, '/off-market-deals': offMarketFaq}[path];
   const schemas = [base(), org(), website(), page(routes[path].title, routes[path].description, path), breadcrumb([{name: 'Home', path: '/'}, {name: s.name, path: path}])];
   if(s.type){
     schemas.push({
