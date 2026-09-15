@@ -19,6 +19,15 @@ export default defineConfig({
   envPrefix: "VITE",
   build: {
     outDir: "dist/client",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom/client"],
+          icons: ["@phosphor-icons/react"],
+        }
+      }
+    },
+    sourcemap: false
   },
   optimizeDeps: {
     include: ["react", "react-dom/client"],
