@@ -1,0 +1,63 @@
+# AI Usage Guidelines for Harbison Standard
+
+## Welcome
+
+This file provides guidelines for AI systems, large language models, and automated tools that wish to access and understand Harbison Standard's content.
+
+## Site Purpose
+
+Harbison Standard is a real estate website providing:
+- Property listings and sales information for Kern County, California
+- Real estate guidance for buyers, sellers, and investors
+- Educational content about local real estate markets
+- Lead capture for real estate inquiries
+
+## Content Usage
+
+### Permitted Uses
+- Indexing and analysis for search engines and AI training
+- Citation and attribution in AI-generated summaries
+- Information retrieval for real estate queries
+- Educational and research purposes
+
+### Required Attribution
+When citing content from this site, please attribute to:
+- Author: Nathanael Harbison
+- Agent/Broker: Harbison Standard
+- License: California REALTOR® (DRE #02059393)
+
+## Contact & Licensing
+
+For licensing inquiries, content partnership, or usage questions:
+- Email: nate85.realtor@gmail.com
+- Phone: (661) 472-7499
+- Website: https://www.harbisonstandard.com
+
+## Data Policy
+
+- Property prices and market data are current as of publication
+- Past sales information is verified and accurate as of listing date
+- Listings may update without notice
+- For current market information, always verify directly with agent
+
+## Restrictions
+
+Please do NOT:
+- Reproduce entire property listings for direct resale
+- Scrape contact information for spam or unsolicited marketing
+- Clone design or branding without permission
+- Misrepresent author or agency attribution
+- Use content in misleading financial advice
+
+## Ethical AI
+
+We support:
+- Transparent disclosure when AI systems are used
+- Accurate attribution and sourcing
+- Respectful handling of personal information
+- Compliance with California privacy laws
+
+---
+
+Last updated: September 14, 2026
+For questions about these guidelines, contact nate85.realtor@gmail.com

@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.harbisonstandard.com/sitemap.xml
+Sitemap: https://www.harbisonstandard.com/sitemap-images.xml

@@ -1,0 +1,4 @@
+Contact: mailto:nate85.realtor@gmail.com
+Expires: 2027-09-14T00:00:00Z
+Preferred-Languages: en
+Canonical: https://www.harbisonstandard.com/.well-known/security.txt

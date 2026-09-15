@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/client",
+  "rewrites": [
+    {
+      "source": "/hq/api/openhouse",
+      "destination": "/api/openhouse"
+    },
+    {
+      "source": "/hq/api/openhouse-log",
+      "destination": "/api/openhouse-log"
+    },
+    {
+      "source": "/property/:slug",
+      "destination": "/property/:slug/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/index.html"
+    },
+    {
+      "source": "/properties",
+      "destination": "/properties/index.html"
+    },
+    {
+      "source": "/past-sales",
+      "destination": "/past-sales/index.html"
+    },
+    {
+      "source": "/open-houses",
+      "destination": "/open-houses/index.html"
+    },
+    {
+      "source": "/moving-from-los-angeles-to-bakersfield",
+      "destination": "/moving-from-los-angeles-to-bakersfield/index.html"
+    },
+    {
+      "source": "/real-estate",
+      "destination": "/real-estate/index.html"
+    },
+    {
+      "source": "/investing",
+      "destination": "/investing/index.html"
+    },
+    {
+      "source": "/hq",
+      "destination": "/hq/index.html"
+    },
+    {
+      "source": "/why-tehachapi",
+      "destination": "/why-tehachapi/index.html"
+    },
+    {
+      "source": "/cheap-land-kern-county",
+      "destination": "/cheap-land-kern-county/index.html"
+    },
+    {
+      "source": "/bakersfield-home-prices",
+      "destination": "/bakersfield-home-prices/index.html"
+    },
+    {
+      "source": "/tehachapi-home-prices",
+      "destination": "/tehachapi-home-prices/index.html"
+    },
+    {
+      "source": "/home-value",
+      "destination": "/home-value/index.html"
+    },
+    {
+      "source": "/((?!api/|property/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

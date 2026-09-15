@@ -1,0 +1,45 @@
+{
+  "description": "Extracted reference tokens; names normalize existing values and are not a claim that all values exist as CSS variables.",
+  "colors": {
+    "navy": "#031c2b",
+    "gold": "#edc66f",
+    "cream": "#f6f5ef",
+    "mutedGold": "#b78b43",
+    "ink": "#08142e",
+    "secondaryText": "#52606a",
+    "sectionTint": "#ecebe2",
+    "warmPanel": "#eae9df",
+    "formSurface": "#fffef9",
+    "propertySurface": "#faf9f4",
+    "border": "#d5ccba",
+    "focus": "#be8c36"
+  },
+  "typography": {
+    "publicHeading": "Georgia, serif",
+    "body": "'Open Sans', sans-serif",
+    "legacyDisplay": "'Libre Caslon Display', Georgia, serif",
+    "legacyItalic": "'Libre Caslon Text', Georgia, serif",
+    "bodyWeights": [
+      400,
+      500,
+      600,
+      700
+    ]
+  },
+  "layout": {
+    "desktopGutter": "6.1%",
+    "mobileGutter": "6%",
+    "mainMobileBreakpoint": "740px",
+    "smallMobileBreakpoint": "460px",
+    "propertyGridGap": "28px 23px"
+  },
+  "radius": {
+    "publicControl": "2px",
+    "hqCard": "6px"
+  },
+  "motion": {
+    "propertyImage": "transform .25s",
+    "propertyCardHoverScale": 1.025,
+    "galleryHoverScale": 1.018
+  }
+}
