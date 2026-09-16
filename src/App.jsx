@@ -1,6 +1,7 @@
 import {useEffect,useState} from 'react';
 import {ArrowRight,List,X,Phone,ChatCircleText,Envelope,HouseLine} from '@phosphor-icons/react';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import {Home} from './Home';
 import {ServicePage} from './ServicePage';
 import {servicePages} from './serviceData';
@@ -57,5 +58,5 @@ export function App({initialPath,initialProperty,initialProperties=null}={}){
  <main id="main">{Component?<Component key={path} {...(propertyMatch?{slug:decodeURIComponent(propertyMatch[1]),initialProperty}:{initialProperties})}/>:<section className="page-heading page-wrap"><p className="eyebrow">404 · Page not found</p><h1>Let’s get you <em>home.</em></h1><a href="/" className="gold">Back to home <ArrowRight/></a></section>}
  <section className="closing"><a href="/" aria-label="Harbison Standard home"><img className="footer-logo" src="/assets/logo.webp" alt="Harbison Standard"/></a><div><p className="motto">It’s not what you do,<br/><em>it’s how you do it.</em></p><a className="gold" href="/contact">Let’s talk <ArrowRight/></a></div></section></main>
  <footer className="site-footer"><div><p>Bakersfield · Tehachapi · Kern County</p><p className="footer-credentials"><a href={agent.phoneHref} onClick={()=>trackEvent('phone_click',{placement:'footer'})}>{agent.phone}</a> · <a href={'mailto:'+agent.email}>{agent.email}</a></p><p className="footer-credentials">{agent.name} · REALTOR® · Harbison Standard · DRE #{agent.license}</p><p className="footer-credentials">Equal Housing Opportunity</p></div><SocialLinks/></footer>
- <div className="mobile-contact" role="navigation" aria-label="Quick contact"><a href={agent.phoneHref} onClick={()=>trackEvent('phone_click',{placement:'mobile_bar'})}><Phone/>Call</a><a href={agent.smsHref} onClick={()=>trackEvent('sms_click',{placement:'mobile_bar'})}><ChatCircleText/>Text</a><a href="/home-value" onClick={()=>trackEvent('home_value_click',{placement:'mobile_bar'})}><HouseLine/>Value</a><a href="/contact"><Envelope/>Contact</a></div><Analytics /></>;
+ <div className="mobile-contact" role="navigation" aria-label="Quick contact"><a href={agent.phoneHref} onClick={()=>trackEvent('phone_click',{placement:'mobile_bar'})}><Phone/>Call</a><a href={agent.smsHref} onClick={()=>trackEvent('sms_click',{placement:'mobile_bar'})}><ChatCircleText/>Text</a><a href="/home-value" onClick={()=>trackEvent('home_value_click',{placement:'mobile_bar'})}><HouseLine/>Value</a><a href="/contact"><Envelope/>Contact</a></div><Analytics /><SpeedInsights /></>;
 }
