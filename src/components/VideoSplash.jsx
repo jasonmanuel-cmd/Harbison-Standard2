@@ -26,7 +26,8 @@ export function VideoSplash({onComplete}) {
                 (navigator.msMaxTouchPoints > 0));
       };
       const width = window.innerWidth;
-      setIsMobile(width < 1024 || isTouchDevice());
+      const mobile = width < 1024 || isTouchDevice();
+      setIsMobile(mobile);
     };
 
     checkDevice();
@@ -37,6 +38,12 @@ export function VideoSplash({onComplete}) {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
+      // Update video source when device type changes
+      const source = video.querySelector('source');
+      if (source) {
+        source.src = getVideoUrl();
+        video.load();
+      }
       video.play().catch(() => {
         // Autoplay blocked or error, user can click to continue
       });
