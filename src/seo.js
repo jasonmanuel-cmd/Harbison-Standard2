@@ -49,6 +49,14 @@ const base = () => ({
   knowsAbout: ['Real estate','Housing market','Real estate investing','Kern County real estate'],
   sameAs: socials,
   brand: {name: 'Harbison Standard', '@type': 'Brand'},
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    bestRating: '5',
+    worstRating: '1',
+    ratingCount: 6,
+    reviewCount: 6,
+  },
 });
 
 const org = () => ({
@@ -263,6 +271,18 @@ export const contactFaq = [
   {q: "Can I talk through multiple options before deciding?", a: "Yes. Many clients explore a few directions — buying, selling, or investing — before landing on the right one."},
 ];
 
+// AggregateRating schema for testimonials (6 verified reviews)
+const aggregateRating = () => ({
+  "@context": "https://schema.org",
+  "@type": "AggregateRating",
+  "@id": siteUrl + "/#rating",
+  ratingValue: "5.0",
+  bestRating: "5",
+  worstRating: "1",
+  ratingCount: 6,
+  reviewCount: 6,
+});
+
 // LocalBusiness schema — complements RealEstateAgent for local SEO
 const localBusiness = () => ({
   "@context": "https://schema.org",
@@ -284,6 +304,7 @@ const localBusiness = () => ({
   sameAs: socials,
   founder: {"@id": siteUrl + "/#agent"},
   image: siteUrl + "/assets/logo.webp",
+  aggregateRating: {"@id": siteUrl + "/#rating"},
 });
 
 // VideoObject schema — for property videos
