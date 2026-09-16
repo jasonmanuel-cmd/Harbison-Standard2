@@ -187,6 +187,22 @@ export const routes = {
     title: 'What Is Your Home Worth? | Home Valuation | Harbison Standard',
     description: "Get an estimate of your home's value in Kern County. Nathanael Harbison provides quick valuations for sellers across Tehachapi, Bakersfield, and the surrounding communities.",
   },
+  '/tehachapi': {
+    title: 'Homes for Sale in Tehachapi, CA | Harbison Standard',
+    description: 'Find homes, land, and investment properties for sale in Tehachapi. Mountain community living with affordable prices and outdoor lifestyle. Work with Nathanael Harbison.',
+  },
+  '/bakersfield': {
+    title: 'Homes for Sale in Bakersfield, CA | Harbison Standard',
+    description: 'Explore affordable homes, investment properties, and real estate in Bakersfield. California\'s 9th largest city with thriving job market and growing economy.',
+  },
+  '/california-city': {
+    title: 'Cheap Land for Sale in California City, CA | Harbison Standard',
+    description: 'Affordable land for investment in California City, CA. Buy land starting at $2K-$8K per acre. Master-planned community with 200K population target.',
+  },
+  '/stallion-springs': {
+    title: 'Homes in Stallion Springs Gated Community | Harbison Standard',
+    description: 'Master-planned homes in Stallion Springs, CA. Golf course, equestrian facilities, resort amenities. Exclusive gated community in Kern County.',
+  },
 };
 
 export const whyTehachapiFaq = [
@@ -328,6 +344,10 @@ export function jsonLdFor(path) {
   }
   if (path === '/home-value') {
     return [base(), org(), website(), page(routes[path].title, routes[path].description, path), breadcrumb([{name: 'Home', path: '/'}, {name: 'Home Value', path}])];
+  }
+  if (['/tehachapi', '/bakersfield', '/california-city', '/stallion-springs'].includes(path)) {
+    const names = {'/tehachapi': 'Tehachapi', '/bakersfield': 'Bakersfield', '/california-city': 'California City', '/stallion-springs': 'Stallion Springs'};
+    return [base(), org(), website(), page(routes[path].title, routes[path].description, path), breadcrumb([{name: 'Home', path: '/'}, {name: names[path], path}])];
   }
   const svc = {
     '/real-estate': {name: 'Selling a Home', type: 'Residential Real Estate Sales', desc: 'Support selling a home with a clear plan — planned moves, inherited homes, repairs, and time-sensitive situations.', path: '/real-estate'},
