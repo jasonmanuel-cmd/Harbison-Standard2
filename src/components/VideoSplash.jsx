@@ -1,7 +1,13 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 export function VideoSplash({onComplete}) {
   const videoRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const getVideoUrl = () => {
+    // Use mobile-optimized video for devices under 768px or touch screens
+    return isMobile ? '/assets/intro-video-mobile.mp4' : '/assets/intro-video.mp4';
+  };
 
   const handleVideoEnd = () => {
     onComplete();
@@ -12,13 +18,30 @@ export function VideoSplash({onComplete}) {
   };
 
   useEffect(() => {
+    // Detect if device is mobile or tablet
+    const checkDevice = () => {
+      const isTouchDevice = () => {
+        return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+      };
+      const width = window.innerWidth;
+      setIsMobile(width < 1024 || isTouchDevice());
+    };
+
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
+
+  useEffect(() => {
     const video = videoRef.current;
     if (video) {
       video.play().catch(() => {
-        // Autoplay blocked, user will click
+        // Autoplay blocked or error, user can click to continue
       });
     }
-  }, []);
+  }, [isMobile]);
 
   return (
     <div
@@ -36,6 +59,7 @@ export function VideoSplash({onComplete}) {
         cursor: 'pointer',
         zIndex: 9999,
       }}
+      role="presentation"
     >
       <video
         ref={videoRef}
@@ -44,11 +68,14 @@ export function VideoSplash({onComplete}) {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
+          display: 'block',
         }}
         muted
         playsInline
+        preload="auto"
       >
-        <source src="/assets/intro-video.mp4" type="video/mp4" />
+        <source src={getVideoUrl()} type="video/mp4" />
+        Your browser does not support the video tag.
       </video>
       <div
         style={{
@@ -57,8 +84,11 @@ export function VideoSplash({onComplete}) {
           left: '50%',
           transform: 'translateX(-50%)',
           color: '#fff',
-          fontSize: '0.9rem',
+          fontSize: isMobile ? '0.8rem' : '0.9rem',
           opacity: 0.6,
+          textAlign: 'center',
+          padding: '0 1rem',
+          pointerEvents: 'none',
         }}
       >
         Click to continue or video will auto-advance
