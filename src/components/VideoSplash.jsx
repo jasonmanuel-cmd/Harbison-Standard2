@@ -3,11 +3,6 @@ import {useEffect, useRef} from 'react';
 export function VideoSplash({onComplete}) {
   const videoRef = useRef(null);
 
-  useEffect(() => {
-    const timer = setTimeout(() => onComplete(), 100);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
-
   const handleVideoEnd = () => {
     onComplete();
   };
