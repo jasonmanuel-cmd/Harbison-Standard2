@@ -2,6 +2,7 @@ import {useEffect,useState} from 'react';
 import {ArrowRight,List,X,Phone,ChatCircleText,Envelope,HouseLine} from '@phosphor-icons/react';
 import { Analytics } from '@vercel/analytics/react';
 import {Home} from './Home';
+import {VideoSplash} from './components/VideoSplash';
 import {ServicePage} from './ServicePage';
 import {servicePages} from './serviceData';
 import {About,Contact,HomeValue} from './Pages';
@@ -30,6 +31,7 @@ export function App({initialPath,initialProperty,initialProperties=null}={}){
  const contentMatch=path.match(/^\/(guide|blog)\/[^/]+$/) ? 'content' : null;
  const page=pages[path]||(contentMatch?{name:'Content',Component:()=><ContentRouter path={path}/>}:(propertyMatch?{name:'Property',Component:PropertyDetailPage}:(servicePages[path]?{name:servicePages[path].name,Component:ServicePage}:undefined)));
  const [menu,setMenu]=useState(false);
+ const [showVideo,setShowVideo]=useState(()=>{try{return !localStorage.getItem('video_seen')}catch{return false}});
  useEffect(()=>{if(path==='/hq')return;captureAttribution();trackPageView(path)},[path]);
  useEffect(()=>{
   // Keep generated property metadata intact while the property API loads.
@@ -51,9 +53,10 @@ export function App({initialPath,initialProperty,initialProperties=null}={}){
   data.forEach(schema=>{const el=document.createElement('script');el.type='application/ld+json';el.setAttribute('data-seo-jsonld','true');el.text=JSON.stringify(schema);document.head.appendChild(el)});
  },[path]);
  useEffect(()=>{const close=e=>{if(e.key==='Escape')setMenu(false)};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close)},[]);
+ const handleVideoComplete=()=>{try{localStorage.setItem('video_seen','true')}catch{}setShowVideo(false)};
  const Component=page?.Component;
  if(path==='/hq')return <Hq/>;
- return <><a className="skip" href="#main">Skip to content</a><header><a className="brand" href="/" aria-label="Harbison Standard home"><img src="/assets/logo.webp" alt="Harbison Standard — Real Estate and Investing"/></a><button className="menu-toggle" onClick={()=>setMenu(!menu)} aria-label={menu?'Close navigation':'Open navigation'} aria-expanded={menu} aria-controls="main-nav">{menu?<X/>:<List/>}</button><nav id="main-nav" className={menu?'open':''} aria-label="Main navigation">{[['/','Home'],['/#approach','Our Approach'],['/properties','Properties'],['/moving-from-los-angeles-to-bakersfield','Relocate'],['/about','About'],['/contact','Contact']].map(([href,label])=><a key={href} className={href===path?'active':''} aria-current={href===path?'page':undefined} href={href} onClick={()=>setMenu(false)}>{label}</a>)}</nav><a className="gold header-cta" href="/contact">Let’s talk</a></header>
+ return <>{showVideo&&<VideoSplash onComplete={handleVideoComplete}/>}<a className="skip" href="#main">Skip to content</a><header><a className="brand" href="/" aria-label="Harbison Standard home"><img src="/assets/logo.webp" alt="Harbison Standard — Real Estate and Investing"/></a><button className="menu-toggle" onClick={()=>setMenu(!menu)} aria-label={menu?'Close navigation':'Open navigation'} aria-expanded={menu} aria-controls="main-nav">{menu?<X/>:<List/>}</button><nav id="main-nav" className={menu?'open':''} aria-label="Main navigation">{[['/','Home'],['/#approach','Our Approach'],['/properties','Properties'],['/moving-from-los-angeles-to-bakersfield','Relocate'],['/about','About'],['/contact','Contact']].map(([href,label])=><a key={href} className={href===path?'active':''} aria-current={href===path?'page':undefined} href={href} onClick={()=>setMenu(false)}>{label}</a>)}</nav><a className="gold header-cta" href="/contact">Let’s talk</a></header>
  <main id="main">{Component?<Component key={path} {...(propertyMatch?{slug:decodeURIComponent(propertyMatch[1]),initialProperty}:{initialProperties})}/>:<section className="page-heading page-wrap"><p className="eyebrow">404 · Page not found</p><h1>Let’s get you <em>home.</em></h1><a href="/" className="gold">Back to home <ArrowRight/></a></section>}
  <section className="closing"><a href="/" aria-label="Harbison Standard home"><img className="footer-logo" src="/assets/logo.webp" alt="Harbison Standard"/></a><div><p className="motto">It’s not what you do,<br/><em>it’s how you do it.</em></p><a className="gold" href="/contact">Let’s talk <ArrowRight/></a></div></section></main>
  <footer className="site-footer"><div><p>Bakersfield · Tehachapi · Kern County</p><p className="footer-credentials"><a href={agent.phoneHref} onClick={()=>trackEvent('phone_click',{placement:'footer'})}>{agent.phone}</a> · <a href={'mailto:'+agent.email}>{agent.email}</a></p><p className="footer-credentials">{agent.name} · REALTOR® · Harbison Standard · DRE #{agent.license}</p><p className="footer-credentials">Equal Housing Opportunity</p></div><SocialLinks/></footer>
