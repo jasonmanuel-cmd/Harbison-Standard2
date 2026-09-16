@@ -1,5 +1,6 @@
 import { json } from './lib/auth.mjs';
 import { supabaseConfigured, supabaseRest, supabaseNotConfigured } from './lib/supabase.mjs';
+import { properties as staticProperties } from '../src/data.js';
 
 function normalize(row) {
   const slug = row.slug || row.id || row.property_slug || '';
@@ -46,20 +47,33 @@ const isKernCounty = p => {
 
 async function handler(request) {
   if (request.method !== 'GET') return json({ error: 'Method not allowed' }, { status: 405 });
-  if (!supabaseConfigured()) return supabaseNotConfigured();
   const url = new URL(request.url);
   const slug = url.searchParams.get('slug');
-  const query = slug
-    ? `properties?select=*&status=in.(available,active,for%20sale,sold,Available,Active,For%20Sale,Sold,Coming%20Soon,coming%20soon)&slug=eq.${encodeURIComponent(slug)}&limit=1`
-    : 'properties?select=*&order=created_at.desc&status=in.(available,active,for%20sale,sold,Available,Active,For%20Sale,Sold,Coming%20Soon,coming%20soon)';
+
   try {
-    const response = await supabaseRest(query, { method: 'GET' });
-    const text = await response.text();
-    if (!response.ok) {
-      console.error('[supabase properties] Request rejected:', response.status);
-      return json({ error: 'Failed to load properties' }, { status: 502 });
+    let rows = [];
+
+    // Try to fetch from Supabase if configured
+    if (supabaseConfigured()) {
+      const query = slug
+        ? `properties?select=*&status=in.(available,active,for%20sale,sold,Available,Active,For%20Sale,Sold,Coming%20Soon,coming%20soon)&slug=eq.${encodeURIComponent(slug)}&limit=1`
+        : 'properties?select=*&order=created_at.desc&status=in.(available,active,for%20sale,sold,Available,Active,For%20Sale,Sold,Coming%20Soon,coming%20soon)';
+      try {
+        const response = await supabaseRest(query, { method: 'GET' });
+        if (response.ok) {
+          const text = await response.text();
+          rows = JSON.parse(text || '[]').map(normalize).filter(p=>slug ? true : isKernCounty(p));
+        }
+      } catch (e) {
+        console.error('[supabase properties] Fallback to static:', e.message);
+      }
     }
-    const rows = JSON.parse(text || '[]').map(normalize).filter(p=>slug ? true : isKernCounty(p));
+
+    // Fall back to static properties if no Supabase results or Supabase not configured
+    if (!rows.length) {
+      rows = staticProperties.map(normalize).filter(p=>slug ? p.slug === slug || p.id === slug : isKernCounty(p));
+    }
+
     if (slug && !rows.length) return json({ error: 'Property not found' }, { status: 404 });
     return json(slug ? { property: rows[0] } : { properties: rows });
   } catch (error) {
