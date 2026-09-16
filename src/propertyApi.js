@@ -36,9 +36,9 @@ export async function getProperties(fallback=null) {
     if(Array.isArray(data.properties)){
       return data.properties.filter(p=>isKernCounty(p)||/^(available|active|for sale|coming soon)$/i.test(p.status||''));
     }
-    return fallback ?? staticProperties.filter(p=>/^sold$/i.test(p.status));
+    return fallback ?? staticProperties.filter(p=>isAvailableProperty(p));
   } catch {
-    return fallback ?? staticProperties.filter(p=>/^sold$/i.test(p.status));
+    return fallback ?? staticProperties.filter(p=>isAvailableProperty(p));
   }
 }
 
