@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 
 export function VideoSplash({onComplete}) {
   const videoRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile] = useState(()=>typeof window!=='undefined'&&(window.innerWidth<1024||navigator.maxTouchPoints>0));
 
   const getVideoUrl = () => {
     // Use mobile-optimized video for devices under 768px or touch screens
@@ -17,33 +17,11 @@ export function VideoSplash({onComplete}) {
     onComplete();
   };
 
-  useEffect(() => {
-    // Detect if device is mobile or tablet
-    const checkDevice = () => {
-      const isTouchDevice = () => {
-        return (('ontouchstart' in window) ||
-                (navigator.maxTouchPoints > 0) ||
-                (navigator.msMaxTouchPoints > 0));
-      };
-      const width = window.innerWidth;
-      const mobile = width < 1024 || isTouchDevice();
-      setIsMobile(mobile);
-    };
 
-    checkDevice();
-    window.addEventListener('resize', checkDevice);
-    return () => window.removeEventListener('resize', checkDevice);
-  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      // Update video source when device type changes
-      const source = video.querySelector('source');
-      if (source) {
-        source.src = getVideoUrl();
-        video.load();
-      }
       video.play().catch(() => {
         // Autoplay blocked or error, user can click to continue
       });
@@ -71,6 +49,7 @@ export function VideoSplash({onComplete}) {
       <video
         ref={videoRef}
         onEnded={handleVideoEnd}
+        onError={handleVideoEnd}
         style={{
           width: '100%',
           height: '100%',
@@ -79,7 +58,7 @@ export function VideoSplash({onComplete}) {
         }}
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
       >
         <source src={getVideoUrl()} type="video/mp4" />
         Your browser does not support the video tag.

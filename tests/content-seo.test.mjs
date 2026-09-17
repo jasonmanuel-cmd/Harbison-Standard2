@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
-import {parseFrontmatter,markdownToHtml,generateTableOfContents} from '../src/utils/contentLoader.js';
+import {parseFrontmatter} from '../src/utils/frontmatter.js';
+import {markdownToHtml,generateTableOfContents} from '../src/utils/contentLoader.js';
 test('FAQ YAML preserves questions, colon values and Windows line endings',()=>{
  const raw='---\r\ntitle: Example\r\nfaqItems:\r\n  - q: "Question?"\r\n    a: "Answer: with a colon"\r\n---\r\n## Useful heading\r\n';
  const {frontmatter,content}=parseFrontmatter(raw);

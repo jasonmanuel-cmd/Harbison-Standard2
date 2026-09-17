@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { parseFrontmatter } from '../utils/contentLoader.js';
+
 
 /**
  * Custom hook to load markdown content by slug
@@ -27,6 +27,7 @@ export function useContent(type, slug) {
         const rawMarkdown = module.default;
 
         // Parse frontmatter and content
+        const {parseFrontmatter}=await import('../utils/frontmatter.js');
         const { frontmatter, content } = parseFrontmatter(rawMarkdown);
 
         setContent({ frontmatter, content, type });

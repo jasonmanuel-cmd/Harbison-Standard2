@@ -3,14 +3,14 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/assets/font-0.ttf) format('truetype');
+  src: url(/assets/font-0.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Libre Caslon Text';
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url(/assets/font-1.ttf) format('truetype');
+  src: url(/assets/font-1.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Open Sans';
@@ -18,7 +18,7 @@
   font-weight: 400;
   font-stretch: normal;
   font-display: swap;
-  src: url(/assets/font-2.ttf) format('truetype');
+  src: url(/assets/font-2.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Open Sans';
@@ -26,7 +26,7 @@
   font-weight: 500;
   font-stretch: normal;
   font-display: swap;
-  src: url(/assets/font-3.ttf) format('truetype');
+  src: url(/assets/font-3.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Open Sans';
@@ -34,7 +34,7 @@
   font-weight: 600;
   font-stretch: normal;
   font-display: swap;
-  src: url(/assets/font-4.ttf) format('truetype');
+  src: url(/assets/font-4.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Open Sans';
@@ -42,5 +42,5 @@
   font-weight: 700;
   font-stretch: normal;
   font-display: swap;
-  src: url(/assets/font-5.ttf) format('truetype');
+  src: url(/assets/font-5.woff2) format('woff2');
 }

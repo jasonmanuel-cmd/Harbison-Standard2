@@ -1,4 +1,4 @@
-import {parseFrontmatter} from '../src/utils/contentLoader.js';
+import {parseFrontmatter} from '../src/utils/frontmatter.js';
 import {readdirSync} from 'node:fs';
 import {articleSchema} from '../src/seo.js';
 import {propertySchema} from '../src/propertySchema.js';

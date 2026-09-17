@@ -1,0 +1,74 @@
+{
+  "hero.webp@768": {
+    "src": "/assets/optimized/hero-768.webp",
+    "width": 768,
+    "height": 431,
+    "bytes": 77448
+  },
+  "hero.webp@1600": {
+    "src": "/assets/optimized/hero-1600.webp",
+    "width": 1500,
+    "height": 842,
+    "bytes": 270120
+  },
+  "logo.webp@500": {
+    "src": "/assets/optimized/logo-500.webp",
+    "width": 500,
+    "height": 139,
+    "bytes": 18844
+  },
+  "property-front.webp@800": {
+    "src": "/assets/optimized/property-front-800.webp",
+    "width": 800,
+    "height": 600,
+    "bytes": 49736
+  },
+  "house.webp@800": {
+    "src": "/assets/optimized/house-800.webp",
+    "width": 323,
+    "height": 159,
+    "bytes": 10154
+  },
+  "investing.webp@800": {
+    "src": "/assets/optimized/investing-800.webp",
+    "width": 321,
+    "height": 159,
+    "bytes": 11910
+  },
+  "property/585-n-wendy-dr-newbury-park-ca.jpg@800": {
+    "src": "/assets/optimized/585-n-wendy-dr-newbury-park-ca-800.webp",
+    "width": 800,
+    "height": 533,
+    "bytes": 24920
+  },
+  "property/585-n-wendy-dr-newbury-park-ca-2.jpg@800": {
+    "src": "/assets/optimized/585-n-wendy-dr-newbury-park-ca-2-800.webp",
+    "width": 800,
+    "height": 532,
+    "bytes": 70842
+  },
+  "property/585-n-wendy-dr-newbury-park-ca-4.jpg@800": {
+    "src": "/assets/optimized/585-n-wendy-dr-newbury-park-ca-4-800.webp",
+    "width": 800,
+    "height": 533,
+    "bytes": 95492
+  },
+  "property/backyard.jpg@800": {
+    "src": "/assets/optimized/backyard-800.webp",
+    "width": 800,
+    "height": 533,
+    "bytes": 40670
+  },
+  "property/bathroom1.jpg@800": {
+    "src": "/assets/optimized/bathroom1-800.webp",
+    "width": 800,
+    "height": 533,
+    "bytes": 35392
+  },
+  "property/Diningroomfacingkitchen.jpg@800": {
+    "src": "/assets/optimized/Diningroomfacingkitchen-800.webp",
+    "width": 800,
+    "height": 533,
+    "bytes": 27772
+  }
+}
