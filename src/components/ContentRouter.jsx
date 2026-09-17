@@ -4,7 +4,8 @@ import { ContentPage } from './ContentPage';
 /**
  * Router component for /guide/:slug and /blog/:slug routes
  */
-export function ContentRouter({ path }) {
+export function ContentRouter({ path, initialContent }) {
+  if(initialContent)return <ContentPage {...initialContent}/>;
   const guideMatch = path.match(/^\/guide\/([^/]+)$/);
   const blogMatch = path.match(/^\/blog\/([^/]+)$/);
 

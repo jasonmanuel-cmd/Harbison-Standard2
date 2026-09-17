@@ -6,24 +6,45 @@ Disallow: /hq
 
 User-agent: GPTBot
 Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
 
 User-agent: anthropic-ai
 Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
 
 Sitemap: https://www.harbisonstandard.com/sitemap.xml
 Sitemap: https://www.harbisonstandard.com/sitemap-images.xml

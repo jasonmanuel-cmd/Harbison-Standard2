@@ -73,8 +73,64 @@
       "destination": "/home-value/index.html"
     },
     {
-      "source": "/((?!api/|property/).*)",
-      "destination": "/index.html"
+      "source": "/guides",
+      "destination": "/guides/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/guide/:slug",
+      "destination": "/guide/:slug/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug/index.html"
+    },
+    {
+      "source": "/tehachapi",
+      "destination": "/tehachapi/index.html"
+    },
+    {
+      "source": "/bakersfield",
+      "destination": "/bakersfield/index.html"
+    },
+    {
+      "source": "/california-city",
+      "destination": "/california-city/index.html"
+    },
+    {
+      "source": "/stallion-springs",
+      "destination": "/stallion-springs/index.html"
+    },
+    {
+      "source": "/hq",
+      "destination": "/hq/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "harbisonstandard.org"
+        }
+      ],
+      "destination": "https://www.harbisonstandard.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.harbisonstandard.org"
+        }
+      ],
+      "destination": "https://www.harbisonstandard.com/:path*",
+      "permanent": true
     }
   ]
 }

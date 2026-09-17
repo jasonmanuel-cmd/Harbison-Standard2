@@ -140,6 +140,8 @@ const listingList = () => ({
 });
 
 export const routes = {
+ '/guides':{title:'Real Estate Guides | Harbison Standard',description:'Practical guides to buying and selling property in Kern County.'},
+ '/blog':{title:'Real Estate Articles | Harbison Standard',description:'Property research and real estate considerations for Kern County.'},
   '/': {
     title: 'Buy, Sell & Invest in Kern County | Harbison Standard',
     description: 'Buy, sell, or invest in Kern County with Nathanael Harbison. Explore current listings and get practical guidance in Bakersfield, Tehachapi, and nearby communities.',
@@ -429,7 +431,7 @@ export function articleSchema(title, description, path, datePublished, dateModif
     dateModified: dateModified || datePublished,
   };
 
-  const schemas = [article];
+  const schemas = [article, breadcrumb([{name:'Home',path:'/'},{name:path.startsWith('/blog/')?'Blog':'Guides',path:path.startsWith('/blog/')?'/blog':'/guides'},{name:title,path}])];
   if (faqs && faqs.length > 0) {
     schemas.push(faq(faqs));
   }

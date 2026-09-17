@@ -1,3 +1,6 @@
+import {parseFrontmatter} from '../src/utils/contentLoader.js';
+import {readdirSync} from 'node:fs';
+import {articleSchema} from '../src/seo.js';
 import {propertySchema} from '../src/propertySchema.js';
 import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
 import {loadEnvFile} from 'node:process';
@@ -49,7 +52,7 @@ const pageContent={
  '/investing':'Real estate investing ranges from long-hold rental properties generating monthly cash flow through renovation flips targeting quick turnarounds to value-add properties combining improvements with long-term appreciation. Nathanael helps investors think through property potential, realistic renovation scope, location fit for target buyer, realistic timeline, and whether deals match stated goals and risk tolerance. Investment analysis requires disciplined understanding of acquisition price, holding costs including taxes and insurance, improvement budgets with contingency, likely buyer pool and pricing, and realistic exit strategy and timeframe. Nathanael brings practical perspective to deal evaluation so you can make informed decisions that align with your investment goals, capital availability, risk tolerance, and timeline, avoiding overpaying or overlooking red flags. Every property is not an investment opportunity, and every investment opportunity is not right for every investor. Successful real estate investing depends on disciplined analysis, realistic forecasting, and alignment with your actual goals. Nathanael provides honest assessment of acquisition pricing, renovation reality-checks, holding cost projections, and realistic exit scenarios. Kern County offers investment opportunities across price ranges and strategies—from emerging market appreciation plays to established neighborhoods with rental demand to value-add renovation opportunities. Whether you are analyzing your first deal or managing a portfolio, Nathanael provides market insights that support disciplined decision-making.',
 };
 
-function page(path,meta,schemas=[],photo=ogImage,property=null,inventory=null,heading=null,content=null){
+function page(path,meta,schemas=[],photo=ogImage,property=null,inventory=null,heading=null,content=null,article=null){
  let html=template.replace(/<title>.*?<\/title>/,'<title>'+escape(meta.title)+'</title>');
  const fields={'name="description"':meta.description,'property="og:title"':meta.title,'property="og:description"':meta.description,'property="og:url"':siteUrl+path,'property="og:image"':photo,'name="twitter:title"':meta.title,'name="twitter:description"':meta.description,'name="twitter:image"':photo,'name="robots"':meta.robots||'index, follow'};
  for(const [field,value] of Object.entries(fields))html=html.replace(new RegExp('(<meta '+field+' content=")[^"]*("[^>]*>)'),(_,a,b)=>a+escape(value||'')+b);
@@ -63,10 +66,10 @@ function page(path,meta,schemas=[],photo=ogImage,property=null,inventory=null,he
   html=html.replace('<div id="root">','<div id="root">'+contentHtml);
  }
 
- if(property||inventory){
-  const content=renderToString(createElement(App,{initialPath:path,initialProperty:property,initialProperties:inventory}));
+ if(property||inventory||article){
+  const content=renderToString(createElement(App,{initialPath:path,initialProperty:property,initialProperties:inventory,initialContent:article}));
   html=html.replace('<div id="root"></div>',()=>'<div id="root">'+content+'</div>');
-  html=html.replace('</body>',()=>'<script id="'+(property?'hs-property-data':'hs-inventory-data')+'" type="application/json">'+json(property||inventory)+'</script></body>');
+  html=html.replace('</body>',()=>'<script id="'+(article?'hs-content-data':property?'hs-property-data':'hs-inventory-data')+'" type="application/json">'+json(article||property||inventory)+'</script></body>');
  }
  const directory='dist/client'+(path==='/'?'':path);
  mkdirSync(directory,{recursive:true});writeFileSync(directory+'/index.html',html);
@@ -91,11 +94,21 @@ try {
 }
 
 const propertyPaths=[];
+const contentPaths=[];
 const publishedProperties=[...properties,...staticProperties.filter(p=>!properties.some(row=>row.slug===p.slug))];
 const renderer=await createServer({server:{middlewareMode:true,warmup:{clientFiles:[]}},appType:'custom'});
 const {App}=await renderer.ssrLoadModule('/src/App.jsx');
 
 try {
+ for(const type of ['guides','blog'])for(const file of readdirSync('src/content/'+type).filter(f=>f.endsWith('.md'))){
+  const {frontmatter,content}=parseFrontmatter(readFileSync('src/content/'+type+'/'+file,'utf8'));
+  if(!/^[a-z0-9-]+$/.test(frontmatter.slug))throw new Error('Invalid content slug: '+file);
+  const path=(type==='guides'?'/guide/':'/blog/')+frontmatter.slug;
+  contentPaths.push(path);
+  page(path,frontmatter,articleSchema(frontmatter.title,frontmatter.description,path,frontmatter.published,frontmatter.updated,frontmatter.faqItems),ogImage,null,null,null,null,{frontmatter,content,type:type==='guides'?'guide':'blog'});
+ }
+ page('/guides',routes['/guides'],jsonLdFor('/guides'),ogImage,null,[]);
+ page('/blog',routes['/blog'],jsonLdFor('/blog'),ogImage,null,[]);
  // Re-render properties and inventory pages with property data
  page('/',routes['/'],jsonLdFor('/'),ogImage,null,properties);
  page('/properties',routes['/properties'],jsonLdFor('/properties'),ogImage,null,properties);
@@ -107,11 +120,11 @@ try {
   const description=p.description||p.context||'Past sale shown for reference; not currently offered for sale.';
   page(path,{title:p.address+' | '+p.status+' | Harbison Standard',description},[propertySchema(p,siteUrl)],photo,p);
  }
- const notFound=template.replace(/<title>.*?<\/title>/,'<title>Page not found | Harbison Standard</title>').replace(/(<meta name="robots" content=")[^"]*/, '$1noindex, follow').replace('<div id="root"></div>',()=>'<div id="root"><main style="display:none"><h1>404 Not Found</h1></main></div>');
+ const notFound=template.replace(/<title>.*?<\/title>/,'<title>Page not found | Harbison Standard</title>').replace(/(<meta name="robots" content=")[^"]*/, '$1noindex, follow').replace('<div id="root"></div>',()=>'<div id="root"><main><h1>Page not found</h1><a href="/">Return home</a></main></div>');
  writeFileSync('dist/client/404.html',notFound);
 } finally {await renderer.close();}
 
-const paths=[...Object.keys(routes).filter(p=>p!=='/hq'),...propertyPaths];
+const paths=[...Object.keys(routes).filter(p=>p!=='/hq'),...propertyPaths,...contentPaths];
 writeFileSync('dist/client/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+paths.map(path=>'<url><loc>'+escape(siteUrl+path)+'</loc></url>').join('')+'</urlset>');
 console.log('Prepared metadata for '+paths.length+' public routes and private HQ.');
 

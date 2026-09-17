@@ -29,7 +29,7 @@ export function ContentPage({ frontmatter, content, type = 'guide' }) {
   }, [title, slug, description, published, updated, faqItems]);
 
   const toc = generateTableOfContents(content);
-  const html = markdownToHtml(content);
+  const html = markdownToHtml(content.replace(/^\s*# .*\r?\n/, ""));
   const relatedHtml = createRelatedGuidesHtml(slug);
 
   return (
@@ -73,7 +73,7 @@ export function ContentPage({ frontmatter, content, type = 'guide' }) {
           </nav>
         )}
 
-        <main className="content-body" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="content-body" dangerouslySetInnerHTML={{ __html: html }} />
 
         {faqItems && faqItems.length > 0 && (
           <section className="content-faq">
@@ -119,7 +119,7 @@ export function ContentPage({ frontmatter, content, type = 'guide' }) {
         </section>
       </aside>
 
-      <style jsx>{`
+      <style>{`
         .content-page {
           display: grid;
           grid-template-columns: 1fr 300px;
