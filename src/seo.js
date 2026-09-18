@@ -50,13 +50,14 @@ const base = () => ({
   sameAs: socials,
   brand: {name: 'Harbison Standard', '@type': 'Brand'},
   aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    bestRating: '5',
-    worstRating: '1',
-    ratingCount: 6,
-    reviewCount: 6,
-  },
+      '@type': 'AggregateRating',
+      name: 'Client Reviews',
+      ratingValue: '5.0',
+      bestRating: '5',
+      worstRating: '1',
+      ratingCount: 6,
+      reviewCount: 6,
+    },
 });
 
 const org = () => ({

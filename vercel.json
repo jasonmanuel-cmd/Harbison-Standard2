@@ -17,6 +17,30 @@
       "destination": "/property/:slug/index.html"
     },
     {
+      "source": "/guide/:slug",
+      "destination": "/guide/:slug/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug/index.html"
+    },
+    {
+      "source": "/tehachapi",
+      "destination": "/tehachapi/index.html"
+    },
+    {
+      "source": "/bakersfield",
+      "destination": "/bakersfield/index.html"
+    },
+    {
+      "source": "/california-city",
+      "destination": "/california-city/index.html"
+    },
+    {
+      "source": "/stallion-springs",
+      "destination": "/stallion-springs/index.html"
+    },
+    {
       "source": "/about",
       "destination": "/about/index.html"
     },
@@ -79,34 +103,6 @@
     {
       "source": "/blog",
       "destination": "/blog/index.html"
-    },
-    {
-      "source": "/guide/:slug",
-      "destination": "/guide/:slug/index.html"
-    },
-    {
-      "source": "/blog/:slug",
-      "destination": "/blog/:slug/index.html"
-    },
-    {
-      "source": "/tehachapi",
-      "destination": "/tehachapi/index.html"
-    },
-    {
-      "source": "/bakersfield",
-      "destination": "/bakersfield/index.html"
-    },
-    {
-      "source": "/california-city",
-      "destination": "/california-city/index.html"
-    },
-    {
-      "source": "/stallion-springs",
-      "destination": "/stallion-springs/index.html"
-    },
-    {
-      "source": "/hq",
-      "destination": "/hq/index.html"
     }
   ],
   "redirects": [
@@ -131,6 +127,12 @@
       ],
       "destination": "https://www.harbisonstandard.com/:path*",
       "permanent": true
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/indexnow.mjs",
+      "schedule": "0 * * * *"
     }
   ]
 }
