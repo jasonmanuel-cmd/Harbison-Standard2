@@ -49,15 +49,6 @@ const base = () => ({
   knowsAbout: ['Real estate','Housing market','Real estate investing','Kern County real estate'],
   sameAs: socials,
   brand: {name: 'Harbison Standard', '@type': 'Brand'},
-  aggregateRating: {
-      '@type': 'AggregateRating',
-      name: 'Client Reviews',
-      ratingValue: '5.0',
-      bestRating: '5',
-      worstRating: '1',
-      ratingCount: 6,
-      reviewCount: 6,
-    },
 });
 
 const org = () => ({
