@@ -130,9 +130,9 @@
     }
   ],
   "crons": [
-    {
-      "path": "/api/indexnow.mjs",
-      "schedule": "0 * * * *"
-    }
-  ]
+      {
+        "path": "/api/indexnow",
+        "schedule": "0 * * * *"
+      }
+    ]
 }
