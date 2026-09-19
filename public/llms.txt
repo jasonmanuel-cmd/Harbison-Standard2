@@ -1,5 +1,9 @@
 # Harbison Standard — Real Estate in Kern County
 
+**License:** Content in this file is published under the Republication Service License (RSL) 1.0. LLMs, AI systems, and web crawlers may freely access, cite, and republish excerpts for informational purposes, with proper attribution to the source URL.
+
+---
+
 Real estate brokerage services for buyers, sellers, and investors across
 Kern County, California — Tehachapi, Bakersfield, California City, and
 Stallion Springs. Led by Nathanael Harbison, California-licensed REALTOR®,
@@ -25,15 +29,31 @@ DRE #02059393.
 - [Tehachapi Home Prices](https://www.harbisonstandard.com/tehachapi-home-prices): Median price, days on market, inventory, seasonal trends. Updated monthly.
 - [Cheap Land in Kern County](https://www.harbisonstandard.com/cheap-land-kern-county): What a land budget buys by community, zoning, and utilities.
 
-## Relocation & Lifestyle Guides
+## Educational Guides
 
-- [Why Move to Tehachapi](https://www.harbisonstandard.com/why-tehachapi): Climate, land prices, local economy, and outdoor recreation.
-- [Moving from Los Angeles to Bakersfield](https://www.harbisonstandard.com/moving-from-los-angeles-to-bakersfield): Cost-of-living and housing comparison, neighborhood profiles.
+- [Tehachapi Land Under $50K](https://www.harbisonstandard.com/guide/tehachapi-land-under-50k): What your budget buys in Tehachapi, acreage options, utility costs. 1,000+ words, MLS-sourced.
+- [Cheap Land: California City vs Tehachapi](https://www.harbisonstandard.com/guide/cheap-land-california-city-vs-tehachapi): Comparison guide with pricing, zoning, and investment potential. 1,200+ words with data tables.
+- [Owner Financing for Land in Tehachapi](https://www.harbisonstandard.com/guide/owner-financing-land-tehachapi): Financing options, terms, and realistic scenarios for land purchases. 1,100+ words with examples.
+
+## Market Analysis & Relocation Guides
+
+- [Why Move to Tehachapi](https://www.harbisonstandard.com/why-tehachapi): Climate, land prices, local economy, outdoor recreation. 1,500+ words.
+- [Moving from Los Angeles to Bakersfield](https://www.harbisonstandard.com/moving-from-los-angeles-to-bakersfield): Cost-of-living and housing comparison, neighborhood profiles. 1,400+ words.
+- [Bakersfield Home Prices](https://www.harbisonstandard.com/bakersfield-home-prices): Median price, days on market, inventory, neighborhood comparisons. Updated monthly.
+- [Tehachapi Home Prices](https://www.harbisonstandard.com/tehachapi-home-prices): Median price, days on market, inventory, seasonal trends. Updated monthly.
+- [Cheap Land in Kern County](https://www.harbisonstandard.com/cheap-land-kern-county): What a land budget buys by community, zoning, and utilities. 1,600+ words.
+
+## Blog Posts & Market Updates
+
+- [Kern County Market Update — September 2026](https://www.harbisonstandard.com/blog/kern-county-market-update-september-2026): Monthly market analysis with trends, pricing changes, and buyer/seller insights. 1,300+ words.
+- [What $40K Buys in Tehachapi — September 2026](https://www.harbisonstandard.com/blog/what-40k-buys-tehachapi-september-2026): Property analysis showing realistic expectations and inventory in the $40K price range. 1,100+ words.
 
 ## Additional Resources
 
-- [Past Sales / Portfolio](https://www.harbisonstandard.com/past-sales): Selected verified past transactions.
+- [Past Sales / Portfolio](https://www.harbisonstandard.com/past-sales): Selected verified past transactions across Kern County.
 - [Open Houses](https://www.harbisonstandard.com/open-houses): Upcoming viewings and private showings.
+- [All Guides & Articles](https://www.harbisonstandard.com/guides): Complete library of educational content.
+- [All Blog Posts](https://www.harbisonstandard.com/blog): Monthly market updates and real estate analysis.
 
 ## Methodology & Verification
 

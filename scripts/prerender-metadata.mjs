@@ -133,7 +133,13 @@ try {
 } finally {await renderer.close();}
 
 const paths=[...Object.keys(routes).filter(p=>p!=='/hq'),...propertyPaths,...contentPaths];
-writeFileSync('dist/client/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+paths.map(path=>'<url><loc>'+escape(siteUrl+path)+'</loc></url>').join('')+'</urlset>');
+const today=new Date().toISOString().split('T')[0];
+const contentUpdated='2026-09-14'; // Last content update date
+writeFileSync('dist/client/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+paths.map(path=>{
+ // Use content update date for guides/blog, today for others
+ const lastmod=(path.startsWith('/guide/')||path.startsWith('/blog/'))?contentUpdated:today;
+ return '<url><loc>'+escape(siteUrl+path)+'</loc><lastmod>'+lastmod+'</lastmod><changefreq>'+(path.startsWith('/guide/')||path.startsWith('/blog/')?'monthly':'weekly')+'</changefreq></url>';
+}).join('')+'</urlset>');
 console.log('Prepared metadata for '+paths.length+' public routes and private HQ.');
 
 const imageEntries=publishedProperties.map(p=>({path:'/property/'+p.slug,images:[...new Set([p.imageUrl,...(p.images||[])].filter(Boolean))]}));

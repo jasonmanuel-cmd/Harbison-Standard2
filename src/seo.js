@@ -17,55 +17,64 @@ const socials = [
 ];
 
 const base = () => ({
-  '@context': 'https://schema.org',
-  '@type': 'RealEstateAgent',
-  '@id': siteUrl + '/#agent',
+  ‘@context’: ‘https://schema.org’,
+  ‘@type’: ‘RealEstateAgent’,
+  ‘@id’: siteUrl + ‘/#agent’,
   name: agent.name,
-  description: 'California REALTOR® and real estate agent, serving buyers, sellers, and investors across Kern County, California.',
-  slogan: 'It’s not what you do. It’s how you do it.',
-  jobTitle: 'Real Estate Agent',
-  image: [ogImage, siteUrl + '/assets/headshot.webp'],
-  url: siteUrl + '/',
+  disambiguatingDescription: ‘Licensed California REALTOR® (DRE #02059393) specializing in Kern County real estate’,
+  description: ‘California REALTOR® and real estate agent, serving buyers, sellers, and investors across Kern County, California.’,
+  slogan: ‘It’s not what you do. It’s how you do it.’,
+  jobTitle: ‘Real Estate Agent’,
+  image: [ogImage, siteUrl + ‘/assets/headshot.webp’],
+  url: siteUrl + ‘/’,
   telephone: agent.phone,
   email: agent.email,
-  priceRange: '$$',
+  priceRange: ‘$$’,
   address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Tehachapi',
-    addressRegion: 'CA',
-    addressCountry: 'US',
+    ‘@type’: ‘PostalAddress’,
+    addressLocality: ‘Tehachapi’,
+    addressRegion: ‘CA’,
+    addressCountry: ‘US’,
   },
-  areaServed: [...counties.map(name => ({'@type': 'AdministrativeArea', name})), ...cities.map(name => ({'@type': 'City', name}))],
+  areaServed: [...counties.map(name => ({‘@type’: ‘AdministrativeArea’, name})), ...cities.map(name => ({‘@type’: ‘City’, name}))],
   hasCredential: {
-    '@type': 'EducationalOccupationalCredential',
-    name: 'California Real Estate License',
-    credentialCategory: 'license',
-    identifier: 'DRE #02059393',
+    ‘@type’: ‘EducationalOccupationalCredential’,
+    name: ‘California Real Estate License’,
+    credentialCategory: ‘license’,
+    identifier: ‘DRE #02059393’,
   },
   memberOf: {
-    '@type': 'Organization',
-    name: 'National Association of REALTORS®',
+    ‘@type’: ‘Organization’,
+    name: ‘National Association of REALTORS®’,
   },
-  knowsAbout: ['Real estate','Housing market','Real estate investing','Kern County real estate'],
+  knowsAbout: [‘Real estate’,’Housing market’,’Real estate investing’,’Kern County real estate’],
   sameAs: socials,
-  brand: {name: 'Harbison Standard', '@type': 'Brand'},
+  worksFoR: {‘@id’: siteUrl + ‘/#org’},
+  brand: {‘@type’: ‘Brand’, ‘@id’: siteUrl + ‘/#brand’, name: ‘Harbison Standard’},
 });
 
 const org = () => ({
-  '@context': 'https://schema.org',
-  '@type': ['Organization','ProfessionalService'],
-  '@id': siteUrl + '/#org',
-  name: 'Harbison Standard',
-  url: siteUrl + '/',
-  logo: siteUrl + '/assets/logo.webp',
-  slogan: 'It’s not what you do. It’s how you do it.',
+  ‘@context’: ‘https://schema.org’,
+  ‘@type’: [‘Organization’,’ProfessionalService’],
+  ‘@id’: siteUrl + ‘/#org’,
+  name: ‘Harbison Standard’,
+  disambiguatingDescription: ‘Real estate brokerage specializing in Kern County properties and investment opportunities’,
+  url: siteUrl + ‘/’,
+  logo: siteUrl + ‘/assets/logo.webp’,
+  slogan: ‘It’s not what you do. It’s how you do it.’,
   telephone: agent.phone,
   email: agent.email,
-  priceRange: '$$',
+  priceRange: ‘$$’,
   areaServed: counties,
   sameAs: socials,
-  founder: {'@id': siteUrl + '/#agent'},
-  brand: {name: 'Harbison Standard', '@type': 'Brand'},
+  founder: {‘@id’: siteUrl + ‘/#agent’},
+  brand: {‘@type’: ‘Brand’, ‘@id’: siteUrl + ‘/#brand’, name: ‘Harbison Standard’},
+  contactPoint: {
+    ‘@type’: ‘ContactPoint’,
+    telephone: agent.phone,
+    contactType: ‘Customer Service’,
+    email: agent.email,
+  },
 });
 
 const website = () => ({
@@ -278,6 +287,17 @@ const aggregateRating = () => ({
 });
 
 // LocalBusiness schema — complements RealEstateAgent for local SEO
+const brand = () => ({
+  "@context": "https://schema.org",
+  "@type": "Brand",
+  "@id": siteUrl + "/#brand",
+  name: "Harbison Standard",
+  url: siteUrl + "/",
+  logo: siteUrl + "/assets/logo.webp",
+  description: "Harbison Standard is a real estate brokerage specializing in Kern County, California. Founded by Nathanael Harbison (DRE #02059393), serving buyers, sellers, and investors.",
+  owns: {"@id": siteUrl + "/#org"},
+});
+
 const localBusiness = () => ({
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
@@ -299,6 +319,7 @@ const localBusiness = () => ({
   founder: {"@id": siteUrl + "/#agent"},
   image: siteUrl + "/assets/logo.webp",
   aggregateRating: {"@id": siteUrl + "/#rating"},
+  brand: {"@id": siteUrl + "/#brand"},
 });
 
 // VideoObject schema — for property videos
@@ -325,7 +346,7 @@ const formActionSchema = () => ({
 
 export function jsonLdFor(path) {
   if (path === '/') {
-    return [base(), org(), localBusiness(), website(), page(routes['/'].title, routes['/'].description, '/'), faq(homeFaq)];
+    return [base(), org(), brand(), localBusiness(), website(), page(routes['/'].title, routes['/'].description, '/'), faq(homeFaq)];
   }
   if (path === '/about') {
     return [base(), org(), localBusiness(), website(), {

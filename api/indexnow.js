@@ -40,19 +40,34 @@ export async function GET() {
       });
     }
     
-    // Send to Bing IndexNow API
-    const BingUrl = `https://www.bing.com/indexnow?urlkey=${indexNowKey}&url=${encodeURIComponent(urls[0])}`;
-    
-    const indexNowResponse = await fetch(BingUrl, { method: 'GET' });
-    
+    // Send to IndexNow API (Bing + Yandex) via POST with bulk URL list
+    // Filter out /hq (private admin) and /api (non-indexable routes)
+    const filteredUrls = urls.filter(url => !url.includes('/hq') && !url.includes('/api'));
+
+    const payload = {
+      host: 'www.harbisonstandard.com',
+      key: indexNowKey,
+      keyLocation: 'https://www.harbisonstandard.com/indexnow-key.txt',
+      urlList: filteredUrls.slice(0, 10000) // IndexNow limit: 10,000 URLs per request
+    };
+
+    // POST to IndexNow API (routes to both Bing and Yandex)
+    const indexNowResponse = await fetch('https://api.indexnow.org/indexnow', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const indexNowData = await indexNowResponse.json();
+
     return new Response(JSON.stringify({
-      success: true,
-      urlCount: urls.length,
-      firstUrl: urls[0],
-      submittedTo: 'Bing IndexNow',
+      success: indexNowResponse.ok,
+      urlCount: filteredUrls.length,
+      submittedTo: 'IndexNow API (Bing + Yandex)',
+      apiResponse: indexNowData,
       timestamp: new Date().toISOString()
     }), {
-      status: 200,
+      status: indexNowResponse.ok ? 200 : 400,
       headers: { 'Content-Type': 'application/json' }
     });
     
