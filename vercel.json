@@ -3,6 +3,37 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist/client",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=()"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/hq/api/openhouse",
@@ -15,6 +46,30 @@
     {
       "source": "/property/:slug",
       "destination": "/property/:slug/index.html"
+    },
+    {
+      "source": "/guide/:slug",
+      "destination": "/guide/:slug/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug/index.html"
+    },
+    {
+      "source": "/tehachapi",
+      "destination": "/tehachapi/index.html"
+    },
+    {
+      "source": "/bakersfield",
+      "destination": "/bakersfield/index.html"
+    },
+    {
+      "source": "/california-city",
+      "destination": "/california-city/index.html"
+    },
+    {
+      "source": "/stallion-springs",
+      "destination": "/stallion-springs/index.html"
     },
     {
       "source": "/about",
@@ -79,34 +134,6 @@
     {
       "source": "/blog",
       "destination": "/blog/index.html"
-    },
-    {
-      "source": "/guide/:slug",
-      "destination": "/guide/:slug/index.html"
-    },
-    {
-      "source": "/blog/:slug",
-      "destination": "/blog/:slug/index.html"
-    },
-    {
-      "source": "/tehachapi",
-      "destination": "/tehachapi/index.html"
-    },
-    {
-      "source": "/bakersfield",
-      "destination": "/bakersfield/index.html"
-    },
-    {
-      "source": "/california-city",
-      "destination": "/california-city/index.html"
-    },
-    {
-      "source": "/stallion-springs",
-      "destination": "/stallion-springs/index.html"
-    },
-    {
-      "source": "/hq",
-      "destination": "/hq/index.html"
     }
   ],
   "redirects": [
@@ -132,5 +159,11 @@
       "destination": "https://www.harbisonstandard.com/:path*",
       "permanent": true
     }
-  ]
+  ],
+  "crons": [
+      {
+        "path": "/api/indexnow",
+        "schedule": "0 * * * *"
+      }
+    ]
 }

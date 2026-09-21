@@ -120,23 +120,41 @@ export function ContentPage({ frontmatter, content, type = 'guide' }) {
       </aside>
 
       <style>{`
-        .content-page {
-          display: grid;
-          grid-template-columns: 1fr 300px;
-          gap: 2rem;
-          max-width: 1000px;
-          margin: 0 auto;
-          padding: 2rem;
-        }
+        .content-body img { 
+                  max-width: 100%; 
+                  height: auto; 
+                  display: block;
+                }
+        
+                .content-body img[width],
+                .content-body img[height] {
+                  object-fit: contain;
+                }
+        
+                .content-body img:not([width]):not([height]) {
+                  background: #f0f0f0;
+                  border-radius: 8px;
+                  padding: 1rem;
+                  text-align: center;
+                }
 
-        @media (max-width: 768px) {
-          .content-page {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-          }
-        }
+                .content-page {
+                  display: grid;
+                  grid-template-columns: 1fr 300px;
+                  gap: 2rem;
+                  max-width: 1000px;
+                  margin: 0 auto;
+                  padding: 2rem;
+                }
 
-        .content-header {
+                @media (max-width: 768px) {
+                  .content-page {
+                    grid-template-columns: 1fr;
+                    gap: 1rem;
+                  }
+                }
+
+                .content-header {
           margin-bottom: 2rem;
           padding-bottom: 2rem;
           border-bottom: 2px solid #e5e7eb;

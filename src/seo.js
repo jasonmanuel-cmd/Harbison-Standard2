@@ -21,8 +21,9 @@ const base = () => ({
   '@type': 'RealEstateAgent',
   '@id': siteUrl + '/#agent',
   name: agent.name,
+  disambiguatingDescription: 'Licensed California REALTOR® (DRE #02059393) specializing in Kern County real estate',
   description: 'California REALTOR® and real estate agent, serving buyers, sellers, and investors across Kern County, California.',
-  slogan: 'It’s not what you do. It’s how you do it.',
+  slogan: "It's not what you do. It's how you do it.",
   jobTitle: 'Real Estate Agent',
   image: [ogImage, siteUrl + '/assets/headshot.webp'],
   url: siteUrl + '/',
@@ -48,15 +49,8 @@ const base = () => ({
   },
   knowsAbout: ['Real estate','Housing market','Real estate investing','Kern County real estate'],
   sameAs: socials,
-  brand: {name: 'Harbison Standard', '@type': 'Brand'},
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    bestRating: '5',
-    worstRating: '1',
-    ratingCount: 6,
-    reviewCount: 6,
-  },
+  worksFoR: {'@id': siteUrl + '/#org'},
+  brand: {'@type': 'Brand', '@id': siteUrl + '/#brand', name: 'Harbison Standard'},
 });
 
 const org = () => ({
@@ -64,16 +58,23 @@ const org = () => ({
   '@type': ['Organization','ProfessionalService'],
   '@id': siteUrl + '/#org',
   name: 'Harbison Standard',
+  disambiguatingDescription: 'Real estate brokerage specializing in Kern County properties and investment opportunities',
   url: siteUrl + '/',
   logo: siteUrl + '/assets/logo.webp',
-  slogan: 'It’s not what you do. It’s how you do it.',
+  slogan: "It's not what you do. It's how you do it.",
   telephone: agent.phone,
   email: agent.email,
   priceRange: '$$',
   areaServed: counties,
   sameAs: socials,
   founder: {'@id': siteUrl + '/#agent'},
-  brand: {name: 'Harbison Standard', '@type': 'Brand'},
+  brand: {'@type': 'Brand', '@id': siteUrl + '/#brand', name: 'Harbison Standard'},
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: agent.phone,
+    contactType: 'Customer Service',
+    email: agent.email,
+  },
 });
 
 const website = () => ({
@@ -266,7 +267,7 @@ export const homeFaq = [
 const serviceFaqFor = path => (servicePages[path] && servicePages[path].faq) ? servicePages[path].faq.items.map(({q, a}) => ({q, a})) : null;
 
 export const contactFaq = [
-  {q: "Can I reach out if I’m not ready yet?", a: "Of course. Many conversations start before a decision is made. There’s no pressure to commit."},
+  {q: "Can I reach out if I'm not ready yet?", a: "Of course. Many conversations start before a decision is made. There's no pressure to commit."},
   {q: "Which Kern County communities do you serve?", a: "Yes. Nathanael serves clients across Kern County (including Tehachapi, Bakersfield, California City, and Stallion Springs)."},
   {q: "Should I call if my timeline is urgent?", a: "For time-sensitive situations, calling (661) 472-7499 typically gets the fastest response. Text works too."},
   {q: "Can I ask about a specific property?", a: "Absolutely. Share the property or the question you have, and Nathanael will help you understand the details."},
@@ -286,6 +287,17 @@ const aggregateRating = () => ({
 });
 
 // LocalBusiness schema — complements RealEstateAgent for local SEO
+const brand = () => ({
+  "@context": "https://schema.org",
+  "@type": "Brand",
+  "@id": siteUrl + "/#brand",
+  name: "Harbison Standard",
+  url: siteUrl + "/",
+  logo: siteUrl + "/assets/logo.webp",
+  description: "Harbison Standard is a real estate brokerage specializing in Kern County, California. Founded by Nathanael Harbison (DRE #02059393), serving buyers, sellers, and investors.",
+  owns: {"@id": siteUrl + "/#org"},
+});
+
 const localBusiness = () => ({
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
@@ -307,6 +319,7 @@ const localBusiness = () => ({
   founder: {"@id": siteUrl + "/#agent"},
   image: siteUrl + "/assets/logo.webp",
   aggregateRating: {"@id": siteUrl + "/#rating"},
+  brand: {"@id": siteUrl + "/#brand"},
 });
 
 // VideoObject schema — for property videos
@@ -333,7 +346,7 @@ const formActionSchema = () => ({
 
 export function jsonLdFor(path) {
   if (path === '/') {
-    return [base(), org(), localBusiness(), website(), page(routes['/'].title, routes['/'].description, '/'), faq(homeFaq)];
+    return [base(), org(), brand(), localBusiness(), website(), page(routes['/'].title, routes['/'].description, '/'), faq(homeFaq)];
   }
   if (path === '/about') {
     return [base(), org(), localBusiness(), website(), {
