@@ -135,13 +135,28 @@ try {
 const paths=[...Object.keys(routes).filter(p=>p!=='/hq'),...propertyPaths,...contentPaths];
 const today=new Date().toISOString().split('T')[0];
 const contentUpdated='2026-09-14'; // Last content update date
+
+// Sitemap with priority values for SEO
+const getPriority=path=>{
+ if(path==='/')return '1.0';
+ if(path==='/properties')return '0.9';
+ if(path.startsWith('/property/'))return '0.8';
+ if(path.startsWith('/guide/')||path.startsWith('/blog/'))return '0.8';
+ if(['/about','/contact'].includes(path))return '0.7';
+ return '0.6';
+};
+
 writeFileSync('dist/client/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+paths.map(path=>{
- // Use content update date for guides/blog, today for others
  const lastmod=(path.startsWith('/guide/')||path.startsWith('/blog/'))?contentUpdated:today;
- return '<url><loc>'+escape(siteUrl+path)+'</loc><lastmod>'+lastmod+'</lastmod><changefreq>'+(path.startsWith('/guide/')||path.startsWith('/blog/')?'monthly':'weekly')+'</changefreq></url>';
+ const priority=getPriority(path);
+ const changefreq=path==='/'?'daily':path==='/properties'?'daily':(path.startsWith('/guide/')||path.startsWith('/blog/'))?'monthly':'weekly';
+ return '<url><loc>'+escape(siteUrl+path)+'</loc><lastmod>'+lastmod+'</lastmod><changefreq>'+changefreq+'</changefreq><priority>'+priority+'</priority></url>';
 }).join('')+'</urlset>');
 console.log('Prepared metadata for '+paths.length+' public routes and private HQ.');
 
-const imageEntries=publishedProperties.map(p=>({path:'/property/'+p.slug,images:[...new Set([p.imageUrl,...(p.images||[])].filter(Boolean))]}));
-imageEntries.unshift({path:'/',images:[ogImage]});
-writeFileSync('dist/client/sitemap-images.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'+imageEntries.filter(e=>e.images.length).map(e=>'<url><loc>'+escape(siteUrl+e.path)+'</loc>'+e.images.map(image=>'<image:image><image:loc>'+escape(new URL(image,siteUrl).href)+'</image:loc></image:image>').join('')+'</url>').join('')+'</urlset>');
+const imageEntries=publishedProperties.map(p=>({path:'/property/'+p.slug,images:[...new Set([p.imageUrl,...(p.images||[])].filter(Boolean))],address:p.address,city:p.city}));
+imageEntries.unshift({path:'/',images:[ogImage],address:'Harbison Standard Hero',city:'Kern County'});
+writeFileSync('dist/client/sitemap-images.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'+imageEntries.filter(e=>e.images.length).map((e,i)=>'<url><loc>'+escape(siteUrl+e.path)+'</loc>'+e.images.map((image,idx)=>{
+ const title=e.address?`${e.address} in ${e.city} - image ${idx+1}`:'Harbison Standard';
+ return '<image:image><image:loc>'+escape(new URL(image,siteUrl).href)+'</image:loc><image:title>'+escape(title)+'</image:title></image:image>';
+}).join('')+'</url>').join('')+'</urlset>');

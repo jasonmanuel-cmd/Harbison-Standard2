@@ -46,5 +46,29 @@ Disallow: /api/
 Allow: /api/properties
 Disallow: /hq
 
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
+User-agent: Slurp
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
 Sitemap: https://www.harbisonstandard.com/sitemap.xml
 Sitemap: https://www.harbisonstandard.com/sitemap-images.xml
