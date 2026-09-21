@@ -47,7 +47,23 @@ const base = () => ({
     '@type': 'Organization',
     name: 'National Association of REALTORS®',
   },
-  knowsAbout: ['Real estate','Housing market','Real estate investing','Kern County real estate'],
+  knowsAbout: [
+    'Real estate',
+    'Housing market',
+    'Real estate investing',
+    'Kern County real estate',
+    'Land acquisition',
+    'Property valuation',
+    'Buyer representation',
+    'Seller marketing',
+  ],
+  expertise: [
+    'Residential real estate sales',
+    'Investment property analysis',
+    'Land purchases and owner financing',
+    'Estate and probate sales',
+    'Kern County market analysis',
+  ],
   sameAs: socials,
   worksFoR: {'@id': siteUrl + '/#org'},
   brand: {'@type': 'Brand', '@id': siteUrl + '/#brand', name: 'Harbison Standard'},
@@ -248,13 +264,33 @@ function faq(pairs) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: pairs.map(({q, a}) => ({
-      '@type': 'Question',
-      name: q,
-      acceptedAnswer: {'@type': 'Answer', text: a},
-    })),
+    mainEntity: pairs.map(({q, a}) => {
+      const item = {
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: {'@type': 'Answer', text: a},
+      };
+      if (a.length > 0) {
+        item.acceptedAnswer.speakable = {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['.faq-item dd'],
+        };
+      }
+      return item;
+    }),
   };
 }
+
+// Speakable schema for voice search optimization
+const speakableSchema = (content) => ({
+  '@context': 'https://schema.org',
+  '@type': 'SpeakableSpecification',
+  cssSelector: [
+    'h1', // Article headline
+    '.content-body p:first-of-type', // First paragraph (summary)
+    '.table-of-contents', // Main headings
+  ],
+});
 
 export const homeFaq = [
   {q: 'Who is Nathanael Harbison?', a: 'Nathanael Harbison is a California-licensed REALTOR® (DRE #02059393) at Harbison Standard. He helps buyers, sellers, and investors across Kern County.'},
@@ -436,12 +472,24 @@ export function articleSchema(title, description, path, datePublished, dateModif
       '@type': 'Person',
       name: agent.name,
       url: siteUrl + '/about',
+      jobTitle: 'California REALTOR® (DRE #02059393)',
       sameAs: socials,
+      image: siteUrl + '/assets/headshot.webp',
+      knowsAbout: ['Real Estate', 'Kern County', 'Investment Properties', 'Land Sales', 'Home Selling'],
     },
-    publisher: {'@id': siteUrl + '/#org'},
+    publisher: {
+      '@type': 'Organization',
+      '@id': siteUrl + '/#org',
+      name: 'Harbison Standard',
+      logo: {
+        '@type': 'ImageObject',
+        url: siteUrl + '/assets/logo.webp',
+      },
+    },
     image: siteUrl + '/assets/hero.webp',
     datePublished,
     dateModified: dateModified || datePublished,
+    articleBody: 'Real estate guidance for buyers, sellers, and investors in Kern County',
   };
 
   const schemas = [article, breadcrumb([{name:'Home',path:'/'},{name:path.startsWith('/blog/')?'Blog':'Guides',path:path.startsWith('/blog/')?'/blog':'/guides'},{name:title,path}])];
