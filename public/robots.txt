@@ -70,5 +70,34 @@ Disallow: /api/
 Allow: /api/properties
 Disallow: /hq
 
+# The crawlers that decide whether ChatGPT / Claude / Perplexity can cite this
+# site in an answer. Named explicitly so search consent is as clear as the
+# training-consent groups above.
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
+User-agent: Applebot
+Allow: /
+Disallow: /api/
+Allow: /api/properties
+Disallow: /hq
+
 Sitemap: https://www.harbisonstandard.com/sitemap.xml
 Sitemap: https://www.harbisonstandard.com/sitemap-images.xml
+Llms: https://www.harbisonstandard.com/llms.txt
+
