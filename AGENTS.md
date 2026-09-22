@@ -1,5 +1,8 @@
 # Prototype Instructions
 
+## September 22: hero video mobile fix — CRITICAL
+- **DEPLOYMENT NOTE:** Hero video mobile display fixed in commit 1a5869c. CSS changed from `background-size: contain; height: 690px` (was letterboxing/zooming) to `background-size: 100% auto; height: auto; min-height: 480px` (now full-width, no crop). Applied to `@media(max-width:740px)` breakpoint in `src/styles.css`. User reports this fix was requested 30+ times. Vercel deployment pending verification on iOS and Android.
+
 ## September 13: brighter hero text
 - User requested brighter gold for the homepage headline’s gold text and the entire supporting “Buy, sell, and invest…” paragraph to improve readability over the photo. Use bright gold #ffdc85 with a subtle dark text shadow, scoped to the homepage hero.
 
