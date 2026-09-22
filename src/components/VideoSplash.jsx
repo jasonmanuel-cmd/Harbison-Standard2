@@ -85,7 +85,7 @@ export function VideoSplash({onComplete}) {
         style={{
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: isMobile ? 'contain' : 'cover',
           display: 'block',
         }}
         muted
