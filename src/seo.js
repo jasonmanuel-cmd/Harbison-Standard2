@@ -230,6 +230,14 @@ export const routes = {
     title: 'Homes in Stallion Springs Gated Community | Harbison Standard',
     description: 'Master-planned homes in Stallion Springs, CA. Golf course, equestrian facilities, resort amenities. Exclusive gated community in Kern County.',
   },
+  '/private-sale': {
+    title: 'Sell Your House Privately in Kern County — No MLS, No Zillow | Harbison Standard',
+    description: 'Sell your Bakersfield or Tehachapi house privately — no MLS, no open houses, no sign in yard. As-is, confidential, fast close. Private Sale Program by Nathanael Harbison, REALTOR® DRE #02059393. Call (661) 472-7499 confidential.',
+  },
+  '/off-market-deals': {
+    title: 'Off-Market Deals in Kern County — Private Listings Not on Zillow | Harbison Standard',
+    description: 'Off-market deals in Bakersfield, Tehachapi, California City — private listings not on MLS or Zillow. Tax-defaulted, pre-foreclosure, probate, FSBO, vacant. Get alerts 21 days before Zillow. Harbison Standard Private Lead System.',
+  },
 };
 
 export const whyTehachapiFaq = [
@@ -258,6 +266,25 @@ export const tehachapiFaq = [
   {q: 'Is Tehachapi expensive to live in?', a: 'Compared to many California cities, Tehachapi is more affordable. Land and home prices tend to be lower, making it attractive for remote workers, retirees, and investors.'},
   {q: 'How far is Tehachapi from Bakersfield?', a: 'Tehachapi is about 35 miles from Bakersfield, roughly a 40-45 minute drive depending on conditions.'},
   {q: 'What is there to do in Tehachapi?', a: 'Outdoor activities including hiking, hunting, horseback riding, cycling, and wine tasting. The community also hosts events like movie nights and mud runs.'},
+];
+
+export const privateSaleFaq = [
+  {q: 'Is it legal to sell my house without listing it on MLS in California?', a: 'Yes. California allows private sales if the seller requests it. You sign C.A.R. Form SELM — Seller Instruction to Exclude Listing from MLS — stating you want it private. Nathanael Harbison, DRE #02059393, handles disclosures, paperwork, and escrow legally.'},
+  {q: 'Will I get less money selling privately?', a: 'Sometimes 5-10% less than full MLS exposure, but many private sellers net similar or more after saving repairs, cleanout, months of mortgage, and hassle. Cash investors pay 70-80% of market, private retail buyers pay 90-95% for off-market access. We discuss trade-offs honestly.'},
+  {q: 'Who will know my house is for sale?', a: 'Only you, Nathanael, and the vetted buyer. No MLS feed, no Zillow, no public open houses, no sign in your yard. Nothing is public until you accept an offer.'},
+  {q: 'How fast can a private sale close?', a: 'Cash: 7-14 days. Private retail buyer with financing: 21-30 days. Nathanael can move at your pace — faster or slower.'},
+  {q: 'What condition does my house need to be in?', a: 'Any condition. As-is sales are the norm for private sales — no repairs, no cleanout required. Investors buy houses that need work every week in Kern County.'},
+  {q: 'What situations is a private sale best for?', a: 'Divorce, inheritance/probate, financial pressure, bad tenants, foreclosure risk, job relocation, health issues, or simply wanting privacy. Any reason you want a quiet sale.'},
+  {q: 'Does a private sale cost me anything upfront?', a: 'No. Nathanael is paid at close of escrow like any real estate transaction. No upfront fees, no obligation to accept any offer.'},
+  {q: 'What areas does the Private Sale Program cover?', a: 'All of Kern County — Bakersfield, Tehachapi, California City, Stallion Springs, Bear Valley Springs, Golden Hills, and surrounding communities.'},
+];
+
+export const offMarketFaq = [
+  {q: 'What are off-market deals?', a: 'Off-market deals are properties for sale that are not listed on MLS, Zillow, or Realtor.com. They include private sales, FSBO, tax-defaulted, pre-foreclosure, probate, and vacant houses. Harbison Standard finds them through county records, direct mail, driving for dollars, and a private seller network.'},
+  {q: 'How do you find off-market deals in Kern County?', a: 'We monitor Craigslist by-owner posts, Zillow FSBO, Kern County tax-defaulted auction lists, Notice of Default filings, probate cases, code violations, Facebook Marketplace, wholesaler lists, and driving for dollars in Golden Hills, Bear Valley Springs, Stallion Springs, and California City. All scored 1-10 for deal quality.'},
+  {q: 'Can I get alerts for off-market deals?', a: 'Yes. Create a buyer profile with your budget, area (Tehachapi, Bakersfield, California City), and type (land under $50k, flip under $250k, etc). We text you when a private lead matches — before it hits Zillow.'},
+  {q: 'Are off-market deals cheaper?', a: 'Often 10-30% below market. Tax-defaulted properties can go for back-taxes, pre-foreclosure sellers often accept 15% below market, probate properties sell as-is, and vacant/distressed properties trade at discounts. We comp every deal: price per sqft vs 90-day comps, DOM, motivation keywords.'},
+  {q: 'Do you work with investors?', a: 'Yes. Most off-market buyers are investors. We have a private buyer network of cash buyers who want off-market inventory not on the MLS. Join by telling us your buy box — area, budget, property type.'},
 ];
 
 function faq(pairs) {
@@ -428,10 +455,12 @@ export function jsonLdFor(path) {
     '/cheap-land-kern-county': {name: 'Cheap Land in Kern County', desc: 'Affordable land for sale in Kern County — current listings and what your budget buys.', path: '/cheap-land-kern-county'},
     '/bakersfield-home-prices': {name: 'Bakersfield Home Prices', desc: 'What homes actually cost in Bakersfield — by neighborhood, by budget, and what your money buys.', path: '/bakersfield-home-prices'},
     '/tehachapi-home-prices': {name: 'Tehachapi Home Prices', desc: 'What homes and land cost in Tehachapi — from condos to acreage.', path: '/tehachapi-home-prices'},
+    '/private-sale': {name: 'Private Home Sale Program', type: 'Real Estate Sales Without MLS', desc: 'Sell your house privately in Kern County — no MLS, no Zillow, no open houses, no sign in yard. As-is, confidential, fast close. Private Sale Program by Nathanael Harbison.', path: '/private-sale'},
+    '/off-market-deals': {name: 'Off-Market Deals', type: 'Off-Market Real Estate', desc: 'Off-market deals in Kern County — private listings not on MLS or Zillow. Tax-defaulted, pre-foreclosure, probate, FSBO, vacant. Get alerts before Zillow.', path: '/off-market-deals'},
   };
   const s = svc[path];
   if (!s) return [];
-  const faqPairs = {'/why-tehachapi': whyTehachapiFaq, '/cheap-land-kern-county': cheapLandKernFaq, '/bakersfield-home-prices': bakersfieldFaq, '/tehachapi-home-prices': tehachapiFaq}[path];
+  const faqPairs = {'/why-tehachapi': whyTehachapiFaq, '/cheap-land-kern-county': cheapLandKernFaq, '/bakersfield-home-prices': bakersfieldFaq, '/tehachapi-home-prices': tehachapiFaq, '/private-sale': privateSaleFaq, '/off-market-deals': offMarketFaq}[path];
   const schemas = [base(), org(), website(), page(routes[path].title, routes[path].description, path), breadcrumb([{name: 'Home', path: '/'}, {name: s.name, path: path}])];
   if(s.type){
     schemas.push({

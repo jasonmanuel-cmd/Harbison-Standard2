@@ -77,6 +77,8 @@ export function CheapLandKernCounty(){
   <section className="svc svc--tint"><div className="svc-head"><div><p className="eyebrow">Explore more</p><h2>Related <em>resources.</em></h2></div></div><div className="cards3">
    <article className="card-t"><h3>Why Tehachapi?</h3><p>Learn what makes this mountain community different from the rest of California.</p><a className="inline-link" href="/why-tehachapi">Discover Tehachapi <ArrowRight/></a></article>
    <article className="card-t"><h3>Investing in Kern County</h3><p>Talk through investment properties, flips, and opportunities with a practical eye.</p><a className="inline-link" href="/investing">Explore investing <ArrowRight/></a></article>
+   <article className="card-t"><h3>Off-market land and homes</h3><p>Private listings not on MLS or Zillow — tax-defaulted, pre-foreclosure, probate, FSBO across Kern County.</p><a className="inline-link" href="/off-market-deals">Off-market deals <ArrowRight/></a></article>
+   <article className="card-t"><h3>Selling privately?</h3><p>No MLS, no Zillow, no open houses. Confidential, as-is private sale for land and homes.</p><a className="inline-link" href="/private-sale">Private sale program <ArrowRight/></a></article>
    <article className="card-t"><h3>Talk to Nathanael</h3><p>Get guidance on land purchases, zoning, and what to look for.</p><a className="inline-link" href="/contact">Contact <ArrowRight/></a></article>
   </div></section>
   <section className="svc"><div className="svc-head"><div><p className="eyebrow">Land buyer questions</p><h2>Land in Kern County, <em>answered.</em></h2></div></div><div className="faq">{cheapLandKernFaq.map(({q,a})=><details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div></section>

@@ -2,17 +2,8 @@ import {useEffect} from 'react';
 import {Phone, ArrowRight, Check, Lock, EyeSlash, HouseLine, ChatCircleText} from '@phosphor-icons/react';
 import {agent} from '../data';
 import {BuyerIntentForm} from '../BuyerIntentForm';
+import {privateSaleFaq} from '../seo';
 
-export const privateSaleFaq = [
-  {q: 'Is it legal to sell my house without listing it on MLS in California?', a: 'Yes. California allows private sales if seller requests it. You sign C.A.R. Form SELM — Seller Instruction to Exclude Listing from MLS — stating you want private for privacy. Nathanael Harbison DRE #02059393 handles disclosures, paperwork, and escrow legally.'},
-  {q: 'Will I get less money selling privately?', a: 'Sometimes 5-10% less than full MLS exposure, but many private sellers net similar or more after saving repairs, cleanout, months of mortgage, and hassle. Cash investors pay 70-80% of market, private retail buyers pay 90-95% for off-market access. We discuss trade-offs honestly.'},
-  {q: 'Who are your private buyers?', a: 'Local investors and retail buyers in Kern County who are tired of bidding wars and want off-market homes not on Zillow. All vetted, proof of funds. I do not post your address online.'},
-  {q: 'Can I sell privately if I have mortgage or behind on payments?', a: 'Yes. Many private sellers have mortgages. If behind, we can close fast before auction. We handle payoff through escrow, confidential.'},
-  {q: 'Do I need to clean out or repair?', a: 'No. Sell as-is. Leave furniture, junk, whatever you want. Private buyers buy as-is. No need to clean, stage, or repair.'},
-  {q: 'How fast can private sale close?', a: 'Cash: 7-14 days. Private retail with loan: 21-30 days. You choose closing date.'},
-  {q: 'What does private sale cost?', a: 'Same as traditional — we discuss fee upfront, no hidden fees. You still get full agent representation, disclosures, escrow, title insurance, but without showings and public listing.'},
-  {q: 'What areas do you do private sales?', a: 'Kern County — Bakersfield, Tehachapi, California City, Stallion Springs, Bear Valley Springs, Golden Hills, Rosamond.'},
-];
 
 export function PrivateSale(){
  useEffect(()=>{

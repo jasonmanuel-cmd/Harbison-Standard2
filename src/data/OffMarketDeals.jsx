@@ -2,14 +2,8 @@ import {useEffect} from 'react';
 import {Phone, ArrowRight, Check, MagnifyingGlass, Lock, HouseLine} from '@phosphor-icons/react';
 import {agent} from '../data';
 import {BuyerIntentForm} from '../BuyerIntentForm';
+import {offMarketFaq} from '../seo';
 
-export const offMarketFaq = [
-  {q: 'What are off-market deals?', a: 'Off-market deals are properties for sale that are not listed on MLS, Zillow, or Realtor.com. They include private sales, FSBO, tax-defaulted, pre-foreclosure, probate, and vacant houses. Harbison Standard finds them through county records, direct mail, driving for dollars, and private seller network.'},
-  {q: 'How do you find off-market deals in Kern County?', a: 'We scrape Craigslist by owner, Zillow FSBO, Kern County tax-defaulted auction lists, Notice of Default filings, probate cases, code violations, Facebook Marketplace, wholesaler lists, and driving for dollars in Golden Hills, Bear Valley Springs, Stallion Springs, and California City. All scored 1-10 for deal quality.'},
-  {q: 'Can I get alerts for off-market deals?', a: 'Yes. Create a buyer profile with your budget, area (Tehachapi, Bakersfield, California City), and type (land under $50k, flip under $250k, etc). We text you within 1 hour when a private lead matches — 21 days before Zillow.'},
-  {q: 'Are off-market deals cheaper?', a: 'Often 10-30% below market. Tax-defaulted $5k-20k, pre-foreclosure 15% below, probate as-is, vacant distressed. We comp every deal: price per sqft vs 90-day comps, DOM, motivation keywords.'},
-  {q: 'Do you work with investors?', a: 'Yes. 70% of off-market buyers are investors. We have private buyer network of 20+ cash buyers who want off-market not on MLS. Join by telling us your buy box.'},
-];
 
 export function OffMarketDeals(){
  useEffect(()=>{
