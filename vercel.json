@@ -14,7 +14,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.(?:woff2|webp|avif|png|jpg|jpeg|svg|ico|mp4|webm)",
+      "source": "/:path*.:ext(woff2|webp|avif|png|jpg|jpeg|svg|ico|mp4|webm)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -152,6 +152,14 @@
     {
       "source": "/blog",
       "destination": "/blog/index.html"
+    },
+    {
+      "source": "/private-sale",
+      "destination": "/private-sale/index.html"
+    },
+    {
+      "source": "/off-market-deals",
+      "destination": "/off-market-deals/index.html"
     }
   ],
   "redirects": [
@@ -179,9 +187,9 @@
     }
   ],
   "crons": [
-      {
-        "path": "/api/indexnow",
-        "schedule": "0 * * * *"
-      }
-    ]
+    {
+      "path": "/api/indexnow",
+      "schedule": "0 * * * *"
+    }
+  ]
 }
