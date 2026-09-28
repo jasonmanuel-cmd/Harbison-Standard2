@@ -65,10 +65,9 @@ async function handler(request) {
       } catch (error) {
         return json({ error: error.message }, { status: 400 });
       }
-      delete fields.notes;
-      fields.status = 'new';
       const lead = {
         ...fields,
+        status: fields.status || 'new',
         session_id: String(body.sessionId || '').slice(0, 100) || null,
         source: String(body.source || 'website').slice(0, 100),
         goal: fields.goal || 'Buying',

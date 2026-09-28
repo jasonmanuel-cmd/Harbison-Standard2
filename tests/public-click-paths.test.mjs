@@ -8,7 +8,7 @@ async function loadComponent(file, name, dependencies={}) {
  const source=readFileSync(file,'utf8').replace(/^import .*;\s*$/gm,'').replaceAll('export function','function');
  const {code}=await transformWithEsbuild(source,file,{loader:'jsx',jsxFactory:'element',jsxFragment:'Fragment'});
  const values=[];let index=0;
- const context={element:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity)}),Fragment:'fragment',useState:initial=>{const i=index++;if(!(i in values))values[i]=initial;return [values[i],value=>{values[i]=typeof value==='function'?value(values[i]):value}]},useRef:()=>({current:null}),useEffect:()=>{},useId:()=> 'test',window:{location:{search:'',pathname:'/contact'}},URLSearchParams,encodeURIComponent,...dependencies};
+ const context={element:(type,props,...children)=>({type,props:props||{},children:children.flat(Infinity)}),Fragment:'fragment',lazy:fn=>fn,Suspense:({children})=>children,useState:initial=>{const i=index++;if(!(i in values))values[i]=initial;return [values[i],value=>{values[i]=typeof value==='function'?value(values[i]):value}]},useRef:()=>({current:null}),useEffect:()=>{},useId:()=> 'test',window:{location:{search:'',pathname:'/contact'}},URLSearchParams,encodeURIComponent,...dependencies};
  runInNewContext(code+`;globalThis.Component=${name}`,context);
  return {render:(props)=>{index=0;return context.Component(props)},values};
 }
@@ -39,7 +39,8 @@ test('general inquiry success records one conversion and removes send controls; 
 
 test('mobile menu rerender preserves property component identity and route key',async()=>{
  const PropertyDetailPage=()=>{};
- const component=await loadComponent('src/App.jsx','App',{...icons,Home:()=>{},About:()=>{},Contact:()=>{},PropertiesPage:()=>{},PastSalesPage:()=>{},OpenHousesPage:()=>{},MovingFromLosAngeles:()=>{},Hq:()=>{},WhyTehachapi:()=>{},CheapLandKernCounty:()=>{},BakersfieldHomePrices:()=>{},TehachapiHomePrices:()=>{},ServicePage:()=>{},SocialLinks:()=>{},servicePages:{},PropertyDetailPage,agent:{},siteUrl:'https://example.test',routes:{},jsonLdFor:()=>[],trackEvent:()=>{},captureAttribution:()=>{},trackPageView:()=>{}});
+ const dummy=()=>{};
+ const component=await loadComponent('src/App.jsx','App',{...icons,Home:dummy,About:dummy,Contact:dummy,HomeValue:dummy,PropertiesPage:dummy,PastSalesPage:dummy,OpenHousesPage:dummy,MovingFromLosAngeles:dummy,Hq:dummy,WhyTehachapi:dummy,CheapLandKernCounty:dummy,BakersfieldHomePrices:dummy,TehachapiHomePrices:dummy,TehachapiBuy:dummy,BakersfieldBuy:dummy,CaliforniaCityInvest:dummy,StalionSpringsCommunities:dummy,PrivateSale:dummy,OffMarketDeals:dummy,ContentRouter:dummy,GuidesIndex:dummy,BlogIndex:dummy,VideoSplash:dummy,Analytics:dummy,SpeedInsights:dummy,ServicePage:dummy,SocialLinks:dummy,servicePages:{},PropertyDetailPage,agent:{},siteUrl:'https://example.test',routes:{},jsonLdFor:()=>[],trackEvent:dummy,captureAttribution:dummy,trackPageView:dummy});
  const render=()=>component.render({initialPath:'/property/example'});
  const before=nodes(render()).find(n=>n.type===PropertyDetailPage);
  assert.ok(before);
