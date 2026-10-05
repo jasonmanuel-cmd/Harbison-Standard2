@@ -51,7 +51,7 @@ export function Hq(){
     if(!stats)setPhase('loading');
     try{
       const [s,l]=await Promise.all([
-        api(token,'/api/stats'),
+        api(token,'/api/leads?stats=true'),
         api(token,'/api/leads?'+new URLSearchParams(filters)),
       ]);
       if(request!==listRequest.current)return;
@@ -104,7 +104,7 @@ export function Hq(){
     const request=++detailRequest.current;
     setDetail(null);setSelected(id);setEditing(false);setAdding(false);setMsg('');
     try{
-      const value=await api(token,'/api/lead?id='+encodeURIComponent(id));
+      const value=await api(token,'/api/leads?id='+encodeURIComponent(id));
       if(request===detailRequest.current)setDetail(value);
     }catch(err){
       if(request!==detailRequest.current)return;
@@ -118,7 +118,7 @@ export function Hq(){
     const session=sessionVersion.current;
     setSaving(true);
     try{
-      await api(token,'/api/lead',{method:'PATCH',body:JSON.stringify({id:leadId,...changes})});
+      await api(token,'/api/leads?id='+encodeURIComponent(leadId),{method:'PATCH',body:JSON.stringify(changes)});
       if(session!==sessionVersion.current)return false;
       setDetail(d=>d?.lead.id===leadId?{...d,lead:{...d.lead,...changes}}:d);
       setMsg('');
@@ -137,7 +137,7 @@ export function Hq(){
     const session=sessionVersion.current;
     setSaving(true);
     try{
-      await api(token,'/api/lead',{method:'POST',body:JSON.stringify({...newLead,source:'manual'})});
+      await api(token,'/api/leads',{method:'POST',body:JSON.stringify({...newLead,source:'manual'})});
       if(session!==sessionVersion.current)return;
       setAdding(false);setMsg('');
       setNewLead({name:'',email:'',phone:'',desired_area:'',budget:'',bedrooms:'',timeline:'',status:'new',notes:''});

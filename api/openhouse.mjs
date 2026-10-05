@@ -1,34 +1,128 @@
-import {json, readJson} from './lib/auth.mjs';
-import {supabaseRest, supabaseConfigured} from './lib/supabase.mjs';
+import { supabaseRest, supabaseConfigured } from './lib/supabase.mjs';
 
-// Public write-only intake; HQ reads still require authentication.
-const headers = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type','X-Robots-Tag':'noindex, nofollow'};
-const reply = (body, status = 200) => json(body, {status, headers});
-async function handler(request) {
-  if (request.method === 'OPTIONS') return new Response(null, {status:204, headers});
-  if (request.method !== 'POST') return reply({success:false,error:'Method not allowed'},405);
-  const body = await readJson(request);
-  if (!body || typeof body !== 'object' || Array.isArray(body)) return reply({success:false,error:'Invalid JSON object'},400);
-  const limits = {name:100,email:200,phone:40,property:200,location:200,source:200,date_time:100,submission_date:100};
-  const data = {};
-  for (const [key,max] of Object.entries(limits)) {
-    if (typeof body[key] !== 'string' || !body[key].trim() || body[key].length > max) return reply({success:false,error:'Invalid or missing '+key},400);
-    data[key] = body[key].trim();
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || !Number.isFinite(Date.parse(data.submission_date))) return reply({success:false,error:'Invalid email or submission_date'},400);
-  const lead = {name:data.name,email:data.email.toLowerCase(),phone:data.phone,location:data.location,interest:data.property,source:data.source,goal:'Open house',status:'new',brand:'harbison_standard',message:JSON.stringify(data,null,2)};
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Accept',
+  'Cache-Control': 'no-store',
+};
+
+async function sendFormspreeFallback(body) {
   try {
-    if (!supabaseConfigured()) throw new Error('CRM unavailable');
-    const saved = await supabaseRest('leads', {method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify(lead),signal:AbortSignal.timeout(8000)});
-    if (!saved.ok) throw new Error('CRM rejected registration');
-    return reply({success:true,message:'Registration recorded'});
+    const res = await fetch('https://formspree.io/f/xqpkdwrp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ ...body, _subject: 'Open House Registration', _replyto: body.email }),
+      signal: AbortSignal.timeout(15000),
+    });
+    return res.ok;
   } catch {
-    // Forms also fall back directly when this entire endpoint is unreachable.
-    try {
-      const backup = await fetch('https://formspree.io/f/xqpkdwrp', {method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},signal:AbortSignal.timeout(8000),body:JSON.stringify({...data,_subject:'Harbison Standard - open house registration',_replyto:data.email})});
-      if (backup.ok) return reply({success:true,message:'Registration received through backup',delivery:'formspree'});
-    } catch { /* Return failure so forms retain inputs for retry. */ }
-    return reply({success:false,error:'Unable to save registration. Please retry.'},503);
+    return false;
   }
 }
-export default {fetch:handler};
+
+async function handler(request) {
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: corsHeaders });
+  }
+
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({ success: false, error: 'Method not allowed' }), {
+      status: 405,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ success: false, error: 'Invalid JSON' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return new Response(JSON.stringify({ success: false, error: 'Invalid payload' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const requiredStringFields = ['name', 'email', 'phone', 'property', 'location', 'source', 'date_time', 'submission_date'];
+  for (const field of requiredStringFields) {
+    if (typeof body[field] !== 'string' || !body[field].trim()) {
+      return new Response(JSON.stringify({ success: false, error: `Missing or invalid ${field}` }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
+    return new Response(JSON.stringify({ success: false, error: 'Invalid email' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  if (isNaN(Date.parse(body.submission_date))) {
+    return new Response(JSON.stringify({ success: false, error: 'Invalid submission date' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  const lead = {
+    name: body.name.trim(),
+    email: body.email.trim().toLowerCase(),
+    phone: body.phone.trim(),
+    location: body.location.trim(),
+    interest: body.property.trim(),
+    source: body.source.trim(),
+    goal: 'Open house',
+    brand: 'harbison_standard',
+    status: 'new',
+    message: JSON.stringify(body),
+  };
+
+  let savedToSupabase = false;
+  if (supabaseConfigured()) {
+    try {
+      const response = await supabaseRest('leads', {
+        method: 'POST',
+        headers: { Prefer: 'return=representation' },
+        body: JSON.stringify(lead),
+      });
+      if (response.ok || response.status === 201) {
+        savedToSupabase = true;
+      }
+    } catch {
+      savedToSupabase = false;
+    }
+  }
+
+  if (savedToSupabase) {
+    return new Response(JSON.stringify({ success: true, message: 'Registration recorded' }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Fallback to Formspree
+  const backupSuccess = await sendFormspreeFallback(body);
+  if (backupSuccess) {
+    return new Response(JSON.stringify({ success: true, message: 'Registration recorded', delivery: 'formspree' }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  return new Response(JSON.stringify({ success: false, error: 'Service temporarily unavailable' }), {
+    status: 503,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+export default { fetch: handler };
