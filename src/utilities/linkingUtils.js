@@ -143,3 +143,67 @@ export function generatePropertyFilterLink(city, type = null, priceRange = null)
     href: `/properties?city=${encodeURIComponent(city)}${type ? '&type=' + encodeURIComponent(type) : ''}`,
   };
 }
+
+/**
+ * Get relevant guides for a given property (by city and type)
+ */
+export function getRelatedContentForProperty(property) {
+  if (!property) return [];
+
+  const contentMap = {
+    tehachapi: [
+      { title: 'Why Move to Tehachapi', slug: 'why-tehachapi', description: 'Explore what makes Tehachapi appealing to buyers and investors.' },
+      { title: 'Tehachapi Home Prices & Market', slug: 'tehachapi-home-prices', description: 'Understand pricing trends and what your budget buys.' },
+      { title: 'Tehachapi Homes with Acreage', slug: 'tehachapi-homes-with-acreage', description: 'Find properties on land with mountain views.' },
+    ],
+    bakersfield: [
+      { title: 'Bakersfield Home Prices & Market', slug: 'bakersfield-home-prices', description: 'Compare neighborhoods and neighborhood pricing.' },
+      { title: 'Moving from LA to Bakersfield', slug: 'moving-from-los-angeles-to-bakersfield', description: 'Understand cost of living and lifestyle differences.' },
+      { title: 'Bakersfield Homes with Shop', slug: 'bakersfield-homes-with-shop', description: 'Find properties with workshop or commercial space.' },
+    ],
+    'california city': [
+      { title: 'Cheap Land in Kern County', slug: 'cheap-land-kern-county', description: 'Explore value pricing in emerging markets.' },
+      { title: 'Kern County Investment Properties', slug: 'kern-county-investment-properties', description: 'Analyze investment opportunities across the region.' },
+    ],
+    'stallion springs': [
+      { title: 'Kern County Investment Properties', slug: 'kern-county-investment-properties', description: 'Understand the investment landscape.' },
+    ],
+  };
+
+  const city = property.city ? property.city.toLowerCase() : '';
+  const guides = contentMap[city] || [];
+
+  return guides.slice(0, 3).map(g => ({
+    ...g,
+    href: `/guide/${g.slug}`,
+  }));
+}
+
+/**
+ * Get properties relevant to a content page (by slug/city mapping)
+ */
+export function getPropertiesByContentSlug(slug, allProperties = []) {
+  if (!allProperties.length) return [];
+
+  const cityMap = {
+    'tehachapi-land-under-50k': 'tehachapi',
+    'tehachapi-homes-with-acreage': 'tehachapi',
+    'why-tehachapi': 'tehachapi',
+    'tehachapi-home-prices': 'tehachapi',
+    'tehachapi-vs-bakersfield': ['tehachapi', 'bakersfield'],
+    'bakersfield-homes-under-400k': 'bakersfield',
+    'bakersfield-home-prices': 'bakersfield',
+    'bakersfield-homes-with-shop': 'bakersfield',
+    'moving-from-los-angeles-to-bakersfield': 'bakersfield',
+    'cheap-land-kern-county': 'california city',
+    'cheap-land-california-city-vs-tehachapi': ['california city', 'tehachapi'],
+  };
+
+  const cities = cityMap[slug];
+  if (!cities) return [];
+
+  const cityList = Array.isArray(cities) ? cities : [cities];
+  return allProperties
+    .filter(p => p.city && cityList.some(c => p.city.toLowerCase() === c.toLowerCase()))
+    .slice(0, 3);
+}

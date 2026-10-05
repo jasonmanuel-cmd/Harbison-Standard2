@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { markdownToHtml, generateTableOfContents } from '../utils/contentLoader.js';
 import { articleSchema } from '../seo.js';
 import { createRelatedGuidesHtml } from '../utilities/linkingUtils.js';
+import { trackCall, trackText } from '../analytics.js';
 import { LeadForm } from '../LeadForm.jsx';
 
 export function ContentPage({ frontmatter, content, type = 'guide' }) {
@@ -107,12 +108,12 @@ export function ContentPage({ frontmatter, content, type = 'guide' }) {
         <section className="sidebar-contact">
           <h4>Contact Nathanael</h4>
           <p>
-            <a href="tel:+16614727499" className="btn btn-secondary">
+            <a href="tel:+16614727499" className="btn btn-secondary" onClick={() => trackCall('guide_sidebar')}>
               Call (661) 472-7499
             </a>
           </p>
           <p>
-            <a href="sms:+16614727499" className="btn btn-secondary">
+            <a href="sms:+16614727499" className="btn btn-secondary" onClick={() => trackText('guide_sidebar')}>
               Text Message
             </a>
           </p>

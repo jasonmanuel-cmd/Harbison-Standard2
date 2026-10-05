@@ -49,3 +49,25 @@ export function trackEvent(name, params = {}) {
   }
   } catch { /* Analytics must never interrupt an inquiry. */ }
 }
+
+// High-level tracking for common conversions
+export function trackCall(source = 'web') {
+  trackEvent('call_click', {source, phone: '(661) 472-7499'});
+}
+
+export function trackText(source = 'web') {
+  trackEvent('text_click', {source, phone: '(661) 472-7499'});
+}
+
+export function trackScheduleClick(propertyId = null, source = 'property') {
+  trackEvent('schedule_showing_click', {property_id: propertyId, source});
+}
+
+export function trackFormStart(formName, source = 'web') {
+  trackEvent('form_start', {form_name: formName, lead_source: source});
+}
+
+export function trackFormComplete(formName, source = 'web', metadata = {}) {
+  trackEvent('form_complete', {form_name: formName, lead_source: source, ...metadata});
+  trackEvent('generate_lead', {form_name: formName, lead_source: source, ...metadata});
+}

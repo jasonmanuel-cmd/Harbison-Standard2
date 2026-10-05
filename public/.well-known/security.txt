@@ -1,7 +1,5 @@
-Contact: security@harbisonstandard.com
-Contact: nate85.realtor@gmail.com
-Expires: 2027-09-21T00:00:00.000Z
-Preferred-Languages: en
+Contact: mailto:nate85.realtor@gmail.com
+Contact: tel:+1-661-472-7499
+Expires: 2027-10-05T00:00:00.000Z
 Canonical: https://www.harbisonstandard.com/.well-known/security.txt
-Policy: https://www.harbisonstandard.com/privacy-policy
-Hiring: https://www.harbisonstandard.com/careers
+Preferred-Languages: en

@@ -5,7 +5,8 @@ import {money} from './data';
 import {responsiveImage} from './utilities/imageUtils';
 import {BuyerIntentForm} from './BuyerIntentForm';
 import {applyPropertySeo} from './seo';
-import {trackEvent} from './analytics';
+import {trackEvent,trackScheduleClick,trackCall,trackText} from './analytics';
+import {getRelatedContentForProperty} from './utilities/linkingUtils';
 
 function Lightbox({images,initialIndex,onClose}){
  const [idx,setIdx]=useState(initialIndex);
@@ -76,6 +77,7 @@ export function PropertyDetailPage({slug,initialProperty=null}){
  {(p.features?.length>0||p.locationContext)&&<section className="svc svc--tint property-context"><div className="svc-split"><div><p className="eyebrow">Property context</p><h2>Look past the photos.<br/><em>Understand the asset.</em></h2>{p.locationContext&&<p>{p.locationContext}</p>}</div>{p.features?.length>0&&<ul className="property-feature-list">{p.features.map((f,i)=><li key={`${f}-${i}`}>{f}</li>)}</ul>}</div></section>}
  <section id="property-inquiry" className="inquiry-section"><div><p className="eyebrow">Property inquiry</p><h2>Interested in this one?<br/><em>See the full picture.</em></h2><p>Share your buyer profile so Nathanael can respond with this property in context—not in isolation.</p></div><BuyerIntentForm earlyInterest={/^coming soon$/i.test(p.status)} propertyId={p.databaseId === null ? null : p.id} source={`property:${p.slug}`}/></section>
  {similar.length>0&&<section className="portfolio-section page-wrap similar-properties"><div className="section-heading"><div><p className="eyebrow">More current listings</p><h2>Not quite right?<br/><em>Keep the search moving.</em></h2></div><a className="inline-link" href="/properties">View all properties <ArrowRight/></a></div><div className="property-grid">{similar.map(x=><PropertyCard key={x.slug||x.id} p={x} onOpen={item=>trackEvent('similar_property_click',{property_id:item.id,property_slug:item.slug,from_property_id:p.id})}/>)}</div></section>}
+ {getRelatedContentForProperty(p)&&<section className="portfolio-section page-wrap related-guides"><div className="section-heading"><div><p className="eyebrow">Learn More</p><h2>Understand the market <em>for this area.</em></h2></div></div><div className="guides-list">{getRelatedContentForProperty(p).map(g=><a key={g.slug} href={`/guide/${g.slug}`} className="guide-link" onClick={()=>trackEvent('related_guide_click',{guide:g.slug,property_id:p.id})}><div className="guide-card"><h3>{g.title}</h3><p>{g.description}</p></div></a>)}</div></section>}
  </>}
 
 export function PastSalesPage(){

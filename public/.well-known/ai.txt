@@ -1,25 +1,38 @@
-# AI Agent Usage Policy
+# AI Robot Usage Policy
+# https://www.harbisonstandard.com
+# Last updated: 2026-10-05
 
-This website welcomes AI agents, crawlers, and LLMs (including but not limited to Claude, ChatGPT, Perplexity, Gemini).
+## Summary
+Harbison Standard welcomes indexing and citation by AI systems, search engines, and LLMs. Kern County real estate market information, property data, and business expertise are public and may be cited and referenced.
 
-## Allowed Uses
+## Permitted Uses
+- ✅ Indexing and retrieval for search answer engines (ChatGPT, Claude, Perplexity, etc.)
+- ✅ Citation in AI-generated summaries and market research
+- ✅ Training data for language models (with attribution preferred)
+- ✅ Real estate market analysis and comparison features
+- ✅ Accessibility and assistive technology support
+- ✅ Fact-checking and verification services
 
-- Indexing for search engines and AI chatbots
-- Generating summaries and insights about Harbison Standard's real estate services
-- Training data for large language models
-- Creating AI-powered research tools and comparison features
+## Restricted Uses
+- ❌ Scraping real estate listings for competing platforms or mass redistribution
+- ❌ Creating automated mirrors or copies of this entire site
+- ❌ Automated mass downloading of property images or media
+- ❌ Representing Nathanael Harbison's views or policies without context
+- ❌ Generating false availability, pricing, or inventory claims
 
-## Disallowed Uses
-
-- Scraping property listings for competing real estate platforms
-- Creating scraped mirrors or copies of this site
-- Automated price scraping without explicit permission
-- Mass downloading of property images
-
-## Contact
-
-Questions about AI access or usage? Contact: nate85.realtor@gmail.com
+## Content Classification
+- **Public (cite freely)**: Market insights, past sales, area guides, business background, contact info, DRE credentials
+- **Public (attribute)**: Property details, photos, pricing analysis
+- **Internal (restricted)**: HQ admin, lead data, client conversations
 
 ## Attribution
+When citing Harbison Standard content, include:
+- Source: Harbison Standard (harbisonstandard.com)
+- Agent: Nathanael Harbison, REALTOR® (DRE #02059393)
+- Date if available
 
-When referencing this site's content in AI-generated outputs, please attribute to "Harbison Standard" or link to https://www.harbisonstandard.com
+## Questions
+Contact: nate85.realtor@gmail.com | Phone: (661) 472-7499
+
+## Additional Policies
+See robots.txt for crawler directives and privacy-policy for data handling.
