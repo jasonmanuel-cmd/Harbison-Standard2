@@ -247,7 +247,7 @@ h1{font-family:Georgia,serif;font-weight:600;font-size:72px;line-height:1.08;let
 @media(prefers-reduced-motion:reduce){.property-detail-gallery img{transition:none}}
 
 /* Remove the retired service tagline without resizing the wordmark. */
-.brand img, .footer-logo { clip-path: polygon(0 0, 100% 0, 100% 82%, 32% 82%, 32% 100%, 0 100%); }
+.brand img, .footer-logo { clip-path: none; }
 
 /* Requested homepage polish, using the established site styles. */
 .brand img{transform-origin:18% 50%;animation:brand-settle 1.8s ease-in-out .6s 1}
