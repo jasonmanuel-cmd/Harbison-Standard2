@@ -17,7 +17,24 @@ export function Home({initialProperties=null}){
  const [loading,setLoading]=useState(initialProperties===null);
  useEffect(()=>{let active=true;getProperties(initialProperties).then(list=>{if(active){setListings(list.filter(isAvailableProperty));setLoading(false)}});return()=>{active=false}},[]);
  return <>
-  <section className="hero hero--standard" aria-labelledby="hero-title">
+  <section className="hero-editorial" aria-labelledby="hero-title">
+    <div className="hero-editorial-background">
+      <img src="/assets/hero.webp" alt="Mountain home in Tehachapi at sunset" width={1600} height={900} className="hero-editorial-image"/>
+    </div>
+    <div className="hero-editorial-overlay"/>
+    <div className="hero-editorial-content">
+      <div className="hero-editorial-logo-block">
+        <img src="/assets/optimized/logo-500.webp" alt="Harbison Standard" width={500} height={128} className="hero-editorial-logo"/>
+        <p className="hero-editorial-tagline">It's not what you do.<br/><em>It's how you do it.</em></p>
+      </div>
+      <div className="hero-editorial-cta">
+        <a className="gold" href={agent.phoneHref}><Phone/> Call Nathanael</a>
+        <a className="text-link" href="/properties"><span>View Listings</span><ArrowRight/></a>
+      </div>
+    </div>
+  </section>
+
+  <section className="hero hero--standard" aria-labelledby="hero-title" style={{display:'none'}}>
     <video
       className="hero-video"
       autoPlay
@@ -36,6 +53,29 @@ export function Home({initialProperties=null}){
     <article className="featured-card" style={{background:'#fff',border:'1px solid #e0e0e0',borderRadius:'8px',overflow:'hidden'}}><a href="/property/958-fairway-dr" style={{textDecoration:'none',color:'inherit'}}><div style={{aspectRatio:'1.5',overflow:'hidden'}}><img src="/assets/property/958-fairway-dr-1.webp" alt="958 Fairway Dr" width={500} height={334} style={{width:'100%',height:'100%',objectFit:'cover'}} loading="lazy"/></div><div style={{padding:'1rem'}}><p style={{fontSize:'0.8rem',color:'#806018',fontWeight:'600',margin:'0 0 0.25rem'}}>Stockdale Country Club</p><h3 style={{margin:'0 0 0.25rem',fontSize:'1.1rem'}}>958 Fairway Dr</h3><p style={{margin:'0 0 0.5rem',fontSize:'0.9rem',color:'#555'}}>4 bed · 3 bath · 2,170 sqft</p><strong style={{fontSize:'1.1rem',color:'#1a1a1a'}}>$899,900</strong></div></a></article>
     <article className="featured-card" style={{background:'#fff',border:'1px solid #e0e0e0',borderRadius:'8px',overflow:'hidden'}}><a href="/property/28211-seabiscuit-way" style={{textDecoration:'none',color:'inherit'}}><div style={{aspectRatio:'1.5',overflow:'hidden'}}><img src="/assets/property/28211-seabiscuit-way-1.webp" alt="28211 Seabiscuit Way" width={500} height={334} style={{width:'100%',height:'100%',objectFit:'cover'}} loading="lazy"/></div><div style={{padding:'1rem'}}><p style={{fontSize:'0.8rem',color:'#806018',fontWeight:'600',margin:'0 0 0.25rem'}}>Stallion Springs</p><h3 style={{margin:'0 0 0.25rem',fontSize:'1.1rem'}}>28211 Seabiscuit Way</h3><p style={{margin:'0 0 0.5rem',fontSize:'0.9rem',color:'#555'}}>4 bed · 3 bath · 2,836 sqft</p><strong style={{fontSize:'1.1rem',color:'#1a1a1a'}}>$699,000</strong></div></a></article>
   </div></section>
+  <section className="agent-showcase page-wrap">
+    <div className="agent-showcase-grid">
+      <div className="agent-showcase-image">
+        <img src="/assets/optimized/headshot-600.webp" alt="Nathanael Harbison" width={600} height={672} className="agent-showcase-photo"/>
+      </div>
+      <div className="agent-showcase-content">
+        <p className="eyebrow">Meet Nathanael Harbison</p>
+        <h2>A practical approach<br/>to <em>your next move.</em></h2>
+        <p>Whether you’re buying, selling, or exploring an investment, the right decision starts with understanding the property in front of you. Nathanael brings a practical perspective shaped by real estate work and a long-term view of value in Kern County.</p>
+        <ul className="agent-showcase-credentials">
+          <li><SealCheck weight="fill"/> Licensed California REALTOR® (DRE #02059393)</li>
+          <li><MapPin weight="fill"/> Specializing in Kern County & Tehachapi</li>
+          <li><ChartLineUp weight="fill"/> Expert in residential & investment real estate</li>
+        </ul>
+        <div className="agent-showcase-cta">
+          <a className="gold" href={agent.phoneHref}><Phone/> Call Nathanael</a>
+          <a className="inline-link" href="/about">Full bio <ArrowRight/></a>
+          <a className="inline-link" href={agent.youtube} target="_blank" rel="noreferrer"><YoutubeLogo/> YouTube <ArrowUpRight/></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section className="trust-bar" aria-label="Credentials and service areas"><ul>{trust.map(({Icon,text})=><li key={text}><Icon weight="fill"/><span>{text}</span></li>)}</ul></section>
   <section className="home-about"><div><p className="eyebrow">More than a transaction</p><h2>A higher standard<br/>for <em>your next move.</em></h2></div><p>Whether you’re buying, selling, or exploring an investment, the right decision starts with understanding the property in front of you. Nathanael brings a practical perspective shaped by real estate work and a long-term view of value. <a className="inline-link" href="/about">Meet Nathanael <ArrowRight/></a><a className="inline-link" href={agent.youtube} target="_blank" rel="noreferrer"><YoutubeLogo/> Follow Nathanael on YouTube <ArrowUpRight/></a></p></section>
   <section className="gbp-widget-section" style={{background:"#fafafa", padding:"2.5rem 2rem", borderBottom:"1px solid #e0e0e0"}}><div className="page-wrap" style={{textAlign:"center"}}><p className="eyebrow">Google Reviews & Local Presence</p><h2 style={{marginBottom:"1.5rem"}}>Find us, read what clients say, and get directions</h2><div style={{display:"flex", gap:"1rem", justifyContent:"center", flexWrap:"wrap", maxWidth:"600px", margin:"0 auto"}}><a href="https://www.google.com/search?q=Harbison+Standard+real+estate+Kern+County+reviews" target="_blank" rel="noreferrer" style={{display:"inline-flex", alignItems:"center", gap:"0.5rem", padding:"0.85rem 2rem", background:"#d4af37", color:"#1a1a1a", textDecoration:"none", borderRadius:"4px", fontWeight:"bold", fontSize:"0.95rem"}}>📍 View on Google Maps</a><a href="https://www.google.com/search?q=Harbison+Standard+reviews" target="_blank" rel="noreferrer" style={{display:"inline-flex", alignItems:"center", gap:"0.5rem", padding:"0.85rem 2rem", background:"#fff", color:"#1a1a1a", border:"2px solid #d4af37", textDecoration:"none", borderRadius:"4px", fontWeight:"bold", fontSize:"0.95rem"}}>⭐ Read Reviews</a></div><p style={{marginTop:"1.5rem", fontSize:"0.9rem", color:"#666"}}>See why Kern County buyers and sellers trust Nathanael Harbison</p></div></section>
