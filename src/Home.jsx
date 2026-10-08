@@ -17,24 +17,7 @@ export function Home({initialProperties=null}){
  const [loading,setLoading]=useState(initialProperties===null);
  useEffect(()=>{let active=true;getProperties(initialProperties).then(list=>{if(active){setListings(list.filter(isAvailableProperty));setLoading(false)}});return()=>{active=false}},[]);
  return <>
-  <section className="hero-editorial" aria-labelledby="hero-title">
-    <div className="hero-editorial-background">
-      <img src="/assets/hero.webp" alt="Mountain home in Tehachapi at sunset" width={1600} height={900} className="hero-editorial-image"/>
-    </div>
-    <div className="hero-editorial-overlay"/>
-    <div className="hero-editorial-content">
-      <div className="hero-editorial-logo-block">
-        <img src="/assets/optimized/logo-500.webp" alt="Harbison Standard" width={500} height={128} className="hero-editorial-logo"/>
-        <p className="hero-editorial-tagline">It's not what you do.<br/><em>It's how you do it.</em></p>
-      </div>
-      <div className="hero-editorial-cta">
-        <a className="gold" href={agent.phoneHref}><Phone/> Call Nathanael</a>
-        <a className="text-link" href="/properties"><span>View Listings</span><ArrowRight/></a>
-      </div>
-    </div>
-  </section>
-
-  <section className="hero hero--standard" aria-labelledby="hero-title" style={{display:'none'}}>
+  <section className="hero hero--standard" aria-labelledby="hero-title">
     <video
       className="hero-video"
       autoPlay
